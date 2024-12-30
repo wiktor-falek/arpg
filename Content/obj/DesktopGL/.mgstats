@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"c:/Users/Apdo/code/arpg/Content/Idle.png","c:/Users/Apdo/code/arpg/Content/bin/DesktopGL/PlayerIdle.xnb","TextureProcessor","Texture2DContent",5129,784085,0.0934124
+"c:/Users/Apdo/code/arpg/Content/Walk.png","c:/Users/Apdo/code/arpg/Content/bin/DesktopGL/PlayerWalk.xnb","TextureProcessor","Texture2DContent",5065,627285,0.010794
