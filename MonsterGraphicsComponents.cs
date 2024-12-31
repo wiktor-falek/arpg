@@ -5,43 +5,43 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class MonsterGraphicsComponent
 {
-    private List<Texture2D> IdleTextures = [];
+    private List<Texture2D> _idleTextures = [];
 
     // private List<Texture2D> WalkTextures = [];
 
-    private int CurrentFrame = 0;
-    private float FrameTime = 0.25f;
-    private float ElapsedTime = 0f;
+    private readonly float _frameTime = 0.25f;
+    private int _currentFrame = 0;
+    private float _elapsedTime = 0f;
 
     public void LoadAssets(ContentManager content)
     {
-        IdleTextures.Add(content.Load<Texture2D>("skeleton_ready_1"));
-        IdleTextures.Add(content.Load<Texture2D>("skeleton_ready_2"));
-        IdleTextures.Add(content.Load<Texture2D>("skeleton_ready_3"));
+        _idleTextures.Add(content.Load<Texture2D>("skeleton_ready_1"));
+        _idleTextures.Add(content.Load<Texture2D>("skeleton_ready_2"));
+        _idleTextures.Add(content.Load<Texture2D>("skeleton_ready_3"));
     }
 
     public void Update(Monster monster, GameTime gameTime)
     {
-        ElapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+        _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (ElapsedTime >= FrameTime)
+        if (_elapsedTime >= _frameTime)
         {
-            ElapsedTime = 0f;
+            _elapsedTime = 0f;
 
-            CurrentFrame++;
+            _currentFrame++;
 
             if (monster.State == ActorState.Idling)
             {
-                if (CurrentFrame >= IdleTextures.Count)
+                if (_currentFrame >= _idleTextures.Count)
                 {
-                    CurrentFrame = 0;
+                    _currentFrame = 0;
                 }
             }
             // else if (monster.State == ActorState.Idling)
             // {
-            //     if (CurrentFrame >= IdleFrames.Count)
+            //     if (_currentFrame >= IdleFrames.Count)
             //     {
-            //         CurrentFrame = 0;
+            //         _currentFrame = 0;
             //     }
             // }
             // else
@@ -53,7 +53,7 @@ public class MonsterGraphicsComponent
 
     public void Draw(Monster monster, SpriteBatch spriteBatch)
     {
-        var texture = IdleTextures[CurrentFrame];
+        var texture = _idleTextures[_currentFrame];
         var effect =
             monster.Facing == ActorFacing.Right
                 ? SpriteEffects.None
