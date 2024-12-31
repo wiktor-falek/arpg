@@ -9,19 +9,22 @@ public class PlayerInputComponent
 
         Vector2 movementDirection = Vector2.Zero;
 
-        if (kstate.IsKeyDown(Keys.W))
+        if (kstate.IsKeyDown(Keys.W) || kstate.IsKeyDown(Keys.Up))
         {
             movementDirection.Y -= 1;
         }
-        if (kstate.IsKeyDown(Keys.S))
+
+        if (kstate.IsKeyDown(Keys.S) || kstate.IsKeyDown(Keys.Down))
         {
             movementDirection.Y += 1;
         }
-        if (kstate.IsKeyDown(Keys.A))
+
+        if (kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left))
         {
             movementDirection.X -= 1;
         }
-        if (kstate.IsKeyDown(Keys.D))
+
+        if (kstate.IsKeyDown(Keys.D) || kstate.IsKeyDown(Keys.Right))
         {
             movementDirection.X += 1;
         }

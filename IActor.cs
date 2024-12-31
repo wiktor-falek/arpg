@@ -20,8 +20,10 @@ public interface IActor
     ActorFacing Facing { get; set; }
     Vector2 Position { get; set; }
     float Speed { get; set; }
+    uint Health { get; set; }
 
     void LoadAssets(ContentManager contentManager);
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch);
+    void Attack();
 }

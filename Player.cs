@@ -8,7 +8,7 @@ public class Player : IActor
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 250f;
-
+    public uint Health { get; set; } = 500u;
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
 
@@ -36,5 +36,10 @@ public class Player : IActor
             State = newState;
             _graphicsComponent.ResetFrames();
         }
+    }
+
+    public void Attack()
+    {
+
     }
 }

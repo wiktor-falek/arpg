@@ -8,7 +8,6 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
     private Player _player;
     private Monster _monster;
 
@@ -25,7 +24,6 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _player.Position = new(100, 100);
-
         _monster.Position = new(200, 100);
 
         base.Initialize();
