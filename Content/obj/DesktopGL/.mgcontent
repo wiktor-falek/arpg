@@ -5,10 +5,16 @@
   <Config />
   <SourceFiles>
     <File>c:/Users/Apdo/code/arpg/Content/Idle.png</File>
+    <File>c:/Users/Apdo/code/arpg/Content/skeleton_ready_1.png</File>
+    <File>c:/Users/Apdo/code/arpg/Content/skeleton_ready_2.png</File>
+    <File>c:/Users/Apdo/code/arpg/Content/skeleton_ready_3.png</File>
     <File>c:/Users/Apdo/code/arpg/Content/Walk.png</File>
   </SourceFiles>
   <DestFiles>
     <File>PlayerIdle.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File>PlayerWalk.png</File>
   </DestFiles>
 </SourceFileCollection>

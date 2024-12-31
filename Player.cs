@@ -2,28 +2,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-public enum PlayerState
+public class Player : IActor
 {
-    Idling,
-    Walking,
-}
+    public ActorState State { get; set; } = ActorState.Idling;
+    public ActorFacing Facing { get; set; } = ActorFacing.Right;
+    public Vector2 Position { get; set; } = Vector2.Zero;
+    public float Speed { get; set; } = 250f;
 
-public enum PlayerFacing
-{
-    Left,
-    Right,
-}
-
-public class Player
-{
-    private InputComponent _inputComponent = new();
-    private GraphicsComponent _graphicsComponent = new();
-
-    public PlayerState state = PlayerState.Idling;
-    public PlayerFacing facing = PlayerFacing.Right;
-
-    public Vector2 Position;
-    public float Speed = 250f;
+    private PlayerInputComponent _inputComponent = new();
+    private PlayerGraphicsComponent _graphicsComponent = new();
 
     public void LoadAssets(ContentManager contentManager)
     {
@@ -41,12 +28,12 @@ public class Player
         _graphicsComponent.Draw(this, spriteBatch);
     }
 
-    public void TransitionState(PlayerState newState)
+    public void TransitionState(ActorState newState)
     {
-        bool stateChanged = state != newState;
+        bool stateChanged = State != newState;
         if (stateChanged)
         {
-            state = newState;
+            State = newState;
             _graphicsComponent.ResetFrames();
         }
     }

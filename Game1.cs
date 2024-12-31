@@ -11,6 +11,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     private Player _player;
+    private Monster _monster;
 
     public Game1()
     {
@@ -19,14 +20,15 @@ public class Game1 : Game
         IsMouseVisible = true;
 
         _player = new Player();
+        _monster = new Monster();
     }
 
     protected override void Initialize()
     {
-        _player.Position = new(
-            _graphics.PreferredBackBufferWidth / 2,
-            _graphics.PreferredBackBufferHeight / 2
-        );
+        _player.Position = new(100, 100);
+
+        _monster.Position = new(200, 100);
+
         base.Initialize();
     }
 
@@ -34,6 +36,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _player.LoadAssets(Content);
+        _monster.LoadAssets(Content);
     }
 
     protected override void Update(GameTime gameTime)
@@ -45,6 +48,7 @@ public class Game1 : Game
             Exit();
 
         _player.Update(gameTime);
+        _monster.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -55,6 +59,7 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
         _player.Draw(_spriteBatch);
+        _monster.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

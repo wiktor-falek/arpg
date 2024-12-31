@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-public class InputComponent
+public class PlayerInputComponent
 {
     public void Update(Player player, GameTime gameTime)
     {
@@ -28,21 +28,21 @@ public class InputComponent
 
         if (movementDirection.X == 1)
         {
-            player.facing = PlayerFacing.Right;
+            player.Facing = ActorFacing.Right;
         }
         else if (movementDirection.X == -1)
         {
-            player.facing = PlayerFacing.Left;
+            player.Facing = ActorFacing.Left;
         }
 
         if (movementDirection.Length() > 0)
         {
             movementDirection.Normalize();
-            player.TransitionState(PlayerState.Walking);
+            player.TransitionState(ActorState.Walking);
         }
         else
         {
-            player.TransitionState(PlayerState.Idling);
+            player.TransitionState(ActorState.Idling);
         }
 
         float updatedSpeed = player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;

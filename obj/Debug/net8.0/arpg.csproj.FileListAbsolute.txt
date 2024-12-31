@@ -25,3 +25,7 @@ C:\Users\Apdo\code\arpg\obj\Debug\net8.0\arpg.genruntimeconfig.cache
 C:\Users\Apdo\code\arpg\obj\Debug\net8.0\ref\arpg.dll
 C:\Users\Apdo\code\arpg\bin\Debug\net8.0\Content\PlayerIdle.xnb
 C:\Users\Apdo\code\arpg\bin\Debug\net8.0\Content\PlayerWalk.xnb
+C:\Users\Apdo\code\arpg\obj\Debug\net8.0\arpg.sourcelink.json
+C:\Users\Apdo\code\arpg\bin\Debug\net8.0\Content\skeleton_ready_1.xnb
+C:\Users\Apdo\code\arpg\bin\Debug\net8.0\Content\skeleton_ready_2.xnb
+C:\Users\Apdo\code\arpg\bin\Debug\net8.0\Content\skeleton_ready_3.xnb
