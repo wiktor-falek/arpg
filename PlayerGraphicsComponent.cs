@@ -80,8 +80,8 @@ public class PlayerGraphicsComponent
             frame,
             Color.White,
             0f,
-            new Vector2(0, 0),
-            2f,
+            new Vector2(frame.Width / 2, frame.Height / 2),
+            2.0f,
             effect,
             0f
         );

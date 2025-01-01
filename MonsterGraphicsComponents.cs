@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -53,6 +54,7 @@ public class MonsterGraphicsComponent
 
     public void Draw(Monster monster, SpriteBatch spriteBatch)
     {
+        // @TODO: This has to be updated for non-idle textures
         var texture = _idleTextures[_currentFrame];
         var effect =
             monster.Facing == ActorFacing.Right
@@ -65,10 +67,35 @@ public class MonsterGraphicsComponent
             null,
             Color.White,
             0f,
-            new Vector2(0, 0),
+            new Vector2(texture.Width / 2, texture.Height / 2),
             2f,
             effect,
             0f
         );
+
+        // Drawing text
+        // Szkeletor health
+        float textScale = 1.0f;
+        float layerdepth = 1.0f;
+        float rotation = 0.0f;
+
+        string monsterHealth = $"{monster.Health}";
+        Vector2 monsterHealthOrigin = Game1.font.MeasureString(monsterHealth);
+
+        spriteBatch.DrawString(
+            Game1.font,
+            monsterHealth,
+            new Vector2(monster.Position.X, monster.Position.Y + 50),
+            Color.Black, rotation, monsterHealthOrigin / 2, textScale, SpriteEffects.None, layerdepth
+        );
+
+        // int textureWidth = _idleTextures[0].Width;
+        // int textureHeight = _idleTextures[0].Height;
+        // spriteBatch.DrawString(
+        //     Game1.font,
+        //     $"{textureWidth} {textureHeight}",
+        //     new Vector2(0, 32),
+        //     Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
+        // );
     }
 }
