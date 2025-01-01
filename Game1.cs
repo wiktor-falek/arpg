@@ -63,15 +63,15 @@ public class Game1 : Game
         // Finds the center of the string in coordinates inside the text rectangle
         Vector2 textMiddlePoint = _font.MeasureString("Hello World") / 2;
         // Places text in center of the screen
-        Vector2 position = new Vector2(
+        Vector2 fontPosition = new Vector2(
             Window.ClientBounds.Width / 2,
             Window.ClientBounds.Height / 2
         );
         _spriteBatch.DrawString(
             _font,
-            "MonoGame Font Test",
-            position,
-            Color.White,
+            "Szkieletor lubi w dupke",
+            fontPosition,
+            Color.Black,
             0,
             textMiddlePoint,
             1.0f,
