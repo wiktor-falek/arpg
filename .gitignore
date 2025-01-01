@@ -399,10 +399,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# binary directories
-bin/
-obj/
-
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
