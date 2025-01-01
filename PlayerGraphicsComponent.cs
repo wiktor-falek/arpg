@@ -40,7 +40,6 @@ public class PlayerGraphicsComponent
             _elapsedTime = 0f;
 
             _currentFrame++;
-
             if (player.State == ActorState.Idling)
             {
                 if (_currentFrame >= _idleFrames.Count)

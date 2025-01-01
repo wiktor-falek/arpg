@@ -21,7 +21,7 @@ public class Player : IActor
 
     public void Update(GameTime gameTime)
     {
-        _inputComponent.Update(this, gameTime); // press spacebar
+        _inputComponent.Update(this, gameTime);
         _graphicsComponent.Update(this, gameTime);
     }
 

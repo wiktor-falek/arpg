@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
@@ -7,8 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class MonsterGraphicsComponent
 {
     private List<Texture2D> _idleTextures = [];
-
-    // private List<Texture2D> WalkTextures = [];
+    private List<Texture2D> _walkTextures = [];
 
     private readonly float _frameTime = 0.25f;
     private int _currentFrame = 0;
@@ -30,7 +30,6 @@ public class MonsterGraphicsComponent
             _elapsedTime = 0f;
 
             _currentFrame++;
-
             if (monster.State == ActorState.Idling)
             {
                 if (_currentFrame >= _idleTextures.Count)
@@ -38,17 +37,17 @@ public class MonsterGraphicsComponent
                     _currentFrame = 0;
                 }
             }
-            // else if (monster.State == ActorState.Idling)
-            // {
-            //     if (_currentFrame >= IdleFrames.Count)
-            //     {
-            //         _currentFrame = 0;
-            //     }
-            // }
-            // else
-            // {
-            //     throw new SystemException("Unhandled ActorState");
-            // }
+            else if (monster.State == ActorState.Walking)
+            {
+                if (_currentFrame >= _walkTextures.Count)
+                {
+                    _currentFrame = 0;
+                }
+            }
+            else
+            {
+                throw new SystemException("Unhandled ActorState");
+            }
         }
     }
 
