@@ -1,30 +1,46 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 public class PlayerInputComponent
 {
+    private KeyboardState _previousKeyboardState;
+
     public void Update(Player player, GameTime gameTime)
     {
-        var kstate = Keyboard.GetState();
+        KeyboardState keyboardState = Keyboard.GetState();
+        MouseState mouseState = Mouse.GetState();
+
+        if (keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
+        {
+            float x1 = player.Position.X;
+            float y1 = player.Position.Y;
+            int x2 = mouseState.Position.X;
+            int y2 = mouseState.Position.Y;
+            float deltaX = x2 - x1;
+            float deltaY = y2 - y1;
+            double angle = Math.Atan2(deltaY, deltaX);
+            
+            player.Attack(angle);
+        }
 
         Vector2 movementDirection = Vector2.Zero;
-
-        if (kstate.IsKeyDown(Keys.W) || kstate.IsKeyDown(Keys.Up))
+        if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
         {
             movementDirection.Y -= 1;
         }
 
-        if (kstate.IsKeyDown(Keys.S) || kstate.IsKeyDown(Keys.Down))
+        if (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down))
         {
             movementDirection.Y += 1;
         }
 
-        if (kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left))
+        if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left))
         {
             movementDirection.X -= 1;
         }
 
-        if (kstate.IsKeyDown(Keys.D) || kstate.IsKeyDown(Keys.Right))
+        if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
         {
             movementDirection.X += 1;
         }
@@ -47,8 +63,9 @@ public class PlayerInputComponent
         {
             player.TransitionState(ActorState.Idling);
         }
-
         float updatedSpeed = player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         player.Position += movementDirection * updatedSpeed;
+
+        _previousKeyboardState = keyboardState;
     }
 }

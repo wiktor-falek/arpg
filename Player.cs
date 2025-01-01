@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,10 +41,15 @@ public class Player : IActor
         }
     }
 
-    public void Attack(IActor target)
+    public void Attack(double angle)
     {
-        float amount = 20;
-        target.TakeDamage(amount);
+
+        Projectile projectile = new()
+        {
+            Position = new(Position.X, Position.Y),
+            Angle = angle,
+        };
+        Game1.Entities.Add(projectile);
     }
 
     public void TakeDamage(float amount)

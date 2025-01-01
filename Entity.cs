@@ -13,12 +13,12 @@ public interface IEntity
 
 public class Projectile : IEntity
 {
-  public string Id { get; set; } = "uuid or something"; // TODO: generate id
+  public string Id { get; set; } = Guid.NewGuid().ToString();
   public Vector2 Position { get; set; }
-  public float Speed { get; set; } = 25.0f;
-  private float _angleDegrees = 360f;
+  public float Speed { get; set; } = 350f;
+  public double Angle = 0d;
   private float _currentDuration = 0f;
-  private readonly float _maxDuration = 5.0f;
+  private readonly float _maxDuration = 2f;
   private Texture2D _rectangleTexture;
 
   public void LoadAssets(ContentManager contentManager)
@@ -50,9 +50,8 @@ public class Projectile : IEntity
       return;
     }
 
-    double angleRadians = _angleDegrees * Math.PI / 180;
-    double x = Position.X + (Speed * elapsedTime * Math.Cos(angleRadians));
-    double y = Position.Y + (Speed * elapsedTime * Math.Sin(angleRadians));
+    double x = Position.X + (Speed * elapsedTime * Math.Cos(Angle));
+    double y = Position.Y + (Speed * elapsedTime * Math.Sin(Angle));
     Position = new((float)x, (float)y);
   }
 }

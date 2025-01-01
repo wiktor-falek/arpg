@@ -29,13 +29,6 @@ public class Game1 : Game
         _player.Position = new(0, 0);
         _monster.Position = new(200, 100);
 
-        Projectile projectile = new()
-        {
-            Position = new(100, 100)
-        };
-
-        Entities.Add(projectile);
-
         base.Initialize();
     }
 

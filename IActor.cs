@@ -25,6 +25,6 @@ public interface IActor
     void LoadAssets(ContentManager contentManager);
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch);
-    void Attack(IActor target);
+    void Attack(double angle);
     void TakeDamage(float amount);
 }
