@@ -8,6 +8,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private SpriteFont _font;
     private Player _player;
     private Monster _monster;
 
@@ -32,6 +33,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _font = Content.Load<SpriteFont>("monogram_extended");
         _player.LoadAssets(Content);
         _monster.LoadAssets(Content);
     }
@@ -57,6 +59,25 @@ public class Game1 : Game
         _spriteBatch.Begin();
         _player.Draw(_spriteBatch);
         _monster.Draw(_spriteBatch);
+
+        // Finds the center of the string in coordinates inside the text rectangle
+        Vector2 textMiddlePoint = _font.MeasureString("Hello World") / 2;
+        // Places text in center of the screen
+        Vector2 position = new Vector2(
+            Window.ClientBounds.Width / 2,
+            Window.ClientBounds.Height / 2
+        );
+        _spriteBatch.DrawString(
+            _font,
+            "MonoGame Font Test",
+            position,
+            Color.White,
+            0,
+            textMiddlePoint,
+            1.0f,
+            SpriteEffects.None,
+            0.5f
+        );
         _spriteBatch.End();
 
         base.Draw(gameTime);

@@ -8,7 +8,8 @@ public class Monster : IActor
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 200f;
-    public uint Health { get; set; } = 100;
+    public uint Health { get; set; } = 100u;
+
     private MonsterGraphicsComponent _graphicsComponent = new();
 
     public void LoadAssets(ContentManager content)

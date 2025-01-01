@@ -9,6 +9,7 @@ public class Player : IActor
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 250f;
     public uint Health { get; set; } = 500u;
+
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
 
@@ -38,8 +39,5 @@ public class Player : IActor
         }
     }
 
-    public void Attack()
-    {
-
-    }
+    public void Attack() { }
 }
