@@ -13,13 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin actorHealth.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:actorHealth.spritefont
-
 #begin Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -31,6 +24,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Idle.png;PlayerIdle.png
+
+#begin monogram.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:monogram.spritefont
 
 #begin skeleton_ready_1.png
 /importer:TextureImporter
