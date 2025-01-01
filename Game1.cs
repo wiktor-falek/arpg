@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,6 +8,7 @@ namespace arpg;
 public class Game1 : Game
 {
     public static SpriteFont font;
+    public static List<IEntity> Entities = [];
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player _player;
@@ -26,6 +28,13 @@ public class Game1 : Game
     {
         _player.Position = new(0, 0);
         _monster.Position = new(200, 100);
+
+        Projectile projectile = new()
+        {
+            Position = new(100, 100)
+        };
+
+        Entities.Add(projectile);
 
         base.Initialize();
     }
@@ -49,6 +58,13 @@ public class Game1 : Game
         _player.Update(gameTime);
         _monster.Update(gameTime);
 
+
+        for (int i = Entities.Count - 1; i >= 0; i--)
+        {
+            var entity = Entities[i];
+            entity.Update(gameTime);
+        }
+
         base.Update(gameTime);
     }
 
@@ -60,6 +76,10 @@ public class Game1 : Game
         _player.Draw(_spriteBatch);
         _monster.Draw(_spriteBatch);
 
+        foreach (var entity in Entities)
+        {
+            entity.Draw(_spriteBatch, GraphicsDevice);
+        }
 
         string playerHealthText = $"Player HP: {_player.Health}";
         string playerPositionText = $"Player X: {_player.Position.X} Y: {_player.Position.Y}";

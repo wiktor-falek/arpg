@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +9,7 @@ public class Player : IActor
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 250f;
-    public uint Health { get; set; } = 500u;
+    public int Health { get; set; } = 500;
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
@@ -20,7 +21,7 @@ public class Player : IActor
 
     public void Update(GameTime gameTime)
     {
-        _inputComponent.Update(this, gameTime);
+        _inputComponent.Update(this, gameTime); // press spacebar
         _graphicsComponent.Update(this, gameTime);
     }
 
@@ -39,5 +40,15 @@ public class Player : IActor
         }
     }
 
-    public void Attack() { }
+    public void Attack(IActor target)
+    {
+        float amount = 20;
+        target.TakeDamage(amount);
+    }
+
+    public void TakeDamage(float amount)
+    {
+        Health -= (int)Math.Floor(amount);
+        Health = Math.Max(Health, 0);
+    }
 }

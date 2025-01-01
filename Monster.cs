@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +9,7 @@ public class Monster : IActor
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 200f;
-    public uint Health { get; set; } = 100u;
+    public int Health { get; set; } = 100;
 
     private MonsterGraphicsComponent _graphicsComponent = new();
 
@@ -27,8 +28,15 @@ public class Monster : IActor
         _graphicsComponent.Draw(this, spriteBatch);
     }
 
-    public void Attack()
+    public void Attack(IActor target)
     {
-        // TODO
+        float amount = 10;
+        target.TakeDamage(amount);
+    }
+
+    public void TakeDamage(float amount)
+    {
+        Health -= (int)Math.Floor(amount);
+        Health = Math.Max(Health, 0);
     }
 }
