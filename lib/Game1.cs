@@ -7,7 +7,6 @@ namespace arpg;
 
 public class Game1 : Game
 {
-    public static SpriteFont font;
     public static List<IEntity> Entities = [];
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -34,7 +33,6 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Assets.Load(Content);
-        font = Content.Load<SpriteFont>("fonts/monogram_extended"); // TODO: move to Assets
     }
 
     protected override void Update(GameTime gameTime)
@@ -79,7 +77,7 @@ public class Game1 : Game
         int fontHeight = 16;
 
         _spriteBatch.DrawString(
-            font,
+            Assets.GetFont("fonts/monogram_extended"),
             playerHealthText,
             new Vector2(0, fontHeight * 0),
             Color.Black,
@@ -91,7 +89,7 @@ public class Game1 : Game
         );
 
         _spriteBatch.DrawString(
-            font,
+            Assets.GetFont("fonts/monogram_extended"),
             playerPositionText,
             new Vector2(0, fontHeight * 1),
             Color.Black,

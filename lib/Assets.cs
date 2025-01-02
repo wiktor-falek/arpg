@@ -9,43 +9,70 @@ namespace arpg;
 
 public static class Assets
 {
+    private static Dictionary<string, SpriteFont> Fonts = [];
     private static OrderedDictionary Textures = [];
+
+    public static SpriteFont GetFont(string name)
+    {
+        try
+        {
+            SpriteFont font = Fonts[name];
+            return font;
+        }
+        catch (ArgumentNullException)
+        {
+            throw new SystemException($"Texture {name} not found.");
+        }
+    }
 
     public static Texture2D GetTextures(string name)
     {
-        Texture2D? texture = (Texture2D?)Textures[name];
-        if (texture is null)
+        try
+        {
+            Texture2D texture = (Texture2D)Textures[name];
+            return texture;
+        }
+        catch (ArgumentNullException)
+        {
             throw new SystemException($"Texture {name} not found.");
-        return texture;
+        }
     }
 
     public static List<Texture2D> GetTextures(params string[] names)
     {
-        List<Texture2D?> textures = names.Select(key => (Texture2D?)Textures[key]).ToList();
-        for (int i = 0; i < textures.Count; i++)
+        try
         {
-            var name = names[i];
-            var texture = textures[i];
-            if (texture is null)
-                throw new SystemException($"Texture {name} not found.");
+            List<Texture2D> textures = names.Select(key => (Texture2D)Textures[key]).ToList();
+            return textures;
         }
-        return textures;
+        catch (ArgumentNullException)
+        {
+            throw new SystemException($"Texture *some texture name im lazy* not found.");
+        }
     }
 
     public static void Load(ContentManager contentManager)
     {
+        AddFont(contentManager, "fonts/monogram_extended");
+
+        AddTexture(contentManager, "player/player_idle");
+        AddTexture(contentManager, "player/player_walk");
+
         AddTexture(contentManager, "spells/fireball_1");
         AddTexture(contentManager, "spells/fireball_2");
         AddTexture(contentManager, "spells/fireball_3");
         AddTexture(contentManager, "spells/fireball_4");
         AddTexture(contentManager, "spells/fireball_5");
 
-        AddTexture(contentManager, "player/player_idle");
-        AddTexture(contentManager, "player/player_walk");
-
         AddTexture(contentManager, "monsters/skeleton_ready_1");
         AddTexture(contentManager, "monsters/skeleton_ready_2");
         AddTexture(contentManager, "monsters/skeleton_ready_3");
+    }
+
+    private static void AddFont(ContentManager contentManager, string path)
+    {
+        var font = contentManager.Load<SpriteFont>("fonts/monogram_extended");
+        Fonts.Add(path, font);
     }
 
     private static void AddTexture(ContentManager contentManager, string path)

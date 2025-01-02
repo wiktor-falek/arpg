@@ -73,10 +73,12 @@ public class MonsterGraphicsComponent
         float rotation = 0.0f;
 
         string monsterHealth = $"{monster.Health}";
-        Vector2 monsterHealthOrigin = Game1.font.MeasureString(monsterHealth);
+        Vector2 monsterHealthOrigin = Assets
+            .GetFont("fonts/monogram_extended")
+            .MeasureString(monsterHealth);
 
         spriteBatch.DrawString(
-            Game1.font,
+            Assets.GetFont("fonts/monogram_extended"),
             monsterHealth,
             new Vector2(monster.Position.X, monster.Position.Y + 50),
             Color.Black,
