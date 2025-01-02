@@ -9,14 +9,19 @@ namespace arpg;
 
 public static class Assets
 {
-    private static Dictionary<string, SpriteFont> Fonts = [];
-    private static OrderedDictionary Textures = [];
+    public static class Fonts
+    {
+        public static SpriteFont MonogramExtened => GetFont("fonts/monogram_extended");
+    }
+
+    private static Dictionary<string, SpriteFont> _fonts = [];
+    private static OrderedDictionary _textures = [];
 
     public static SpriteFont GetFont(string name)
     {
         try
         {
-            SpriteFont font = Fonts[name];
+            SpriteFont font = _fonts[name];
             return font;
         }
         catch (ArgumentNullException)
@@ -29,7 +34,7 @@ public static class Assets
     {
         try
         {
-            Texture2D texture = (Texture2D)Textures[name];
+            Texture2D texture = (Texture2D)_textures[name];
             return texture;
         }
         catch (ArgumentNullException)
@@ -42,7 +47,7 @@ public static class Assets
     {
         try
         {
-            List<Texture2D> textures = names.Select(key => (Texture2D)Textures[key]).ToList();
+            List<Texture2D> textures = names.Select(key => (Texture2D)_textures[key]).ToList();
             return textures;
         }
         catch (ArgumentNullException)
@@ -72,11 +77,11 @@ public static class Assets
     private static void AddFont(ContentManager contentManager, string path)
     {
         var font = contentManager.Load<SpriteFont>("fonts/monogram_extended");
-        Fonts.Add(path, font);
+        _fonts.Add(path, font);
     }
 
     private static void AddTexture(ContentManager contentManager, string path)
     {
-        Textures.Add(path, contentManager.Load<Texture2D>(path));
+        _textures.Add(path, contentManager.Load<Texture2D>(path));
     }
 }

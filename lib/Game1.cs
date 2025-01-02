@@ -77,7 +77,7 @@ public class Game1 : Game
         int fontHeight = 16;
 
         _spriteBatch.DrawString(
-            Assets.GetFont("fonts/monogram_extended"),
+            Assets.Fonts.MonogramExtened,
             playerHealthText,
             new Vector2(0, fontHeight * 0),
             Color.Black,
@@ -89,7 +89,7 @@ public class Game1 : Game
         );
 
         _spriteBatch.DrawString(
-            Assets.GetFont("fonts/monogram_extended"),
+            Assets.Fonts.MonogramExtened,
             playerPositionText,
             new Vector2(0, fontHeight * 1),
             Color.Black,
