@@ -51,8 +51,8 @@ public class Fireball : IEntity
 
         if (_currentDuration >= _maxDuration)
         {
-            int index = arpg.Game1.Entities.FindIndex(e => e.Id == Id);
-            arpg.Game1.Entities.RemoveAt(index);
+            int index = Game1.Entities.FindIndex(e => e.Id == Id);
+            Game1.Entities.RemoveAt(index);
             return;
         }
 
