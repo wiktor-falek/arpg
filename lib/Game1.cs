@@ -19,26 +19,22 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-
-        _player = new Player();
-        _monster = new Monster();
     }
 
     protected override void Initialize()
     {
+        base.Initialize();
+        _player = new Player();
+        _monster = new Monster();
         _player.Position = new(0, 0);
         _monster.Position = new(200, 100);
-
-        base.Initialize();
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        font = Content.Load<SpriteFont>("fonts/monogram_extended");
-        _player.LoadAssets(Content);
-        _monster.LoadAssets(Content);
         Assets.Load(Content);
+        font = Content.Load<SpriteFont>("fonts/monogram_extended"); // TODO: move to Assets
     }
 
     protected override void Update(GameTime gameTime)

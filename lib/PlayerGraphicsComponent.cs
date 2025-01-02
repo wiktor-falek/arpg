@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using arpg;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class PlayerGraphicsComponent
 {
-    private Texture2D _idleTexture;
-    private Texture2D _walkTexture;
+    private Texture2D _idleTexture = Assets.GetTextures("player/player_idle");
+    private Texture2D _walkTexture = Assets.GetTextures("player/player_walk");
     private List<Rectangle> _idleFrames = [];
     private List<Rectangle> _walkFrames = [];
 
@@ -15,11 +15,8 @@ public class PlayerGraphicsComponent
     private float _frameTime = 0.1f;
     private float _elapsedTime = 0f;
 
-    public void LoadAssets(ContentManager content)
+    public PlayerGraphicsComponent()
     {
-        _idleTexture = content.Load<Texture2D>("player/player_idle");
-        _walkTexture = content.Load<Texture2D>("player/player_walk");
-
         for (int i = 0; i < 10; i++)
         {
             _idleFrames.Add(new Rectangle(140 * i, 0, 140, 140));

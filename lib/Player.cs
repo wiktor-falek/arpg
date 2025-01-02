@@ -1,7 +1,6 @@
 using System;
 using arpg;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class Player : IActor
@@ -15,11 +14,6 @@ public class Player : IActor
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
-
-    public void LoadAssets(ContentManager contentManager)
-    {
-        _graphicsComponent.LoadAssets(contentManager);
-    }
 
     public void Update(GameTime gameTime)
     {

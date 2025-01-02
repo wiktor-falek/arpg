@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class Monster : IActor
@@ -13,11 +12,6 @@ public class Monster : IActor
     public readonly int MaxHealth = 100;
 
     private MonsterGraphicsComponent _graphicsComponent = new();
-
-    public void LoadAssets(ContentManager content)
-    {
-        _graphicsComponent.LoadAssets(content);
-    }
 
     public void Update(GameTime gameTime)
     {

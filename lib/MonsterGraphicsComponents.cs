@@ -2,24 +2,18 @@ using System;
 using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class MonsterGraphicsComponent
 {
-    private List<Texture2D> _idleTextures = [];
+    private List<Texture2D> _idleTextures = Assets.GetTextures(
+        ["monsters/skeleton_ready_1", "monsters/skeleton_ready_2", "monsters/skeleton_ready_3"]
+    );
     private List<Texture2D> _walkTextures = [];
 
     private readonly float _frameTime = 0.25f;
     private int _currentFrame = 0;
     private float _elapsedTime = 0f;
-
-    public void LoadAssets(ContentManager content)
-    {
-        _idleTextures.Add(content.Load<Texture2D>("monsters/skeleton_ready_1"));
-        _idleTextures.Add(content.Load<Texture2D>("monsters/skeleton_ready_2"));
-        _idleTextures.Add(content.Load<Texture2D>("monsters/skeleton_ready_3"));
-    }
 
     public void Update(Monster monster, GameTime gameTime)
     {

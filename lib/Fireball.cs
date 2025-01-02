@@ -22,8 +22,6 @@ public class Fireball : IEntity
     );
     private int _currentFrame = 0;
 
-    public void LoadAssets(ContentManager contentManager) { }
-
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
         Texture2D texture = _textures[_currentFrame];

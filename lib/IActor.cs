@@ -22,7 +22,6 @@ public interface IActor
     float Speed { get; set; }
     int Health { get; set; }
 
-    void LoadAssets(ContentManager contentManager);
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch);
     void Attack(double angle);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -10,18 +11,45 @@ public static class Assets
 {
     private static OrderedDictionary Textures = [];
 
-    public static void Load(ContentManager contentManager)
+    public static Texture2D GetTextures(string name)
     {
-        Textures.Add("spells/fireball_1", contentManager.Load<Texture2D>("spells/fireball_1"));
-        Textures.Add("spells/fireball_2", contentManager.Load<Texture2D>("spells/fireball_2"));
-        Textures.Add("spells/fireball_3", contentManager.Load<Texture2D>("spells/fireball_3"));
-        Textures.Add("spells/fireball_4", contentManager.Load<Texture2D>("spells/fireball_4"));
-        Textures.Add("spells/fireball_5", contentManager.Load<Texture2D>("spells/fireball_5"));
+        Texture2D? texture = (Texture2D?)Textures[name];
+        if (texture is null)
+            throw new SystemException($"Texture {name} not found.");
+        return texture;
     }
 
     public static List<Texture2D> GetTextures(params string[] names)
     {
-        List<Texture2D> textures = names.Select(key => (Texture2D)Textures[key]).ToList();
+        List<Texture2D?> textures = names.Select(key => (Texture2D?)Textures[key]).ToList();
+        for (int i = 0; i < textures.Count; i++)
+        {
+            var name = names[i];
+            var texture = textures[i];
+            if (texture is null)
+                throw new SystemException($"Texture {name} not found.");
+        }
         return textures;
+    }
+
+    public static void Load(ContentManager contentManager)
+    {
+        AddTexture(contentManager, "spells/fireball_1");
+        AddTexture(contentManager, "spells/fireball_2");
+        AddTexture(contentManager, "spells/fireball_3");
+        AddTexture(contentManager, "spells/fireball_4");
+        AddTexture(contentManager, "spells/fireball_5");
+
+        AddTexture(contentManager, "player/player_idle");
+        AddTexture(contentManager, "player/player_walk");
+
+        AddTexture(contentManager, "monsters/skeleton_ready_1");
+        AddTexture(contentManager, "monsters/skeleton_ready_2");
+        AddTexture(contentManager, "monsters/skeleton_ready_3");
+    }
+
+    private static void AddTexture(ContentManager contentManager, string path)
+    {
+        Textures.Add(path, contentManager.Load<Texture2D>(path));
     }
 }
