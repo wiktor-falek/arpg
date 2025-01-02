@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,7 +7,6 @@ namespace arpg;
 
 public class Game1 : Game
 {
-    public static ContentManager SharedContent;
     public static SpriteFont font;
     public static List<IEntity> Entities = [];
     private GraphicsDeviceManager _graphics;
@@ -18,7 +16,6 @@ public class Game1 : Game
 
     public Game1()
     {
-        SharedContent = Content;
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -41,12 +38,7 @@ public class Game1 : Game
         font = Content.Load<SpriteFont>("monogram");
         _player.LoadAssets(Content);
         _monster.LoadAssets(Content);
-
-        SharedContent.Load<Texture2D>("fireball_1");
-        SharedContent.Load<Texture2D>("fireball_2");
-        SharedContent.Load<Texture2D>("fireball_3");
-        SharedContent.Load<Texture2D>("fireball_4");
-        SharedContent.Load<Texture2D>("fireball_5");
+        Assets.Load(Content);
     }
 
     protected override void Update(GameTime gameTime)
