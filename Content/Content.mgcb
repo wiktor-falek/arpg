@@ -83,7 +83,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Idle.png;PlayerIdle.png
+/build:Idle.png;player_idle.png
 
 #begin monogram.spritefont
 /importer:FontDescriptionImporter
@@ -138,5 +138,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Walk.png;PlayerWalk.png
+/build:Walk.png;player_walk.png
 
