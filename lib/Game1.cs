@@ -60,7 +60,6 @@ public class Game1 : Game
         _player.Update(gameTime);
         _monster.Update(gameTime);
 
-
         for (int i = Entities.Count - 1; i >= 0; i--)
         {
             var entity = Entities[i];
@@ -95,16 +94,25 @@ public class Game1 : Game
             font,
             playerHealthText,
             new Vector2(0, fontHeight * 0),
-            Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
+            Color.Black,
+            rotation,
+            Vector2.Zero,
+            textScale,
+            SpriteEffects.None,
+            layerdepth
         );
 
         _spriteBatch.DrawString(
             font,
             playerPositionText,
             new Vector2(0, fontHeight * 1),
-            Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
+            Color.Black,
+            rotation,
+            Vector2.Zero,
+            textScale,
+            SpriteEffects.None,
+            layerdepth
         );
-
 
         _spriteBatch.End();
 

@@ -43,11 +43,7 @@ public class Player : IActor
 
     public void Attack(double angle)
     {
-        Fireball fireball = new()
-        {
-            Position = new(Position.X, Position.Y),
-            Angle = angle,
-        };
+        Fireball fireball = new() { Position = new(Position.X, Position.Y), Angle = angle };
         fireball.LoadAssets(Game1.SharedContent);
         Game1.Entities.Add(fireball);
     }

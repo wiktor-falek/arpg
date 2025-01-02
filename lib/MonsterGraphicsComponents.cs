@@ -85,7 +85,12 @@ public class MonsterGraphicsComponent
             Game1.font,
             monsterHealth,
             new Vector2(monster.Position.X, monster.Position.Y + 50),
-            Color.Black, rotation, monsterHealthOrigin / 2, textScale, SpriteEffects.None, layerdepth
+            Color.Black,
+            rotation,
+            monsterHealthOrigin / 2,
+            textScale,
+            SpriteEffects.None,
+            layerdepth
         );
 
         // int textureWidth = _idleTextures[0].Width;

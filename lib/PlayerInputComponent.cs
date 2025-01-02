@@ -20,7 +20,7 @@ public class PlayerInputComponent
             float deltaX = x2 - x1;
             float deltaY = y2 - y1;
             double angle = Math.Atan2(deltaY, deltaX);
-            
+
             player.Attack(angle);
         }
 
