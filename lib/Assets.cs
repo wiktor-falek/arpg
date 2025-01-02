@@ -8,7 +8,7 @@ namespace arpg;
 
 public static class Assets
 {
-    public static OrderedDictionary Textures = [];
+    private static OrderedDictionary Textures = [];
 
     public static void Load(ContentManager contentManager)
     {
