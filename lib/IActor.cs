@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public enum ActorState
@@ -16,14 +15,17 @@ public enum ActorFacing
 
 public interface IActor
 {
+    string Id { get; set; }
     ActorState State { get; set; }
     ActorFacing Facing { get; set; }
     Vector2 Position { get; set; }
     float Speed { get; set; }
     int Health { get; set; }
+    int MaxHealth { get; set; }
+    Rectangle Hitbox { get; }
 
     void Update(GameTime gameTime);
-    void Draw(SpriteBatch spriteBatch);
+    void Draw(SpriteBatch spriteBatch, GraphicsDevice device);
     void Attack(double angle);
     void TakeDamage(float amount);
 }

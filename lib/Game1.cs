@@ -8,10 +8,10 @@ namespace arpg;
 public class Game1 : Game
 {
     public static List<IEntity> Entities = [];
+    public static List<IActor> Actors = []; // Non-Player actors
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player _player;
-    private Monster _monster;
 
     public Game1()
     {
@@ -23,10 +23,10 @@ public class Game1 : Game
     protected override void Initialize()
     {
         base.Initialize();
-        _player = new Player();
-        _monster = new Monster();
-        _player.Position = new(0, 0);
-        _monster.Position = new(200, 100);
+        _player = new Player { Position = new(0, 0) };
+
+        Monster monster = new() { Position = new(200, 100) };
+        Actors.Add(monster);
     }
 
     protected override void LoadContent()
@@ -44,7 +44,11 @@ public class Game1 : Game
             Exit();
 
         _player.Update(gameTime);
-        _monster.Update(gameTime);
+
+        foreach (var actor in Actors)
+        {
+            actor.Update(gameTime);
+        }
 
         for (int i = Entities.Count - 1; i >= 0; i--)
         {
@@ -60,8 +64,12 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.AliceBlue);
 
         _spriteBatch.Begin();
-        _player.Draw(_spriteBatch);
-        _monster.Draw(_spriteBatch);
+        _player.Draw(_spriteBatch, GraphicsDevice);
+
+        foreach (var actor in Actors)
+        {
+            actor.Draw(_spriteBatch, GraphicsDevice);
+        }
 
         foreach (var entity in Entities)
         {

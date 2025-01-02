@@ -45,7 +45,12 @@ public class MonsterGraphicsComponent
         }
     }
 
-    public void Draw(Monster monster, SpriteBatch spriteBatch)
+    public void Draw(
+        Monster monster,
+        SpriteBatch spriteBatch,
+        GraphicsDevice device,
+        bool showHitbox = false
+    )
     {
         // @TODO: This has to be updated for non-idle textures
         var texture = _idleTextures[_currentFrame];
@@ -53,6 +58,13 @@ public class MonsterGraphicsComponent
             monster.Facing == ActorFacing.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
+
+        if (showHitbox)
+        {
+            var rectangleTexture = new Texture2D(device, 1, 1);
+            rectangleTexture.SetData([Color.Yellow]);
+            spriteBatch.Draw(rectangleTexture, monster.Hitbox, Color.Yellow);
+        }
 
         spriteBatch.Draw(
             texture,

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 public class Fireball : IEntity
@@ -11,6 +10,11 @@ public class Fireball : IEntity
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 350f;
     public double Angle = 0d;
+    public Rectangle Hitbox
+    {
+        get => new((int)Position.X, (int)Position.Y, 16, 16);
+    }
+
     private float _currentDuration = 0f;
     private readonly float _maxDuration = 2f;
     private List<Texture2D> _textures = Assets.GetTextures(
@@ -21,6 +25,7 @@ public class Fireball : IEntity
         "spells/fireball_5"
     );
     private int _currentFrame = 0;
+    private List<string> _hitActors = [];
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
@@ -28,6 +33,12 @@ public class Fireball : IEntity
         _currentFrame++;
         if (_currentFrame >= _textures.Count)
             _currentFrame = 0;
+
+        {
+            var rectangleTexture = new Texture2D(device, 1, 1);
+            rectangleTexture.SetData([Color.Yellow]);
+            spriteBatch.Draw(rectangleTexture, Hitbox, Color.Yellow);
+        }
 
         spriteBatch.Draw(
             texture,
@@ -57,5 +68,18 @@ public class Fireball : IEntity
         double x = Position.X + (Speed * elapsedTime * Math.Cos(Angle));
         double y = Position.Y + (Speed * elapsedTime * Math.Sin(Angle));
         Position = new((float)x, (float)y);
+
+        foreach (var actor in Game1.Actors)
+        {
+            if (
+                actor is Monster
+                && !_hitActors.Contains(actor.Id)
+                && Hitbox.Intersects(actor.Hitbox)
+            )
+            {
+                actor.TakeDamage(10);
+                _hitActors.Add(actor.Id);
+            }
+        }
     }
 }

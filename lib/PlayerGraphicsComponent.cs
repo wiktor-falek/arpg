@@ -58,7 +58,12 @@ public class PlayerGraphicsComponent
         }
     }
 
-    public void Draw(Player player, SpriteBatch spriteBatch)
+    public void Draw(
+        Player player,
+        SpriteBatch spriteBatch,
+        GraphicsDevice device,
+        bool showHitbox = false
+    )
     {
         var texture = player.State == ActorState.Idling ? _idleTexture : _walkTexture;
         var frame =
@@ -69,6 +74,13 @@ public class PlayerGraphicsComponent
             player.Facing == ActorFacing.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
+
+        if (showHitbox)
+        {
+            var rectangleTexture = new Texture2D(device, 1, 1);
+            rectangleTexture.SetData([Color.Yellow]);
+            spriteBatch.Draw(rectangleTexture, player.Hitbox, Color.Yellow);
+        }
 
         spriteBatch.Draw(
             texture,
