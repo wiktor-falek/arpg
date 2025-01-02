@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,6 +8,7 @@ namespace arpg;
 
 public class Game1 : Game
 {
+    public static ContentManager SharedContent;
     public static SpriteFont font;
     public static List<IEntity> Entities = [];
     private GraphicsDeviceManager _graphics;
@@ -16,6 +18,7 @@ public class Game1 : Game
 
     public Game1()
     {
+        SharedContent = Content;
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -29,13 +32,6 @@ public class Game1 : Game
         _player.Position = new(0, 0);
         _monster.Position = new(200, 100);
 
-        Projectile projectile = new()
-        {
-            Position = new(100, 100)
-        };
-
-        Entities.Add(projectile);
-
         base.Initialize();
     }
 
@@ -45,6 +41,12 @@ public class Game1 : Game
         font = Content.Load<SpriteFont>("monogram");
         _player.LoadAssets(Content);
         _monster.LoadAssets(Content);
+
+        SharedContent.Load<Texture2D>("fireball_1");
+        SharedContent.Load<Texture2D>("fireball_2");
+        SharedContent.Load<Texture2D>("fireball_3");
+        SharedContent.Load<Texture2D>("fireball_4");
+        SharedContent.Load<Texture2D>("fireball_5");
     }
 
     protected override void Update(GameTime gameTime)
@@ -57,7 +59,6 @@ public class Game1 : Game
 
         _player.Update(gameTime);
         _monster.Update(gameTime);
-
 
         for (int i = Entities.Count - 1; i >= 0; i--)
         {
@@ -93,14 +94,24 @@ public class Game1 : Game
             font,
             playerHealthText,
             new Vector2(0, fontHeight * 0),
-            Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
+            Color.Black,
+            rotation,
+            Vector2.Zero,
+            textScale,
+            SpriteEffects.None,
+            layerdepth
         );
 
         _spriteBatch.DrawString(
             font,
             playerPositionText,
             new Vector2(0, fontHeight * 1),
-            Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
+            Color.Black,
+            rotation,
+            Vector2.Zero,
+            textScale,
+            SpriteEffects.None,
+            layerdepth
         );
 
         _spriteBatch.End();

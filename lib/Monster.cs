@@ -29,11 +29,7 @@ public class Monster : IActor
         _graphicsComponent.Draw(this, spriteBatch);
     }
 
-    public void Attack(IActor target)
-    {
-        float amount = 10;
-        target.TakeDamage(amount);
-    }
+    public void Attack(double angle) { }
 
     public void TakeDamage(float amount)
     {
