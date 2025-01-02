@@ -10,6 +10,7 @@ public class Monster : IActor
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 200f;
     public int Health { get; set; } = 100;
+    public readonly int MaxHealth = 100;
 
     private MonsterGraphicsComponent _graphicsComponent = new();
 
