@@ -103,7 +103,6 @@ public class Game1 : Game
             Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
         );
 
-
         _spriteBatch.End();
 
         base.Draw(gameTime);

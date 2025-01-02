@@ -10,6 +10,7 @@ public class Player : IActor
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; set; } = 250f;
     public int Health { get; set; } = 500;
+    public readonly int MaxHealth = 500;
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
