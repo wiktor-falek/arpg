@@ -38,7 +38,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        font = Content.Load<SpriteFont>("monogram");
+        font = Content.Load<SpriteFont>("monogram_extended");
         _player.LoadAssets(Content);
         _monster.LoadAssets(Content);
 

@@ -73,7 +73,7 @@
 /processorParam:TextureFormat=Color
 /build:fireball_5.png
 
-#begin Idle.png
+#begin player_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -83,14 +83,14 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Idle.png;player_idle.png
+/build:player_idle.png;
 
-#begin monogram.spritefont
+#begin monogram_extended.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:monogram.spritefont
+/build:monogram_extended.spritefont
 
 #begin skeleton_ready_1.png
 /importer:TextureImporter
@@ -128,7 +128,7 @@
 /processorParam:TextureFormat=Color
 /build:skeleton_ready_3.png
 
-#begin Walk.png
+#begin player_walk.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -138,5 +138,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Walk.png;player_walk.png
+/build:player_walk.png
 
