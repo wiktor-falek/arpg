@@ -18,8 +18,8 @@ public class PlayerGraphicsComponent
 
     public void LoadAssets(ContentManager content)
     {
-        _idleTexture = content.Load<Texture2D>("player_idle");
-        _walkTexture = content.Load<Texture2D>("player_walk");
+        _idleTexture = content.Load<Texture2D>("player/player_idle");
+        _walkTexture = content.Load<Texture2D>("player/player_walk");
 
         for (int i = 0; i < 10; i++)
         {

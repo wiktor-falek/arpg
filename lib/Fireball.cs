@@ -14,11 +14,11 @@ public class Fireball : IEntity
     private float _currentDuration = 0f;
     private readonly float _maxDuration = 2f;
     private List<Texture2D> _textures = Assets.GetTextures(
-        "fireball_1",
-        "fireball_2",
-        "fireball_3",
-        "fireball_4",
-        "fireball_5"
+        "spells/fireball_1",
+        "spells/fireball_2",
+        "spells/fireball_3",
+        "spells/fireball_4",
+        "spells/fireball_5"
     );
     private int _currentFrame = 0;
 

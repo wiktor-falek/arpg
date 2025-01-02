@@ -16,9 +16,9 @@ public class MonsterGraphicsComponent
 
     public void LoadAssets(ContentManager content)
     {
-        _idleTextures.Add(content.Load<Texture2D>("skeleton_ready_1"));
-        _idleTextures.Add(content.Load<Texture2D>("skeleton_ready_2"));
-        _idleTextures.Add(content.Load<Texture2D>("skeleton_ready_3"));
+        _idleTextures.Add(content.Load<Texture2D>("monsters/skeleton_ready_1"));
+        _idleTextures.Add(content.Load<Texture2D>("monsters/skeleton_ready_2"));
+        _idleTextures.Add(content.Load<Texture2D>("monsters/skeleton_ready_3"));
     }
 
     public void Update(Monster monster, GameTime gameTime)

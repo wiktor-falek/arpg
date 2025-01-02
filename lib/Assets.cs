@@ -12,11 +12,11 @@ public static class Assets
 
     public static void Load(ContentManager contentManager)
     {
-        Textures.Add("fireball_1", contentManager.Load<Texture2D>("fireball_1"));
-        Textures.Add("fireball_2", contentManager.Load<Texture2D>("fireball_2"));
-        Textures.Add("fireball_3", contentManager.Load<Texture2D>("fireball_3"));
-        Textures.Add("fireball_4", contentManager.Load<Texture2D>("fireball_4"));
-        Textures.Add("fireball_5", contentManager.Load<Texture2D>("fireball_5"));
+        Textures.Add("spells/fireball_1", contentManager.Load<Texture2D>("spells/fireball_1"));
+        Textures.Add("spells/fireball_2", contentManager.Load<Texture2D>("spells/fireball_2"));
+        Textures.Add("spells/fireball_3", contentManager.Load<Texture2D>("spells/fireball_3"));
+        Textures.Add("spells/fireball_4", contentManager.Load<Texture2D>("spells/fireball_4"));
+        Textures.Add("spells/fireball_5", contentManager.Load<Texture2D>("spells/fireball_5"));
     }
 
     public static List<Texture2D> GetTextures(params string[] names)
