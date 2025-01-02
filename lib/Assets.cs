@@ -72,6 +72,16 @@ public static class Assets
         AddTexture(contentManager, "monsters/skeleton_ready_1");
         AddTexture(contentManager, "monsters/skeleton_ready_2");
         AddTexture(contentManager, "monsters/skeleton_ready_3");
+
+        AddTexture(contentManager, "monsters/skeleton_walk_1");
+        AddTexture(contentManager, "monsters/skeleton_walk_2");
+        AddTexture(contentManager, "monsters/skeleton_walk_3");
+        AddTexture(contentManager, "monsters/skeleton_walk_4");
+        AddTexture(contentManager, "monsters/skeleton_walk_5");
+        AddTexture(contentManager, "monsters/skeleton_walk_6");
+
+        AddTexture(contentManager, "monsters/skeleton_corpse_1");
+        AddTexture(contentManager, "monsters/skeleton_corpse_2");
     }
 
     private static void AddFont(ContentManager contentManager, string path)

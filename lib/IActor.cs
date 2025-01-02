@@ -5,6 +5,7 @@ public enum ActorState
 {
     Idling,
     Walking,
+    Dead,
 }
 
 public enum ActorFacing
@@ -22,6 +23,7 @@ public interface IActor
     float Speed { get; set; }
     int Health { get; set; }
     int MaxHealth { get; set; }
+    bool IsAlive { get; }
     Rectangle Hitbox { get; }
 
     void Update(GameTime gameTime);

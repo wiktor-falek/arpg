@@ -9,7 +9,20 @@ public class MonsterGraphicsComponent
     private List<Texture2D> _idleTextures = Assets.GetTextures(
         ["monsters/skeleton_ready_1", "monsters/skeleton_ready_2", "monsters/skeleton_ready_3"]
     );
-    private List<Texture2D> _walkTextures = [];
+    private List<Texture2D> _walkTextures = Assets.GetTextures(
+        [
+            "monsters/skeleton_walk_1",
+            "monsters/skeleton_walk_2",
+            "monsters/skeleton_walk_3",
+            "monsters/skeleton_walk_4",
+            "monsters/skeleton_walk_5",
+            "monsters/skeleton_walk_6",
+        ]
+    );
+    private Texture2D _deadTexture = Assets.GetTextures(
+        "monsters/skeleton_corpse_1"
+    // ["monsters/skeleton_corpse_1", "monsters/skeleton_corpse_2"] // TODO: random select
+    );
 
     private readonly float _frameTime = 0.25f;
     private int _currentFrame = 0;
@@ -23,9 +36,9 @@ public class MonsterGraphicsComponent
         {
             _elapsedTime = 0f;
 
-            _currentFrame++;
             if (monster.State == ActorState.Idling)
             {
+                _currentFrame++;
                 if (_currentFrame >= _idleTextures.Count)
                 {
                     _currentFrame = 0;
@@ -33,11 +46,13 @@ public class MonsterGraphicsComponent
             }
             else if (monster.State == ActorState.Walking)
             {
+                _currentFrame++;
                 if (_currentFrame >= _walkTextures.Count)
                 {
                     _currentFrame = 0;
                 }
             }
+            else if (monster.State == ActorState.Dead) { }
             else
             {
                 throw new SystemException("Unhandled ActorState");
@@ -53,7 +68,28 @@ public class MonsterGraphicsComponent
     )
     {
         // @TODO: This has to be updated for non-idle textures
-        var texture = _idleTextures[_currentFrame];
+        Texture2D texture;
+        switch (monster.State)
+        {
+            case ActorState.Idling:
+            {
+                texture = _idleTextures[_currentFrame];
+                break;
+            }
+            case ActorState.Walking:
+            {
+                texture = _walkTextures[_currentFrame];
+                break;
+            }
+            case ActorState.Dead:
+            {
+                texture = _deadTexture;
+                break;
+            }
+            default:
+                throw new SystemException("Unhandled ActorState");
+        }
+
         var effect =
             monster.Facing == ActorFacing.Right
                 ? SpriteEffects.None

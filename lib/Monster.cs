@@ -11,6 +11,7 @@ public class Monster : IActor
     public float Speed { get; set; } = 125f;
     public int Health { get; set; } = 100;
     public int MaxHealth { get; set; } = 1000;
+    public bool IsAlive => Health > 0;
     public Rectangle Hitbox
     {
         get => new((int)Position.X - 20, (int)Position.Y - 20, 40, 50);
@@ -21,6 +22,11 @@ public class Monster : IActor
 
     public void Update(GameTime gameTime)
     {
+        if (!IsAlive)
+        {
+            State = ActorState.Dead;
+        }
+
         _graphicsComponent.Update(this, gameTime);
         _behaviorComponent.Update(this, gameTime);
     }

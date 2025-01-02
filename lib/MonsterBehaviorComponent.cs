@@ -6,6 +6,9 @@ public class MonsterBehaviorComponent
 {
     public void Update(Monster monster, GameTime time)
     {
+        if (monster.State == ActorState.Dead)
+            return;
+
         // TODO: When should monster start moving?
         float x1 = monster.Position.X;
         float y1 = monster.Position.Y;

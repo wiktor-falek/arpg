@@ -12,6 +12,7 @@ public class Player : IActor
     public float Speed { get; set; } = 250f;
     public int Health { get; set; } = 500;
     public int MaxHealth { get; set; } = 500;
+    public bool IsAlive => Health > 0;
     public Rectangle Hitbox
     {
         get => new((int)Position.X - 20, (int)Position.Y - 44, 32, 100);
