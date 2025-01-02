@@ -7,11 +7,11 @@ namespace arpg;
 
 public class Game1 : Game
 {
+    public static Player Player;
     public static List<IEntity> Entities = [];
     public static List<IActor> Actors = []; // Non-Player actors
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Player _player;
     private Hud _hud;
 
     public Game1()
@@ -25,9 +25,9 @@ public class Game1 : Game
     protected override void Initialize()
     {
         base.Initialize();
-        _player = new Player { Position = new(0, 0) };
+        Player = new Player { Position = new(100, 100) };
 
-        Monster monster = new() { Position = new(200, 100) };
+        Monster monster = new() { Position = new(600, 400) };
         Actors.Add(monster);
     }
 
@@ -45,7 +45,7 @@ public class Game1 : Game
         )
             Exit();
 
-        _player.Update(gameTime);
+        Player.Update(gameTime);
 
         foreach (var actor in Actors)
         {
@@ -66,7 +66,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.AliceBlue);
 
         _spriteBatch.Begin();
-        _player.Draw(_spriteBatch, GraphicsDevice);
+        Player.Draw(_spriteBatch, GraphicsDevice);
 
         foreach (var actor in Actors)
         {
@@ -78,8 +78,8 @@ public class Game1 : Game
             entity.Draw(_spriteBatch, GraphicsDevice);
         }
 
-        string playerHealthText = $"Player HP: {_player.Health}";
-        string playerPositionText = $"Player X: {_player.Position.X} Y: {_player.Position.Y}";
+        string playerHealthText = $"Player HP: {Player.Health}";
+        string playerPositionText = $"Player X: {Player.Position.X} Y: {Player.Position.Y}";
 
         float textScale = 1.0f;
         float layerdepth = 1.0f;
