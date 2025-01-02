@@ -12,10 +12,12 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player _player;
+    private Hud _hud;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        _hud = new Hud();
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -107,6 +109,8 @@ public class Game1 : Game
             SpriteEffects.None,
             layerdepth
         );
+
+        _hud.Draw(_spriteBatch, GraphicsDevice);
 
         _spriteBatch.End();
 
