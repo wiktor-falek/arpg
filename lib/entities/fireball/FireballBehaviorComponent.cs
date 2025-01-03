@@ -15,8 +15,7 @@ public class FireballBehaviorComponent
 
         if (CurrentDuration >= fireball.MaxDuration)
         {
-            int index = Game1.Entities.FindIndex(e => e.Id == fireball.Id);
-            Game1.Entities.RemoveAt(index);
+            Game1.RemoveEntity(fireball);
             return;
         }
 

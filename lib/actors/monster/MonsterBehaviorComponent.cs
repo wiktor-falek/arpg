@@ -4,10 +4,22 @@ using Microsoft.Xna.Framework;
 
 public class MonsterBehaviorComponent
 {
+    private float _corpseDespawnTime = 10f;
+    private float _timeSinceDeath = 0f;
+
     public void Update(Monster monster, GameTime time)
     {
         if (monster.State == ActorState.Dead)
+        {
+            double elapsedTime = time.ElapsedGameTime.TotalSeconds;
+            _timeSinceDeath += (float)elapsedTime;
+
+            if (_timeSinceDeath >= _corpseDespawnTime)
+            {
+                Game1.RemoveActor(monster);
+            }
             return;
+        }
 
         float x1 = monster.Position.X;
         float y1 = monster.Position.Y;

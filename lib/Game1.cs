@@ -22,6 +22,18 @@ public class Game1 : Game
         IsMouseVisible = true;
     }
 
+    public static void RemoveEntity(IEntity entity)
+    {
+        int index = Entities.FindIndex(e => e.Id == entity.Id);
+        Entities.RemoveAt(index);
+    }
+
+    public static void RemoveActor(IActor actor)
+    {
+        int index = Actors.FindIndex(e => e.Id == actor.Id);
+        Actors.RemoveAt(index);
+    }
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -50,14 +62,15 @@ public class Game1 : Game
 
         Player.Update(gameTime);
 
-        foreach (var actor in Actors)
+        for (int i = Actors.Count - 1; i >= 0; i--)
         {
+            IActor actor = Actors[i];
             actor.Update(gameTime);
         }
 
         for (int i = Entities.Count - 1; i >= 0; i--)
         {
-            var entity = Entities[i];
+            IEntity entity = Entities[i];
             entity.Update(gameTime);
         }
 
