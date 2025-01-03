@@ -26,8 +26,16 @@ public class MonsterBehaviorComponent
         float x2 = Game1.Player.Position.X;
         float y2 = Game1.Player.Position.Y;
 
-        double distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+        if (x1 < x2)
+        {
+            monster.Facing = ActorFacing.Right;
+        }
+        else if (x1 > x2)
+        {
+            monster.Facing = ActorFacing.Left;
+        }
 
+        double distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         if (distance <= 300)
         {
             float deltaX = x2 - x1;
