@@ -17,7 +17,8 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _hud = new Hud();
+        _graphics.PreferredBackBufferWidth = 640;
+        _graphics.PreferredBackBufferHeight = 360;
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -38,12 +39,12 @@ public class Game1 : Game
     {
         base.Initialize();
         Player = new Player { Position = new(100, 100) };
-
         for (int i = 0; i < 3; i++)
         {
             Monster monster = new() { Position = new(600, 200 + 100 * i) };
             Actors.Add(monster);
         }
+        _hud = new Hud();
     }
 
     protected override void LoadContent()

@@ -7,8 +7,8 @@ public class HealthGlobe : IHudElement
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
-    // 405 is temporary value and has to be dynamically changed based on current resolution
-    public Vector2 Position { get; set; } = new Vector2(0, 405);
+    // 285 is temporary value and has to be dynamically changed based on current resolution
+    public Vector2 Position { get; set; } = new Vector2(0, 285);
     public Vector2 Size { get; set; } = new Vector2(75, 75);
     public Rectangle Rectangle
     {
