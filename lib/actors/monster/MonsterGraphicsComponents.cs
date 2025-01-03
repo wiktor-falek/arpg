@@ -8,9 +8,12 @@ public class MonsterGraphicsComponent
 {
     private List<Texture2D> _idleTextures = Assets.Monsters.Skeleton.Idle;
     private List<Texture2D> _walkTextures = Assets.Monsters.Skeleton.Walk;
-    private Texture2D _deadTexture = Assets.Monsters.Skeleton.Corpse[0]; // TODO: random
+    private List<Texture2D> _deathTextures = new(Assets.Monsters.Skeleton.Death)
+    {
+        Assets.Monsters.Skeleton.Corpse[0],
+    };
 
-    private readonly float _frameTime = 0.25f;
+    private readonly float _frameTime = 0.15f;
     private int _currentFrame = 0;
     private float _elapsedTime = 0f;
 
@@ -38,7 +41,11 @@ public class MonsterGraphicsComponent
                     _currentFrame = 0;
                 }
             }
-            else if (monster.State == ActorState.Dead) { }
+            else if (monster.State == ActorState.Dead)
+            {
+                if (_currentFrame != _deathTextures.Count - 1)
+                    _currentFrame++;
+            }
             else
             {
                 throw new SystemException("Unhandled ActorState");
@@ -69,7 +76,7 @@ public class MonsterGraphicsComponent
             }
             case ActorState.Dead:
             {
-                texture = _deadTexture;
+                texture = _deathTextures[_currentFrame];
                 break;
             }
             default:
@@ -129,5 +136,10 @@ public class MonsterGraphicsComponent
         //     new Vector2(0, 32),
         //     Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
         // );
+    }
+
+    public void ResetFrames()
+    {
+        _currentFrame = 0;
     }
 }

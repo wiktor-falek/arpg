@@ -24,7 +24,7 @@ public class Monster : IActor
     {
         if (!IsAlive)
         {
-            State = ActorState.Dead;
+            TransitionState(ActorState.Dead);
         }
 
         _graphicsComponent.Update(this, gameTime);
@@ -42,5 +42,15 @@ public class Monster : IActor
     {
         Health -= (int)Math.Floor(amount);
         Health = Math.Max(Health, 0);
+    }
+
+    public void TransitionState(ActorState newState)
+    {
+        bool stateChanged = State != newState;
+        if (stateChanged)
+        {
+            State = newState;
+            _graphicsComponent.ResetFrames();
+        }
     }
 }

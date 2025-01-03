@@ -29,6 +29,7 @@ public static class Assets
         {
             public static List<Texture2D> Idle => GetTextures("monsters/skeleton_ready", 3);
             public static List<Texture2D> Walk => GetTextures("monsters/skeleton_walk", 6);
+            public static List<Texture2D> Death => GetTextures("monsters/skeleton_dead_near", 5);
             public static List<Texture2D> Corpse => GetTextures("monsters/skeleton_corpse", 2);
         }
     }
@@ -47,6 +48,7 @@ public static class Assets
 
         AddTextures(contentManager, "monsters/skeleton_ready", 3);
         AddTextures(contentManager, "monsters/skeleton_walk", 6);
+        AddTextures(contentManager, "monsters/skeleton_dead_near", 5);
         AddTextures(contentManager, "monsters/skeleton_corpse", 2);
     }
 
