@@ -10,7 +10,14 @@ public class Hud
         _elements.Add(new HealthGlobe());
     }
 
-    // HUD automatically will update upon drawing (for now)
+    public void Update()
+    {
+        foreach (var element in _elements)
+        {
+            element.Update();
+        }
+    }
+
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
         foreach (var element in _elements)

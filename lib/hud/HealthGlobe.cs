@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 public class HealthGlobe : IHudElement
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
+
+    // 405 is temporary value and has to be dynamically changed based on current resolution
     public Vector2 Position { get; set; } = new Vector2(0, 405);
     public Vector2 Size { get; set; } = new Vector2(75, 75);
     public Rectangle Rectangle
@@ -13,8 +15,8 @@ public class HealthGlobe : IHudElement
         get => new((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y);
     }
 
-    public uint CurrentHealth { get; set; }
-    public uint MaxHealth { get; set; }
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
@@ -23,7 +25,7 @@ public class HealthGlobe : IHudElement
         spriteBatch.Draw(globeTexture, Rectangle, Color.Red);
 
         float scale = 1.5f;
-        string healthGlobeValuesText = $"{CurrentHealth} / {MaxHealth}";
+        string healthGlobeValuesText = $"{Health} / {MaxHealth}";
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,
             healthGlobeValuesText,
@@ -37,5 +39,9 @@ public class HealthGlobe : IHudElement
         );
     }
 
-    public void Update() { }
+    public void Update()
+    {
+        Health = arpg.Game1.Player.Health;
+        MaxHealth = arpg.Game1.Player.MaxHealth;
+    }
 };

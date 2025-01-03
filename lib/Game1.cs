@@ -110,6 +110,7 @@ public class Game1 : Game
             layerdepth
         );
 
+        _hud.Update();
         _hud.Draw(_spriteBatch, GraphicsDevice);
 
         _spriteBatch.End();
