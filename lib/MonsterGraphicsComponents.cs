@@ -6,23 +6,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class MonsterGraphicsComponent
 {
-    private List<Texture2D> _idleTextures = Assets.GetTextures(
-        ["monsters/skeleton_ready_1", "monsters/skeleton_ready_2", "monsters/skeleton_ready_3"]
-    );
-    private List<Texture2D> _walkTextures = Assets.GetTextures(
-        [
-            "monsters/skeleton_walk_1",
-            "monsters/skeleton_walk_2",
-            "monsters/skeleton_walk_3",
-            "monsters/skeleton_walk_4",
-            "monsters/skeleton_walk_5",
-            "monsters/skeleton_walk_6",
-        ]
-    );
-    private Texture2D _deadTexture = Assets.GetTextures(
-        "monsters/skeleton_corpse_1"
-    // ["monsters/skeleton_corpse_1", "monsters/skeleton_corpse_2"] // TODO: random select
-    );
+    private List<Texture2D> _idleTextures = Assets.Monsters.Skeleton.Idle;
+    private List<Texture2D> _walkTextures = Assets.Monsters.Skeleton.Walk;
+    private Texture2D _deadTexture = Assets.Monsters.Skeleton.Corpse[0]; // TODO: random
 
     private readonly float _frameTime = 0.25f;
     private int _currentFrame = 0;

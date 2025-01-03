@@ -6,8 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class PlayerGraphicsComponent
 {
-    private Texture2D _idleTexture = Assets.GetTextures("player/player_idle");
-    private Texture2D _walkTexture = Assets.GetTextures("player/player_walk");
+    private Texture2D _idleTexture = Assets.Player.Idle;
+    private Texture2D _walkTexture = Assets.Player.Walk;
     private List<Rectangle> _idleFrames = [];
     private List<Rectangle> _walkFrames = [];
 
