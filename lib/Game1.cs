@@ -66,49 +66,18 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.AliceBlue);
 
         _spriteBatch.Begin();
-        Player.Draw(_spriteBatch, GraphicsDevice);
 
         foreach (var actor in Actors)
         {
             actor.Draw(_spriteBatch, GraphicsDevice);
         }
 
+        Player.Draw(_spriteBatch, GraphicsDevice);
+
         foreach (var entity in Entities)
         {
             entity.Draw(_spriteBatch, GraphicsDevice);
         }
-
-        string playerHealthText = $"Player HP: {Player.Health}";
-        string playerPositionText = $"Player X: {Player.Position.X} Y: {Player.Position.Y}";
-
-        float textScale = 1.0f;
-        float layerdepth = 1.0f;
-        float rotation = 0.0f;
-        int fontHeight = 16;
-
-        _spriteBatch.DrawString(
-            Assets.Fonts.MonogramExtened,
-            playerHealthText,
-            new Vector2(0, fontHeight * 0),
-            Color.Black,
-            rotation,
-            Vector2.Zero,
-            textScale,
-            SpriteEffects.None,
-            layerdepth
-        );
-
-        _spriteBatch.DrawString(
-            Assets.Fonts.MonogramExtened,
-            playerPositionText,
-            new Vector2(0, fontHeight * 1),
-            Color.Black,
-            rotation,
-            Vector2.Zero,
-            textScale,
-            SpriteEffects.None,
-            layerdepth
-        );
 
         _hud.Update();
         _hud.Draw(_spriteBatch, GraphicsDevice);
