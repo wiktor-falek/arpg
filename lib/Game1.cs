@@ -10,15 +10,16 @@ public class Game1 : Game
     public static Player Player;
     public static List<IActor> Actors = []; // Non-Player actors
     public static List<IEntity> Entities = [];
+    public float Scale;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private RenderTarget2D _renderTarget;
+
     private Hud _hud;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = 640;
-        _graphics.PreferredBackBufferHeight = 360;
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -38,6 +39,10 @@ public class Game1 : Game
     protected override void Initialize()
     {
         base.Initialize();
+        _graphics.PreferredBackBufferWidth = 640;
+        _graphics.PreferredBackBufferHeight = 360;
+        _graphics.ApplyChanges();
+
         Player = new Player { Position = new(100, 100) };
         for (int i = 0; i < 3; i++)
         {
@@ -50,6 +55,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _renderTarget = new(GraphicsDevice, 1920, 1080);
         Assets.Load(Content);
     }
 
@@ -75,11 +81,16 @@ public class Game1 : Game
             entity.Update(gameTime);
         }
 
+        _hud.Update();
+
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        Scale = 1f / (1080f / _graphics.GraphicsDevice.Viewport.Height);
+
+        GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.AliceBlue);
 
         _spriteBatch.Begin();
@@ -96,9 +107,25 @@ public class Game1 : Game
             entity.Draw(_spriteBatch, GraphicsDevice);
         }
 
-        _hud.Update();
         _hud.Draw(_spriteBatch, GraphicsDevice);
 
+        _spriteBatch.End();
+
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.AliceBlue);
+
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(
+            _renderTarget,
+            Vector2.Zero,
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            Scale,
+            SpriteEffects.None,
+            0f
+        );
         _spriteBatch.End();
 
         base.Draw(gameTime);
