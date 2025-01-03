@@ -8,8 +8,8 @@ namespace arpg;
 public class Game1 : Game
 {
     public static Player Player;
-    public static List<IEntity> Entities = [];
     public static List<IActor> Actors = []; // Non-Player actors
+    public static List<IEntity> Entities = [];
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Hud _hud;
