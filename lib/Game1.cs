@@ -20,6 +20,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 640;
         _graphics.PreferredBackBufferHeight = 360;
         Content.RootDirectory = "Content";
+        Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
     }
 
