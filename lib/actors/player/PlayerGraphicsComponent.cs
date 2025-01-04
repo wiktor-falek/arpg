@@ -6,27 +6,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class PlayerGraphicsComponent
 {
-    private Texture2D _idleTexture = Assets.Player.Idle;
-    private Texture2D _walkTexture = Assets.Player.Walk;
-    private List<Rectangle> _idleFrames = [];
+    private Asset _idleAsset = Assets.Player.Idle;
+
+    // private Texture2D _idleTexture = Assets.Player.Idle;
+    private Asset _walkAsset = Assets.Player.Walk;
+
+    // private List<Rectangle> _idleFrames = [];
     private List<Rectangle> _walkFrames = [];
 
     private int _currentFrame = 0;
     private float _frameTime = 0.1f;
     private float _elapsedTime = 0f;
-
-    public PlayerGraphicsComponent()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            _idleFrames.Add(new Rectangle(140 * i, 0, 140, 140));
-        }
-
-        for (int i = 0; i < 8; i++)
-        {
-            _walkFrames.Add(new Rectangle(140 * i, 0, 140, 140));
-        }
-    }
 
     public void Update(Player player, GameTime gameTime)
     {
@@ -39,7 +29,7 @@ public class PlayerGraphicsComponent
             _currentFrame++;
             if (player.State == ActorState.Idling)
             {
-                if (_currentFrame >= _idleFrames.Count)
+                if (_currentFrame >= _idleAsset.Frames.Count)
                 {
                     _currentFrame = 0;
                 }
@@ -65,11 +55,11 @@ public class PlayerGraphicsComponent
         bool showHitbox = false
     )
     {
-        var texture = player.State == ActorState.Idling ? _idleTexture : _walkTexture;
+        var texture = player.State == ActorState.Idling ? _idleAsset.Texture : _walkAsset.Texture;
         var frame =
             player.State == ActorState.Idling
-                ? _idleFrames[_currentFrame]
-                : _walkFrames[_currentFrame];
+                ? _idleAsset.Frames[_currentFrame]
+                : _walkAsset.Frames[_currentFrame];
         var effect =
             player.Facing == ActorFacing.Right
                 ? SpriteEffects.None
