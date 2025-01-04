@@ -20,7 +20,8 @@ public static class Assets
 
     public static class Spells
     {
-        public static List<Texture2D> Fireball => GetTextures("spells/fireball", 5);
+        public static Texture2D Fireball => GetTexture("spells/fireball");
+        public static Texture2D Spark => GetTexture("spells/spark");
     }
 
     public static class Monsters
@@ -44,7 +45,8 @@ public static class Assets
         AddTexture(contentManager, "player/player_idle");
         AddTexture(contentManager, "player/player_walk");
 
-        AddTextures(contentManager, "spells/fireball", 5);
+        AddTexture(contentManager, "spells/fireball");
+        AddTexture(contentManager, "spells/spark");
 
         AddTextures(contentManager, "monsters/skeleton_ready", 3);
         AddTextures(contentManager, "monsters/skeleton_walk", 6);
