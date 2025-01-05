@@ -89,7 +89,7 @@ public class PlayerGraphicsComponent
             Color.White,
             0f,
             new Vector2(frame.Width / 2, frame.Height / 2),
-            2.0f,
+            1f,
             effect,
             0f
         );

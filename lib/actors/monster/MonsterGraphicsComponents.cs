@@ -102,7 +102,7 @@ public class MonsterGraphicsComponent
             Color.White,
             0f,
             new Vector2(texture.Width / 2, texture.Height / 2),
-            2f,
+            1f,
             effect,
             0f
         );
