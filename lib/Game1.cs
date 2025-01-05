@@ -5,6 +5,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace arpg;
 
+public static class Layer
+{
+    public const float Text = 0.1f;
+    public const float Entity = 0.2f;
+    public const float Player = 0.3f;
+    public const float Monster = 0.4f;
+    public const float Hitbox = 0.5f;
+}
+
 public class Game1 : Game
 {
     public static Player Player;
@@ -22,8 +31,8 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Config = new(_graphics);
-        Config.ChangeResolutionScale(2);
-        // Config.SetFullScreen();
+        Config.ChangeResolutionScale(3);
+        Config.SetFullScreen();
         Config.ApplyChanges();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
@@ -93,7 +102,7 @@ public class Game1 : Game
         GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.AliceBlue);
 
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(SpriteSortMode.BackToFront);
 
         foreach (var actor in Actors)
         {

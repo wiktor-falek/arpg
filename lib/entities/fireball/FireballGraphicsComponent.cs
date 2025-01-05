@@ -16,7 +16,16 @@ public class FireballGraphicsComponent
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);
-            spriteBatch.Draw(rectangleTexture, fireball.Hitbox, Color.Yellow);
+            spriteBatch.Draw(
+                rectangleTexture,
+                fireball.Hitbox,
+                null,
+                Color.Yellow,
+                0f,
+                Vector2.Zero,
+                SpriteEffects.None,
+                Layer.Hitbox
+            );
         }
 
         spriteBatch.Draw(
@@ -26,9 +35,9 @@ public class FireballGraphicsComponent
             Color.White,
             (float)fireball.Angle,
             new Vector2(_asset.Texture.Width / _asset.Frames.Count / 2, _asset.Texture.Height / 2),
-            1.5f,
+            1f,
             SpriteEffects.None,
-            0f
+            Layer.Entity
         );
     }
 }

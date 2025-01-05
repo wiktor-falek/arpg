@@ -62,7 +62,16 @@ public class PlayerGraphicsComponent
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);
-            spriteBatch.Draw(rectangleTexture, player.Hitbox, Color.Yellow);
+            spriteBatch.Draw(
+                rectangleTexture,
+                player.Hitbox,
+                null,
+                Color.Yellow,
+                0f,
+                Vector2.Zero,
+                SpriteEffects.None,
+                Layer.Hitbox
+            );
         }
 
         spriteBatch.Draw(
@@ -74,7 +83,7 @@ public class PlayerGraphicsComponent
             new Vector2(frame.Width / 2, frame.Height / 2),
             1f,
             effect,
-            0f
+            Layer.Text
         );
     }
 
