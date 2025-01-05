@@ -84,7 +84,7 @@ public class PlayerGraphicsComponent
 
         spriteBatch.Draw(
             texture,
-            player.Position,
+            new((int)player.Position.X, (int)player.Position.Y),
             frame,
             Color.White,
             0f,

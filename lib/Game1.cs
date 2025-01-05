@@ -22,8 +22,8 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Config = new(_graphics);
-        Config.ChangeResolutionScale(3);
-        Config.SetFullScreen();
+        Config.ChangeResolutionScale(2);
+        // Config.SetFullScreen();
         Config.ApplyChanges();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";

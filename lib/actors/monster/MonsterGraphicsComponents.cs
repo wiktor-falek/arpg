@@ -97,7 +97,7 @@ public class MonsterGraphicsComponent
 
         spriteBatch.Draw(
             texture,
-            monster.Position,
+            new((int)monster.Position.X, (int)monster.Position.Y),
             null,
             Color.White,
             0f,

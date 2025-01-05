@@ -23,7 +23,7 @@ public class FireballGraphicsComponent
 
         spriteBatch.Draw(
             texture,
-            fireball.Position,
+            new((int)fireball.Position.X, (int)fireball.Position.Y),
             null,
             Color.White,
             (float)fireball.Angle,
