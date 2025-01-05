@@ -10,15 +10,21 @@ public class Game1 : Game
     public static Player Player;
     public static List<IActor> Actors = []; // Non-Player actors
     public static List<IEntity> Entities = [];
+    public static float ScaleX;
+    public static float ScaleY;
+    public Config Config;
     private GraphicsDeviceManager _graphics;
+    private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
     private Hud _hud;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = 640;
-        _graphics.PreferredBackBufferHeight = 360;
+        Config = new(_graphics);
+        Config.ChangeResolutionScale(2);
+        // Config.SetFullScreen();
+        Config.ApplyChanges();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
@@ -38,6 +44,9 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        _renderTarget = new(GraphicsDevice, 640, 360);
+        ScaleX = (float)GraphicsDevice.Viewport.Width / _renderTarget.Width;
+        ScaleY = (float)GraphicsDevice.Viewport.Height / _renderTarget.Height;
         base.Initialize();
         Player = new Player { Position = new(100, 100) };
         for (int i = 0; i < 3; i++)
@@ -81,6 +90,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.AliceBlue);
 
         _spriteBatch.Begin();
@@ -100,6 +110,13 @@ public class Game1 : Game
         _hud.Update();
         _hud.Draw(_spriteBatch, GraphicsDevice);
 
+        _spriteBatch.End();
+
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.White);
+
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        _spriteBatch.Draw(_renderTarget, GraphicsDevice.Viewport.Bounds, Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);

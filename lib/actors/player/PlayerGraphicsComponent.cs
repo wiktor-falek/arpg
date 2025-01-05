@@ -67,12 +67,12 @@ public class PlayerGraphicsComponent
 
         spriteBatch.Draw(
             texture,
-            player.Position,
+            new((int)player.Position.X, (int)player.Position.Y),
             frame,
             Color.White,
             0f,
             new Vector2(frame.Width / 2, frame.Height / 2),
-            2.0f,
+            1f,
             effect,
             0f
         );

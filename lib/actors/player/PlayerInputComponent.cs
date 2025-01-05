@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,13 +11,17 @@ public class PlayerInputComponent
     {
         KeyboardState keyboardState = Keyboard.GetState();
         MouseState mouseState = Mouse.GetState();
+        Vector2 mousePositionInGame = new Vector2(
+            mouseState.Position.X / Game1.ScaleX,
+            mouseState.Position.Y / Game1.ScaleY
+        );
 
         if (keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
         {
             float x1 = player.Position.X;
             float y1 = player.Position.Y;
-            int x2 = mouseState.Position.X;
-            int y2 = mouseState.Position.Y;
+            float x2 = mousePositionInGame.X;
+            float y2 = mousePositionInGame.Y;
             float deltaX = x2 - x1;
             float deltaY = y2 - y1;
             double angle = Math.Atan2(deltaY, deltaX);

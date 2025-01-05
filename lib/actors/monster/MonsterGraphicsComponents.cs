@@ -91,12 +91,12 @@ public class MonsterGraphicsComponent
 
         spriteBatch.Draw(
             asset.Texture,
-            monster.Position,
+            new((int)monster.Position.X, (int)monster.Position.Y),
             asset.Frames[_currentFrame],
             Color.White,
             0f,
             new Vector2(asset.Texture.Width / asset.Frames.Count / 2, asset.Texture.Height / 2),
-            2f,
+            1f,
             effect,
             0f
         );
