@@ -18,7 +18,16 @@ public class FireballGraphicsComponent
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);
-            spriteBatch.Draw(rectangleTexture, fireball.Hitbox, Color.Yellow);
+            spriteBatch.Draw(
+                rectangleTexture,
+                fireball.Hitbox,
+                null,
+                Color.Yellow,
+                0f,
+                Vector2.Zero,
+                SpriteEffects.None,
+                Layer.Hitbox
+            );
         }
 
         spriteBatch.Draw(
@@ -30,7 +39,7 @@ public class FireballGraphicsComponent
             new Vector2(texture.Width / 2, texture.Height / 2),
             1f,
             SpriteEffects.None,
-            0f
+            Layer.Entity
         );
     }
 }

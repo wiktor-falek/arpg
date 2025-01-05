@@ -24,24 +24,23 @@ public class HealthGlobe : IHudElement
         globeTexture.SetData([Color.Red]);
         spriteBatch.Draw(globeTexture, Rectangle, Color.Red);
 
-        float scale = 1f;
         string healthGlobeValuesText = $"{Health} / {MaxHealth}";
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,
             healthGlobeValuesText,
-            new Vector2(Position.X, Position.Y - 12 * scale),
+            new Vector2(Position.X, Position.Y - 12),
             Color.Red,
             0.0f,
             Vector2.Zero,
-            scale,
+            1f,
             SpriteEffects.None,
-            0.0f
+            Layer.Text
         );
     }
 
     public void Update()
     {
-        Health = arpg.Game1.Player.Health;
-        MaxHealth = arpg.Game1.Player.MaxHealth;
+        Health = Game1.Player.Health;
+        MaxHealth = Game1.Player.MaxHealth;
     }
 };

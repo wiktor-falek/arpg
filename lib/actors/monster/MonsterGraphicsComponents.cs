@@ -92,7 +92,16 @@ public class MonsterGraphicsComponent
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);
-            spriteBatch.Draw(rectangleTexture, monster.Hitbox, Color.Yellow);
+            spriteBatch.Draw(
+                rectangleTexture,
+                monster.Hitbox,
+                null,
+                Color.Yellow,
+                0f,
+                Vector2.Zero,
+                SpriteEffects.None,
+                Layer.Hitbox
+            );
         }
 
         spriteBatch.Draw(
@@ -104,14 +113,8 @@ public class MonsterGraphicsComponent
             new Vector2(texture.Width / 2, texture.Height / 2),
             1f,
             effect,
-            0f
+            Layer.Monster
         );
-
-        // Drawing text
-        // Szkeletor health
-        float textScale = 1.0f;
-        float layerdepth = 1.0f;
-        float rotation = 0.0f;
 
         string monsterHealth = $"{monster.Health}";
         Vector2 monsterHealthOrigin = Assets.Fonts.MonogramExtened.MeasureString(monsterHealth);
@@ -119,23 +122,14 @@ public class MonsterGraphicsComponent
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,
             monsterHealth,
-            new Vector2(monster.Position.X, monster.Position.Y + 50),
+            new((int)monster.Position.X, (int)monster.Position.Y + 30),
             Color.Black,
-            rotation,
-            monsterHealthOrigin / 2,
-            textScale,
+            0f,
+            new((int)(monsterHealthOrigin.X / 2), (int)(monsterHealthOrigin.Y / 2)),
+            1f,
             SpriteEffects.None,
-            layerdepth
+            Layer.Text
         );
-
-        // int textureWidth = _idleTextures[0].Width;
-        // int textureHeight = _idleTextures[0].Height;
-        // spriteBatch.DrawString(
-        //     Game1.font,
-        //     $"{textureWidth} {textureHeight}",
-        //     new Vector2(0, 32),
-        //     Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
-        // );
     }
 
     public void ResetFrames()
