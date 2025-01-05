@@ -10,9 +10,9 @@ public class Game1 : Game
     public static Player Player;
     public static List<IActor> Actors = []; // Non-Player actors
     public static List<IEntity> Entities = [];
-    public static int ResolutionScale => 1;
     public static float ScaleX;
     public static float ScaleY;
+    public Config Config;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
@@ -21,9 +21,10 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = 640 * ResolutionScale;
-        _graphics.PreferredBackBufferHeight = 360 * ResolutionScale;
-        _graphics.ApplyChanges();
+        Config = new(_graphics);
+        Config.ChangeResolutionScale(3);
+        Config.SetFullScreen();
+        Config.ApplyChanges();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
