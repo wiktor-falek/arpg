@@ -1,18 +1,16 @@
-using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class FireballGraphicsComponent
 {
-    private List<Texture2D> _textures = Assets.Spells.Fireball;
+    private Asset _asset = Assets.Spells.Fireball;
     private int _currentFrame = 0;
 
     public void Draw(Fireball fireball, SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        Texture2D texture = _textures[_currentFrame];
         _currentFrame++;
-        if (_currentFrame >= _textures.Count)
+        if (_currentFrame >= _asset.Frames.Count)
             _currentFrame = 0;
 
         {
@@ -31,12 +29,12 @@ public class FireballGraphicsComponent
         }
 
         spriteBatch.Draw(
-            texture,
+            _asset.Texture,
             new((int)fireball.Position.X, (int)fireball.Position.Y),
-            null,
+            _asset.Frames[_currentFrame],
             Color.White,
             (float)fireball.Angle,
-            new Vector2(texture.Width / 2, texture.Height / 2),
+            new Vector2(_asset.Texture.Width / _asset.Frames.Count / 2, _asset.Texture.Height / 2),
             1f,
             SpriteEffects.None,
             Layer.Entity

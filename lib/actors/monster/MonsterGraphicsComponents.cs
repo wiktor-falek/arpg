@@ -1,18 +1,13 @@
 using System;
-using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class MonsterGraphicsComponent
 {
-    private List<Texture2D> _idleTextures = Assets.Monsters.Skeleton.Idle;
-    private List<Texture2D> _walkTextures = Assets.Monsters.Skeleton.Walk;
-    private List<Texture2D> _deathTextures = new(Assets.Monsters.Skeleton.Death)
-    {
-        Assets.Monsters.Skeleton.Corpse[0],
-    };
-
+    private Asset _idleAsset = Assets.Monsters.Skeleton.Idle;
+    private Asset _walkAsset = Assets.Monsters.Skeleton.Walk;
+    private Asset _deathAsset = Assets.Monsters.Skeleton.Death; // TODO: add one of the two corpse frames
     private readonly float _frameTime = 0.15f;
     private int _currentFrame = 0;
     private float _elapsedTime = 0f;
@@ -28,7 +23,7 @@ public class MonsterGraphicsComponent
             if (monster.State == ActorState.Idling)
             {
                 _currentFrame++;
-                if (_currentFrame >= _idleTextures.Count)
+                if (_currentFrame >= _idleAsset.Frames.Count)
                 {
                     _currentFrame = 0;
                 }
@@ -36,14 +31,14 @@ public class MonsterGraphicsComponent
             else if (monster.State == ActorState.Walking)
             {
                 _currentFrame++;
-                if (_currentFrame >= _walkTextures.Count)
+                if (_currentFrame >= _walkAsset.Frames.Count)
                 {
                     _currentFrame = 0;
                 }
             }
             else if (monster.State == ActorState.Dead)
             {
-                if (_currentFrame != _deathTextures.Count - 1)
+                if (_currentFrame != _deathAsset.Frames.Count - 1)
                     _currentFrame++;
             }
             else
@@ -60,23 +55,22 @@ public class MonsterGraphicsComponent
         bool showHitbox = false
     )
     {
-        // @TODO: This has to be updated for non-idle textures
-        Texture2D texture;
+        Asset asset;
         switch (monster.State)
         {
             case ActorState.Idling:
             {
-                texture = _idleTextures[_currentFrame];
+                asset = _idleAsset;
                 break;
             }
             case ActorState.Walking:
             {
-                texture = _walkTextures[_currentFrame];
+                asset = _walkAsset;
                 break;
             }
             case ActorState.Dead:
             {
-                texture = _deathTextures[_currentFrame];
+                asset = _deathAsset;
                 break;
             }
             default:
@@ -105,12 +99,12 @@ public class MonsterGraphicsComponent
         }
 
         spriteBatch.Draw(
-            texture,
+            asset.Texture,
             new((int)monster.Position.X, (int)monster.Position.Y),
-            null,
+            asset.Frames[_currentFrame],
             Color.White,
             0f,
-            new Vector2(texture.Width / 2, texture.Height / 2),
+            new Vector2(asset.Texture.Width / asset.Frames.Count / 2, asset.Texture.Height / 2),
             1f,
             effect,
             Layer.Monster
