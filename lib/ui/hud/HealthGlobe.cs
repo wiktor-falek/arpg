@@ -41,7 +41,7 @@ public class HealthGlobe : IHudElement
 
     public void Update()
     {
-        Health = arpg.Game1.Player.Health;
-        MaxHealth = arpg.Game1.Player.MaxHealth;
+        Health = Game1.Player.Health;
+        MaxHealth = Game1.Player.MaxHealth;
     }
 };
