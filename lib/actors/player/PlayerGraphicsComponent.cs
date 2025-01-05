@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,13 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class PlayerGraphicsComponent
 {
     private Asset _idleAsset = Assets.Player.Idle;
-
-    // private Texture2D _idleTexture = Assets.Player.Idle;
     private Asset _walkAsset = Assets.Player.Walk;
-
-    // private List<Rectangle> _idleFrames = [];
-    private List<Rectangle> _walkFrames = [];
-
     private int _currentFrame = 0;
     private float _frameTime = 0.1f;
     private float _elapsedTime = 0f;
@@ -36,7 +29,7 @@ public class PlayerGraphicsComponent
             }
             else if (player.State == ActorState.Walking)
             {
-                if (_currentFrame >= _walkFrames.Count)
+                if (_currentFrame >= _walkAsset.Frames.Count)
                 {
                     _currentFrame = 0;
                 }

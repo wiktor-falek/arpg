@@ -101,8 +101,6 @@ public class MonsterGraphicsComponent
             0f
         );
 
-        // Drawing text
-        // Szkeletor health
         float textScale = 1.0f;
         float layerdepth = 1.0f;
         float rotation = 0.0f;
@@ -121,15 +119,6 @@ public class MonsterGraphicsComponent
             SpriteEffects.None,
             layerdepth
         );
-
-        // int textureWidth = _idleAsset[0].Width;
-        // int textureHeight = _idleAsset[0].Height;
-        // spriteBatch.DrawString(
-        //     Game1.font,
-        //     $"{textureWidth} {textureHeight}",
-        //     new Vector2(0, 32),
-        //     Color.Black, rotation, Vector2.Zero, textScale, SpriteEffects.None, layerdepth
-        // );
     }
 
     public void ResetFrames()
