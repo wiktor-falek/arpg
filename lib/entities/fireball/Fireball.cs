@@ -10,7 +10,7 @@ public class Fireball : IEntity
     public double Angle = 0d;
     public Rectangle Hitbox
     {
-        get => new((int)Position.X, (int)Position.Y, 16, 16);
+        get => new((int)Position.X - 8, (int)Position.Y - 8, 16, 16);
     }
     public float Damage = 10f;
     public readonly float MaxDuration = 2f;
