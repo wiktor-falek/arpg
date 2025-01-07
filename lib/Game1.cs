@@ -62,7 +62,7 @@ public class Game1 : Game
         Player = new Player { Position = new(100, 100) };
         for (int i = 0; i < 3; i++)
         {
-            Monster monster = new() { Position = new(600, 200 + 100 * i) };
+            Monster monster = new() { Position = new(401, 200 + 100 * i) };
             Actors.Add(monster);
         }
         _hud = new Hud();

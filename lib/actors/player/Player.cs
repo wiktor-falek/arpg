@@ -15,7 +15,7 @@ public class Player : IActor
     public bool IsAlive => Health > 0;
     public Rectangle Hitbox
     {
-        get => new((int)Position.X - 20, (int)Position.Y - 44, 32, 100);
+        get => new((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
     }
     public Vector2 Size => new(140, 140);
 

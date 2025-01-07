@@ -14,7 +14,7 @@ public class Monster : IActor
     public bool IsAlive => Health > 0;
     public Rectangle Hitbox
     {
-        get => new((int)Position.X - 20, (int)Position.Y - 20, 40, 50);
+        get => new((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
     }
 
     private MonsterGraphicsComponent _graphicsComponent = new();
