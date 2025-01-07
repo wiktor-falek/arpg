@@ -17,6 +17,7 @@ public class Player : IActor
     {
         get => new((int)Position.X - 20, (int)Position.Y - 44, 32, 100);
     }
+    public Vector2 Size => new(140, 140);
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();

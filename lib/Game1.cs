@@ -21,6 +21,7 @@ public class Game1 : Game
     public static List<IEntity> Entities = [];
     public static float ScaleX;
     public static float ScaleY;
+    public static Camera Camera;
     public Config Config;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
@@ -30,6 +31,7 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        Camera = new();
         Config = new(_graphics);
         Config.ChangeResolutionScale(3);
         Config.SetFullScreen();
@@ -81,6 +83,7 @@ public class Game1 : Game
             Exit();
 
         Player.Update(gameTime);
+        Camera.Follow(Player);
 
         for (int i = Actors.Count - 1; i >= 0; i--)
         {
@@ -94,6 +97,8 @@ public class Game1 : Game
             entity.Update(gameTime);
         }
 
+        _hud.Update();
+
         base.Update(gameTime);
     }
 
@@ -102,7 +107,11 @@ public class Game1 : Game
         GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.AliceBlue);
 
-        _spriteBatch.Begin(SpriteSortMode.BackToFront);
+        _spriteBatch.Begin(
+            SpriteSortMode.BackToFront,
+            transformMatrix: Camera.Transform,
+            samplerState: SamplerState.PointClamp
+        );
 
         foreach (var actor in Actors)
         {
@@ -116,9 +125,11 @@ public class Game1 : Game
             entity.Draw(_spriteBatch, GraphicsDevice);
         }
 
-        _hud.Update();
-        _hud.Draw(_spriteBatch, GraphicsDevice);
+        _spriteBatch.End();
 
+        _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
+
+        _hud.Draw(_spriteBatch, GraphicsDevice);
         _spriteBatch.End();
 
         GraphicsDevice.SetRenderTarget(null);
