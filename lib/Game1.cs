@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace arpg;
 
@@ -12,6 +11,7 @@ public static class Layer
     public const float Player = 0.3f;
     public const float Monster = 0.4f;
     public const float Hitbox = 0.5f;
+    public const float Background = 0.6f;
 }
 
 public class Game1 : Game
@@ -21,21 +21,20 @@ public class Game1 : Game
     public static List<IEntity> Entities = [];
     public static float ScaleX;
     public static float ScaleY;
-    public static Camera Camera;
+    public static Camera Camera = new();
     public Config Config;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
+    private InputManager _inputManager;
     private Hud _hud;
+    private Background _background;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        _inputManager = new InputManager(this);
         Camera = new();
-        Config = new(_graphics);
-        Config.ChangeResolutionScale(3);
-        Config.SetFullScreen();
-        Config.ApplyChanges();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
@@ -56,8 +55,10 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _renderTarget = new(GraphicsDevice, 640, 360);
-        ScaleX = (float)GraphicsDevice.Viewport.Width / _renderTarget.Width;
-        ScaleY = (float)GraphicsDevice.Viewport.Height / _renderTarget.Height;
+        Config = new(_graphics, GraphicsDevice, _renderTarget);
+        Config.ChangeResolutionScale(3);
+        Config.ApplyChanges();
+
         base.Initialize();
         Player = new Player { Position = new(100, 100) };
         for (int i = 0; i < 3; i++)
@@ -66,6 +67,7 @@ public class Game1 : Game
             Actors.Add(monster);
         }
         _hud = new Hud();
+        _background = new Background();
     }
 
     protected override void LoadContent()
@@ -76,11 +78,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (
-            GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
-            || Keyboard.GetState().IsKeyDown(Keys.Escape)
-        )
-            Exit();
+        _inputManager.Update();
 
         Player.Update(gameTime);
         Camera.Follow(Player);
@@ -108,7 +106,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.AliceBlue);
 
         _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
-        _spriteBatch.Draw(Assets.Environment.Cobblestone.Texture, Vector2.Zero,Assets.Environment.Cobblestone.Frames[0], Color.White, 0f, Vector2.Zero, 0.05f, SpriteEffects.None, 0f);
+        _background.Draw(_spriteBatch);
         _spriteBatch.End();
 
         _spriteBatch.Begin(
