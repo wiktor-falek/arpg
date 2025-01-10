@@ -42,7 +42,7 @@ public class ManaGlobe : IHudElement
 
     public void Update()
     {
-        Health = Game1.Player.Health;
-        MaxHealth = Game1.Player.MaxHealth;
+        Health = GameState.Player.Health;
+        MaxHealth = GameState.Player.MaxHealth;
     }
 };

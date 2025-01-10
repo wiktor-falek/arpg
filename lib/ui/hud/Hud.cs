@@ -27,6 +27,6 @@ public class Hud
             element.Draw(spriteBatch, graphicsDevice);
         }
 
-        _debugScreen.Draw(spriteBatch, isDebugScreen: true);
+        _debugScreen.Draw(spriteBatch);
     }
 }

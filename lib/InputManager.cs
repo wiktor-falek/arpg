@@ -13,6 +13,11 @@ public class InputManager(Game1 game)
         if (keyboardState.IsKeyDown(Keys.Escape))
             _game.Exit();
 
+        if (keyboardState.IsKeyDown(Keys.F1) && _previousKeyboardState.IsKeyUp(Keys.F1))
+        {
+            GameState.IsDebugMode = !GameState.IsDebugMode;
+        }
+
         if (
             (keyboardState.IsKeyDown(Keys.F11) && _previousKeyboardState.IsKeyUp(Keys.F11))
             || (

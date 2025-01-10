@@ -1,5 +1,4 @@
 using System;
-using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -30,7 +29,7 @@ public class Player : IActor
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        _graphicsComponent.Draw(this, spriteBatch, device, showHitbox: false);
+        _graphicsComponent.Draw(this, spriteBatch, device);
     }
 
     public void TransitionState(ActorState newState)
@@ -46,7 +45,7 @@ public class Player : IActor
     public void Attack(double angle)
     {
         Fireball fireball = new() { Position = new(Position.X, Position.Y), Angle = angle };
-        Game1.Entities.Add(fireball);
+        GameState.Entities.Add(fireball);
     }
 
     public void TakeDamage(float amount)

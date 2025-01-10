@@ -16,15 +16,15 @@ public class MonsterBehaviorComponent
 
             if (_timeSinceDeath >= _corpseDespawnTime)
             {
-                Game1.RemoveActor(monster);
+                GameState.RemoveActor(monster);
             }
             return;
         }
 
         float x1 = monster.Position.X;
         float y1 = monster.Position.Y;
-        float x2 = Game1.Player.Position.X;
-        float y2 = Game1.Player.Position.Y;
+        float x2 = GameState.Player.Position.X;
+        float y2 = GameState.Player.Position.Y;
 
         if (x1 < x2)
         {

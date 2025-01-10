@@ -17,7 +17,7 @@ public class PlayerInputComponent
         );
         mousePositionInGame = Vector2.Transform(
             mousePositionInGame,
-            Matrix.Invert(Game1.Camera.Transform)
+            Matrix.Invert(Camera.Transform)
         );
 
         if (keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))

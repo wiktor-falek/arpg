@@ -48,12 +48,7 @@ public class MonsterGraphicsComponent
         }
     }
 
-    public void Draw(
-        Monster monster,
-        SpriteBatch spriteBatch,
-        GraphicsDevice device,
-        bool showHitbox = false
-    )
+    public void Draw(Monster monster, SpriteBatch spriteBatch, GraphicsDevice device)
     {
         Asset asset;
         switch (monster.State)
@@ -82,7 +77,7 @@ public class MonsterGraphicsComponent
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
 
-        if (showHitbox)
+        if (GameState.IsDebugMode)
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);

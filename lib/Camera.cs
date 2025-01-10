@@ -1,16 +1,12 @@
 using Microsoft.Xna.Framework;
 
-public class Camera
+public static class Camera
 {
-    public Matrix Transform;
+    public static Matrix Transform;
 
-    public void Follow(Player player)
+    public static void Follow(IActor actor)
     {
-        var position = Matrix.CreateTranslation(
-            -(int)player.Position.X,
-            -(int)player.Position.Y,
-            0
-        );
+        var position = Matrix.CreateTranslation(-(int)actor.Position.X, -(int)actor.Position.Y, 0);
         var offset = Matrix.CreateTranslation(640 / 2, 360 / 2, 0);
         Transform = position * offset;
     }

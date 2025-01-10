@@ -41,12 +41,7 @@ public class PlayerGraphicsComponent
         }
     }
 
-    public void Draw(
-        Player player,
-        SpriteBatch spriteBatch,
-        GraphicsDevice device,
-        bool showHitbox = false
-    )
+    public void Draw(Player player, SpriteBatch spriteBatch, GraphicsDevice device)
     {
         var texture = player.State == ActorState.Idling ? _idleAsset.Texture : _walkAsset.Texture;
         var frame =
@@ -58,7 +53,7 @@ public class PlayerGraphicsComponent
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
 
-        if (showHitbox)
+        if (GameState.IsDebugMode)
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);

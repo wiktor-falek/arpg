@@ -15,7 +15,7 @@ public class FireballBehaviorComponent
 
         if (CurrentDuration >= fireball.MaxDuration)
         {
-            Game1.RemoveEntity(fireball);
+            GameState.RemoveEntity(fireball);
             return;
         }
 
@@ -23,7 +23,7 @@ public class FireballBehaviorComponent
         double y = fireball.Position.Y + (fireball.Speed * elapsedTime * Math.Sin(fireball.Angle));
         fireball.Position = new((float)x, (float)y);
 
-        foreach (var actor in Game1.Actors)
+        foreach (var actor in GameState.Actors)
         {
             if (
                 actor is Monster

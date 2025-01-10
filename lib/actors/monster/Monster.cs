@@ -33,7 +33,7 @@ public class Monster : IActor
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        _graphicsComponent.Draw(this, spriteBatch, device, showHitbox: false);
+        _graphicsComponent.Draw(this, spriteBatch, device);
     }
 
     public void Attack(double angle) { }

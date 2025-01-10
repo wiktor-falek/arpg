@@ -7,18 +7,13 @@ public class FireballGraphicsComponent
     private Asset _asset = Assets.Spells.Fireball;
     private int _currentFrame = 0;
 
-    public void Draw(
-        Fireball fireball,
-        SpriteBatch spriteBatch,
-        GraphicsDevice device,
-        bool showHitbox = false
-    )
+    public void Draw(Fireball fireball, SpriteBatch spriteBatch, GraphicsDevice device)
     {
         _currentFrame++;
         if (_currentFrame >= _asset.Frames.Count)
             _currentFrame = 0;
 
-        if (showHitbox)
+        if (GameState.IsDebugMode)
         {
             var rectangleTexture = new Texture2D(device, 1, 1);
             rectangleTexture.SetData([Color.Yellow]);

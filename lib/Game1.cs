@@ -1,28 +1,13 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace arpg;
 
-public static class Layer
-{
-    public const float Text = 0.1f;
-    public const float Entity = 0.2f;
-    public const float Player = 0.3f;
-    public const float Monster = 0.4f;
-    public const float Hitbox = 0.5f;
-    public const float Background = 0.6f;
-}
-
 public class Game1 : Game
 {
-    public static Player Player;
-    public static List<IActor> Actors = []; // Non-Player actors
-    public static List<IEntity> Entities = [];
-    public static float ScaleX;
-    public static float ScaleY;
-    public static Camera Camera;
-    public Config Config;
+    public static float ScaleX { get; set; }
+    public static float ScaleY { get; set; }
+    public Config Config { get; private set; }
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
@@ -34,22 +19,9 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         _inputManager = new InputManager(this);
-        Camera = new();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
-    }
-
-    public static void RemoveEntity(IEntity entity)
-    {
-        int index = Entities.FindIndex(e => e.Id == entity.Id);
-        Entities.RemoveAt(index);
-    }
-
-    public static void RemoveActor(IActor actor)
-    {
-        int index = Actors.FindIndex(e => e.Id == actor.Id);
-        Actors.RemoveAt(index);
     }
 
     protected override void Initialize()
@@ -58,14 +30,7 @@ public class Game1 : Game
         Config = new(_graphics, GraphicsDevice, _renderTarget);
         Config.ChangeResolutionScale(2);
         Config.ApplyChanges();
-
         base.Initialize();
-        Player = new Player { Position = new(100, 100) };
-        for (int i = 0; i < 3; i++)
-        {
-            Monster monster = new() { Position = new(401, 200 + 100 * i) };
-            Actors.Add(monster);
-        }
         _hud = new Hud();
         _background = new Background();
     }
@@ -73,6 +38,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        // FIXME: GameState constructor doesnt belong here, but has to be called after assets are loaded
         Assets.Load(Content);
     }
 
@@ -80,18 +46,18 @@ public class Game1 : Game
     {
         _inputManager.Update();
 
-        Player.Update(gameTime);
-        Camera.Follow(Player);
+        GameState.Player.Update(gameTime);
+        Camera.Follow(GameState.Player);
 
-        for (int i = Actors.Count - 1; i >= 0; i--)
+        for (int i = GameState.Actors.Count - 1; i >= 0; i--)
         {
-            IActor actor = Actors[i];
+            IActor actor = GameState.Actors[i];
             actor.Update(gameTime);
         }
 
-        for (int i = Entities.Count - 1; i >= 0; i--)
+        for (int i = GameState.Entities.Count - 1; i >= 0; i--)
         {
-            IEntity entity = Entities[i];
+            IEntity entity = GameState.Entities[i];
             entity.Update(gameTime);
         }
 
@@ -115,14 +81,14 @@ public class Game1 : Game
             samplerState: SamplerState.PointClamp
         );
 
-        foreach (var actor in Actors)
+        foreach (var actor in GameState.Actors)
         {
             actor.Draw(_spriteBatch, GraphicsDevice);
         }
 
-        Player.Draw(_spriteBatch, GraphicsDevice);
+        GameState.Player.Draw(_spriteBatch, GraphicsDevice);
 
-        foreach (var entity in Entities)
+        foreach (var entity in GameState.Entities)
         {
             entity.Draw(_spriteBatch, GraphicsDevice);
         }
