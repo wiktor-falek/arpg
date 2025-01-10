@@ -26,7 +26,7 @@ public class HealthGlobe : IHudElement
         globeTexture.SetData([new Color(150, 10, 10)]);
         spriteBatch.Draw(globeTexture, Rectangle, Color.White);
 
-        string healthGlobeValuesText = $"{Health}0/{MaxHealth}0";
+        string healthGlobeValuesText = $"{Health}/{MaxHealth}";
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,
             healthGlobeValuesText,
