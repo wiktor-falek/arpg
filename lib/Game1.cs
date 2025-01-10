@@ -21,7 +21,7 @@ public class Game1 : Game
     public static List<IEntity> Entities = [];
     public static float ScaleX;
     public static float ScaleY;
-    public static Camera Camera = new();
+    public static Camera Camera;
     public Config Config;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
@@ -56,7 +56,7 @@ public class Game1 : Game
     {
         _renderTarget = new(GraphicsDevice, 640, 360);
         Config = new(_graphics, GraphicsDevice, _renderTarget);
-        Config.ChangeResolutionScale(3);
+        Config.ChangeResolutionScale(2);
         Config.ApplyChanges();
 
         base.Initialize();

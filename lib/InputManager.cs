@@ -17,7 +17,6 @@ public class InputManager(Game1 game)
             (keyboardState.IsKeyDown(Keys.F11) && _previousKeyboardState.IsKeyUp(Keys.F11))
             || (
                 keyboardState.IsKeyDown(Keys.LeftAlt)
-                && _previousKeyboardState.IsKeyUp(Keys.LeftAlt)
                 && keyboardState.IsKeyDown(Keys.Enter)
                 && _previousKeyboardState.IsKeyUp(Keys.Enter)
             )

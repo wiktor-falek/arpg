@@ -2,23 +2,16 @@ using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Config
+public class Config(
+    GraphicsDeviceManager graphics,
+    GraphicsDevice device,
+    RenderTarget2D renderTarget
+)
 {
     public int Scale { get; private set; }
-    private GraphicsDeviceManager _graphics;
-    private GraphicsDevice _device;
-    private RenderTarget2D _renderTarget;
-
-    public Config(
-        GraphicsDeviceManager graphics,
-        GraphicsDevice device,
-        RenderTarget2D renderTarget
-    )
-    {
-        _graphics = graphics;
-        _device = device;
-        _renderTarget = renderTarget;
-    }
+    private GraphicsDeviceManager _graphics = graphics;
+    private GraphicsDevice _device = device;
+    private RenderTarget2D _renderTarget = renderTarget;
 
     public void ChangeResolutionScale(int scale)
     {
