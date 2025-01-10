@@ -30,6 +30,11 @@ public static class Assets
         public static SpriteFont MonogramExtened => GetFont("fonts/monogram_extended");
     }
 
+    public static class Environment
+    {
+        public static Asset Cobblestone => GetTexture("environment/cobblestone_3");
+    }
+
     public static class Player
     {
         public static Asset Idle => GetTexture("player/player_idle");
@@ -59,6 +64,8 @@ public static class Assets
     public static void Load(ContentManager contentManager)
     {
         AddFont(contentManager, "fonts/monogram_extended");
+
+        AddTexture(contentManager, "environment/cobblestone_3", 1);
 
         AddTexture(contentManager, "player/player_idle", 10);
         AddTexture(contentManager, "player/player_walk", 8);
