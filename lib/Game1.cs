@@ -107,6 +107,10 @@ public class Game1 : Game
         GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.AliceBlue);
 
+        _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Draw(Assets.Environment.Cobblestone.Texture, Vector2.Zero,Assets.Environment.Cobblestone.Frames[0], Color.White, 0f, Vector2.Zero, 0.05f, SpriteEffects.None, 0f);
+        _spriteBatch.End();
+
         _spriteBatch.Begin(
             SpriteSortMode.BackToFront,
             transformMatrix: Camera.Transform,
