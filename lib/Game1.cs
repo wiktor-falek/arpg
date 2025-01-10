@@ -11,14 +11,14 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
-    private InputManager _inputManager;
+    private KeyboardInputManager _keyboardInputManager;
     private Hud _hud;
     private Background _background;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _inputManager = new InputManager(this);
+        _keyboardInputManager = new KeyboardInputManager(this);
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
@@ -44,7 +44,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        _inputManager.Update();
+        _keyboardInputManager.Update();
 
         GameState.Player.Update(gameTime);
         Camera.Follow(GameState.Player);

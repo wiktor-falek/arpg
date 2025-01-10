@@ -10,22 +10,14 @@ public class PlayerInputComponent
     public void Update(Player player, GameTime gameTime)
     {
         KeyboardState keyboardState = Keyboard.GetState();
-        MouseState mouseState = Mouse.GetState();
-        Vector2 mousePositionInGame = new Vector2(
-            mouseState.Position.X / Game1.ScaleX,
-            mouseState.Position.Y / Game1.ScaleY
-        );
-        mousePositionInGame = Vector2.Transform(
-            mousePositionInGame,
-            Matrix.Invert(Camera.Transform)
-        );
+        Vector2 mousePosition = MouseManager.GetMousePosition();
 
         if (keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
         {
             float x1 = player.Position.X;
             float y1 = player.Position.Y;
-            float x2 = mousePositionInGame.X;
-            float y2 = mousePositionInGame.Y;
+            float x2 = mousePosition.X;
+            float y2 = mousePosition.Y;
             float deltaX = x2 - x1;
             float deltaY = y2 - y1;
             double angle = Math.Atan2(deltaY, deltaX);

@@ -1,7 +1,7 @@
 using arpg;
 using Microsoft.Xna.Framework.Input;
 
-public class InputManager(Game1 game)
+public class KeyboardInputManager(Game1 game)
 {
     private Game1 _game = game;
     private KeyboardState _previousKeyboardState;
