@@ -1,22 +1,23 @@
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class Hud
 {
     private List<IHudElement> _elements = [];
-    private DebugScreen _debugScreen = new();
 
     public Hud()
     {
         _elements.Add(new HealthGlobe());
         _elements.Add(new ManaGlobe());
+        _elements.Add(new DebugScreen());
     }
 
-    public void Update()
+    public void Update(GameTime gameTime)
     {
         foreach (var element in _elements)
         {
-            element.Update();
+            element.Update(gameTime);
         }
     }
 
@@ -26,7 +27,5 @@ public class Hud
         {
             element.Draw(spriteBatch, graphicsDevice);
         }
-
-        _debugScreen.Draw(spriteBatch);
     }
 }

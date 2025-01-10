@@ -5,8 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class ManaGlobe : IHudElement
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-
     public int Health { get; set; }
     public int MaxHealth { get; set; }
 
@@ -18,6 +16,12 @@ public class ManaGlobe : IHudElement
     {
         Size = new Vector2(55, 55);
         Position = new Vector2(640 - Size.X, 360 - Size.Y);
+    }
+
+    public void Update(GameTime gameTime)
+    {
+        Health = GameState.Player.Health;
+        MaxHealth = GameState.Player.MaxHealth;
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -38,11 +42,5 @@ public class ManaGlobe : IHudElement
             SpriteEffects.None,
             Layer.Text
         );
-    }
-
-    public void Update()
-    {
-        Health = GameState.Player.Health;
-        MaxHealth = GameState.Player.MaxHealth;
     }
 };

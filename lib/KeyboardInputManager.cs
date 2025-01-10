@@ -27,15 +27,15 @@ public class KeyboardInputManager(Game1 game)
             )
         )
         {
-            _game.Config.ToggleFullScreen();
-            _game.Config.ApplyChanges();
+            Game1.Config.ToggleFullScreen();
+            Game1.Config.ApplyChanges();
         }
 
         if (keyboardState.IsKeyDown(Keys.F10) && _previousKeyboardState.IsKeyUp(Keys.F10))
         {
-            int scale = (_game.Config.Scale % 3) + 1;
-            _game.Config.ChangeResolutionScale(scale);
-            _game.Config.ApplyChanges();
+            int scale = (Game1.Config.Scale % 3) + 1;
+            Game1.Config.ChangeResolutionScale(scale);
+            Game1.Config.ApplyChanges();
         }
 
         _previousKeyboardState = keyboardState;
