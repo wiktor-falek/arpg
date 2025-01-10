@@ -6,14 +6,17 @@ public class Config
 {
     public int Scale { get; private set; }
     private GraphicsDeviceManager _graphics;
+    private GraphicsDevice _device;
     private RenderTarget2D _renderTarget;
 
-    private float _scaleX;
-    private float _scaleY;
-
-    public Config(GraphicsDeviceManager graphics, RenderTarget2D renderTarget)
+    public Config(
+        GraphicsDeviceManager graphics,
+        GraphicsDevice device,
+        RenderTarget2D renderTarget
+    )
     {
         _graphics = graphics;
+        _device = device;
         _renderTarget = renderTarget;
     }
 
@@ -21,8 +24,6 @@ public class Config
     {
         _graphics.PreferredBackBufferWidth = 640 * scale;
         _graphics.PreferredBackBufferHeight = 360 * scale;
-        _scaleX = (float)_graphics.GraphicsDevice.Viewport.Width / _renderTarget.Width;
-        _scaleY = (float)_graphics.GraphicsDevice.Viewport.Height / _renderTarget.Height;
         Scale = scale;
     }
 
@@ -44,7 +45,7 @@ public class Config
     public void ApplyChanges()
     {
         _graphics.ApplyChanges();
-        Game1.ScaleX = _scaleX;
-        Game1.ScaleY = _scaleY;
+        Game1.ScaleX = (float)_device.Viewport.Width / _renderTarget.Width;
+        Game1.ScaleY = (float)_device.Viewport.Height / _renderTarget.Height;
     }
 }

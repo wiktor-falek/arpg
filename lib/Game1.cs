@@ -55,7 +55,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _renderTarget = new(GraphicsDevice, 640, 360);
-        Config = new(_graphics, _renderTarget);
+        Config = new(_graphics, GraphicsDevice, _renderTarget);
         Config.ChangeResolutionScale(3);
         Config.ApplyChanges();
 
