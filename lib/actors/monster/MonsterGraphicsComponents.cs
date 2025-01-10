@@ -117,7 +117,7 @@ public class MonsterGraphicsComponent
             Assets.Fonts.MonogramExtened,
             monsterHealth,
             new((int)monster.Position.X, (int)monster.Position.Y + 30),
-            Color.Black,
+            Color.White,
             0f,
             new((int)(monsterHealthOrigin.X / 2), (int)(monsterHealthOrigin.Y / 2)),
             1f,

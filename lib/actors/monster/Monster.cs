@@ -8,7 +8,7 @@ public class Monster : IActor
     public ActorState State { get; set; } = ActorState.Idling;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public float Speed { get; set; } = 125f;
+    public float Speed { get; set; } = 100f;
     public int Health { get; set; } = 100;
     public int MaxHealth { get; set; } = 1000;
     public bool IsAlive => Health > 0;
@@ -33,7 +33,7 @@ public class Monster : IActor
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        _graphicsComponent.Draw(this, spriteBatch, device, showHitbox: true);
+        _graphicsComponent.Draw(this, spriteBatch, device, showHitbox: false);
     }
 
     public void Attack(double angle) { }

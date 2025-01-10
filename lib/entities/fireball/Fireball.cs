@@ -20,7 +20,7 @@ public class Fireball : IEntity
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        _fireballGraphicsComponent.Draw(this, spriteBatch, device);
+        _fireballGraphicsComponent.Draw(this, spriteBatch, device, showHitbox: false);
     }
 
     public void Update(GameTime gameTime)
