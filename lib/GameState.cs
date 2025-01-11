@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class GameState
+public static class GameState
 {
     public static bool IsDebugMode = false;
     public static Player Player = new() { Position = new(100, 100) };

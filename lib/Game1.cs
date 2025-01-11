@@ -36,7 +36,6 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        // FIXME: GameState constructor doesnt belong here, but has to be called after assets are loaded
         Assets.Load(Content);
     }
 
