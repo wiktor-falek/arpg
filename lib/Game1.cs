@@ -16,7 +16,6 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _renderTarget = new(GraphicsDevice, 640, 360);
         _keyboardInputManager = new KeyboardInputManager(this);
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
@@ -25,6 +24,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        _renderTarget = new(GraphicsDevice, 640, 360);
         Config = new(_graphics, GraphicsDevice, _renderTarget);
         _hud = new Hud();
         _background = new Background();
@@ -65,7 +65,7 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.SetRenderTarget(_renderTarget);
-        GraphicsDevice.Clear(Color.AliceBlue);
+        GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
         _background.Draw(_spriteBatch);
