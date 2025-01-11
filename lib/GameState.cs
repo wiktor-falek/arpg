@@ -3,9 +3,9 @@ using System.Collections.Generic;
 public static class GameState
 {
     public static bool IsDebugMode = false;
-    public static Player Player = new() { Position = new(100, 100) };
-    public static List<IEntity> Entities = [];
-    public static List<IActor> Actors =
+    public static readonly Player Player = new() { Position = new(100, 100) };
+    public static readonly List<IEntity> Entities = [];
+    public static readonly List<IActor> Actors =
     [
         new Monster() { Position = new(401, 200 + 0) },
         new Monster() { Position = new(401, 200 + 100) },
