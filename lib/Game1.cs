@@ -5,8 +5,6 @@ namespace arpg;
 
 public class Game1 : Game
 {
-    public static float ScaleX { get; set; }
-    public static float ScaleY { get; set; }
     public static Config Config { get; private set; }
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;

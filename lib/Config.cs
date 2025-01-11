@@ -9,6 +9,8 @@ public class Config(
 )
 {
     public int Scale { get; private set; }
+    public float ScaleX { get; private set; }
+    public float ScaleY { get; private set; }
     private GraphicsDeviceManager _graphics = graphics;
     private GraphicsDevice _device = device;
     private RenderTarget2D _renderTarget = renderTarget;
@@ -38,7 +40,7 @@ public class Config(
     public void ApplyChanges()
     {
         _graphics.ApplyChanges();
-        Game1.ScaleX = (float)_device.Viewport.Width / _renderTarget.Width;
-        Game1.ScaleY = (float)_device.Viewport.Height / _renderTarget.Height;
+        ScaleX = (float)_device.Viewport.Width / _renderTarget.Width;
+        ScaleY = (float)_device.Viewport.Height / _renderTarget.Height;
     }
 }

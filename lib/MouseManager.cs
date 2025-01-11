@@ -8,8 +8,8 @@ public static class MouseManager
     {
         MouseState mouseState = Mouse.GetState();
         Vector2 mousePositionInGame = new Vector2(
-            mouseState.Position.X / Game1.ScaleX,
-            mouseState.Position.Y / Game1.ScaleY
+            mouseState.Position.X / Game1.Config.ScaleX,
+            mouseState.Position.Y / Game1.Config.ScaleY
         );
         mousePositionInGame = Vector2.Transform(
             mousePositionInGame,
