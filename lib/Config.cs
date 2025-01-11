@@ -1,18 +1,27 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Config(
-    GraphicsDeviceManager graphics,
-    GraphicsDevice device,
-    RenderTarget2D renderTarget
-)
+public class Config
 {
     public int Scale { get; private set; }
     public float ScaleX { get; private set; }
     public float ScaleY { get; private set; }
-    private GraphicsDeviceManager _graphics = graphics;
-    private GraphicsDevice _device = device;
-    private RenderTarget2D _renderTarget = renderTarget;
+    private GraphicsDeviceManager _graphics;
+    private GraphicsDevice _device;
+    private RenderTarget2D _renderTarget;
+
+    public Config(
+        GraphicsDeviceManager graphics,
+        GraphicsDevice device,
+        RenderTarget2D renderTarget
+    )
+    {
+        _graphics = graphics;
+        _device = device;
+        _renderTarget = renderTarget;
+        ChangeResolutionScale(2);
+        ApplyChanges();
+    }
 
     public void ChangeResolutionScale(int scale)
     {
