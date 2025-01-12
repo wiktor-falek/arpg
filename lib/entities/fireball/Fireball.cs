@@ -8,13 +8,15 @@ public class Fireball : IEntity
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 350f;
     public double Angle = 0d;
-    public Rectangle Hitbox
-    {
-        get => new((int)Position.X - 8, (int)Position.Y - 8, 16, 16);
-    }
     public float Damage = 10f;
     public readonly float MaxDuration = 2f;
+    public IHitbox Hitbox
+    {
+        get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 8, 16, 16);
+        set => _hitbox = value;
+    }
 
+    private IHitbox _hitbox;
     private FireballGraphicsComponent _fireballGraphicsComponent = new();
     private FireballBehaviorComponent _fireballBehaviorComponent = new();
 

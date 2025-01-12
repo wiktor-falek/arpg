@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 public interface IEntity
 {
     string Id { get; set; }
-    Rectangle Hitbox { get; }
+    IHitbox Hitbox { get; set; }
+    public Vector2 Position { get; set; }
 
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch, GraphicsDevice device);

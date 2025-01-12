@@ -12,18 +12,21 @@ public class Player : IActor
     public int Health { get; set; } = 500;
     public int MaxHealth { get; set; } = 500;
     public bool IsAlive => Health > 0;
-    public Rectangle Hitbox
+    public IHitbox Hitbox
     {
-        get => new((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
+        get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
     }
     public Vector2 Size => new(140, 140);
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
 
+    // private HolyFire _holyFire = new();
+
     public void Update(GameTime gameTime)
     {
         _inputComponent.Update(this, gameTime);
+        // _holyFire.Position = new();
         _graphicsComponent.Update(this, gameTime);
     }
 

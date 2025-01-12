@@ -12,9 +12,9 @@ public class Monster : IActor
     public int Health { get; set; } = 100;
     public int MaxHealth { get; set; } = 1000;
     public bool IsAlive => Health > 0;
-    public Rectangle Hitbox
+    public IHitbox Hitbox
     {
-        get => new((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
+        get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
     }
 
     private MonsterGraphicsComponent _graphicsComponent = new();

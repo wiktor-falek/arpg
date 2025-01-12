@@ -79,18 +79,25 @@ public class MonsterGraphicsComponent
 
         if (GameState.IsDebugMode)
         {
-            var rectangleTexture = new Texture2D(device, 1, 1);
-            rectangleTexture.SetData([Color.Yellow]);
-            spriteBatch.Draw(
-                rectangleTexture,
-                monster.Hitbox,
-                null,
-                Color.Yellow,
-                0f,
-                Vector2.Zero,
-                SpriteEffects.None,
-                Layer.Hitbox
-            );
+            if (monster.Hitbox is RectangleHitbox rectangleHitbox)
+            {
+                var rectangleTexture = new Texture2D(device, 1, 1);
+                rectangleTexture.SetData([Color.Yellow]);
+                spriteBatch.Draw(
+                    rectangleTexture,
+                    rectangleHitbox.Bounds,
+                    null,
+                    Color.Yellow,
+                    0f,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    Layer.Hitbox
+                );
+            }
+            else
+            {
+                throw new NotImplementedException("Unhandled hitbox type");
+            }
         }
 
         spriteBatch.Draw(

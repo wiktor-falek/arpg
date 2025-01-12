@@ -24,7 +24,7 @@ public interface IActor
     int Health { get; set; }
     int MaxHealth { get; set; }
     bool IsAlive { get; }
-    Rectangle Hitbox { get; }
+    IHitbox Hitbox { get; }
 
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch, GraphicsDevice device);
