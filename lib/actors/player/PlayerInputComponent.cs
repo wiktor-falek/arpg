@@ -1,5 +1,4 @@
 using System;
-using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -66,6 +65,11 @@ public class PlayerInputComponent
         }
         float updatedSpeed = player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         player.Position += movementDirection * updatedSpeed;
+
+        player.HolyFire.Position = new(
+            player.Position.X - (int)player.HolyFire.Radius + 0,
+            player.Position.Y - (int)player.HolyFire.Radius + 20
+        );
 
         _previousKeyboardState = keyboardState;
     }

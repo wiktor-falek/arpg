@@ -17,16 +17,14 @@ public class Player : IActor
         get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
     }
     public Vector2 Size => new(140, 140);
+    public HolyFire HolyFire = new();
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
 
-    // private HolyFire _holyFire = new();
-
     public void Update(GameTime gameTime)
     {
         _inputComponent.Update(this, gameTime);
-        // _holyFire.Position = new();
         _graphicsComponent.Update(this, gameTime);
     }
 

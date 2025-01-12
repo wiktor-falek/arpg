@@ -87,10 +87,53 @@ public class PlayerGraphicsComponent
             effect,
             Layer.Text
         );
+
+        Texture2D circleTexture = CreateCircleTexture(device, (int)player.HolyFire.Radius);
+
+        spriteBatch.Draw(
+            circleTexture,
+            new((int)player.HolyFire.Position.X, (int)player.HolyFire.Position.Y),
+            null,
+            new Color(205, 45, 10, 64),
+            0f,
+            Vector2.Zero,
+            1f,
+            SpriteEffects.None,
+            Layer.PlayerOnGroundEffect
+        );
     }
 
     public void ResetFrames()
     {
         _currentFrame = 0;
+    }
+
+    Texture2D CreateCircleTexture(GraphicsDevice device, int radius)
+    {
+        int diameter = radius * 2;
+        Texture2D texture = new Texture2D(device, diameter, diameter);
+        Color[] colorData = new Color[diameter * diameter];
+
+        float radiusSquared = radius * radius;
+
+        for (int x = 0; x < diameter; x++)
+        {
+            for (int y = 0; y < diameter; y++)
+            {
+                int index = x + y * diameter;
+                Vector2 pos = new Vector2(x - radius, y - radius);
+                if (pos.LengthSquared() <= radiusSquared)
+                {
+                    colorData[index] = Color.White;
+                }
+                else
+                {
+                    colorData[index] = Color.Transparent;
+                }
+            }
+        }
+
+        texture.SetData(colorData);
+        return texture;
     }
 }
