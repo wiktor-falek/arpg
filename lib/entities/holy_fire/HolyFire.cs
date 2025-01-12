@@ -12,6 +12,7 @@ public class HolyFire(Player player) : IEntity
         set => _hitbox = value;
     }
     public double Radius = 100d;
+    public bool isActive = false;
 
     private Player _player = player;
     private IHitbox _hitbox;
@@ -21,8 +22,9 @@ public class HolyFire(Player player) : IEntity
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        Texture2D circleTexture = CreateCircleTexture(device, (int)Radius);
+        if (!isActive) return;
 
+        Texture2D circleTexture = CreateCircleTexture(device, (int)Radius);
         spriteBatch.Draw(
             circleTexture,
             new((int)(Position.X - Radius), (int)(Position.Y - Radius)),
@@ -38,16 +40,20 @@ public class HolyFire(Player player) : IEntity
 
     public void Update(GameTime gameTime)
     {
+        if (!isActive) return;
         _frameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         Position = new(_player.Position.X + 0, _player.Position.Y + 20);
         if (_frameTime >= _tickRate)
         {
+            int selfDps = 4;
+            int dps = 20;
+            _player.TakeDamage(selfDps * _tickRate);
             foreach (var actor in GameState.Actors)
             {
                 if (actor is Monster && actor.Hitbox.Intersects(Hitbox))
                 {
-                    actor.TakeDamage(5);
+                    actor.TakeDamage(dps * _tickRate);
                 }
             }
             _frameTime -= _tickRate;

@@ -1,12 +1,11 @@
-using System;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class ManaGlobe : IHudElement
 {
-    public int Health { get; set; }
-    public int MaxHealth { get; set; }
+    public int Mana { get; set; } = 100;
+    public int MaxMana { get; set; } = 100;
 
     public Vector2 Size { get; set; }
     public Vector2 Position { get; set; }
@@ -20,8 +19,8 @@ public class ManaGlobe : IHudElement
 
     public void Update(GameTime gameTime)
     {
-        Health = GameState.Player.Health;
-        MaxHealth = GameState.Player.MaxHealth;
+        // Mana = GameState.Player.Mana;
+        // MaxMana = GameState.Player.MaxMana;
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -30,7 +29,7 @@ public class ManaGlobe : IHudElement
         globeTexture.SetData([new Color(10, 10, 140)]);
         spriteBatch.Draw(globeTexture, Rectangle, Color.White);
 
-        string manaGlobeValuesText = $"{Health}/{MaxHealth}";
+        string manaGlobeValuesText = $"{Mana}/{MaxMana}";
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,
             manaGlobeValuesText,

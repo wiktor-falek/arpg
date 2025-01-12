@@ -11,7 +11,7 @@ public class PlayerInputComponent
         KeyboardState keyboardState = Keyboard.GetState();
         Vector2 mousePosition = MouseManager.GetMousePosition();
 
-        if (keyboardState.IsKeyDown(Keys.Space) && !_previousKeyboardState.IsKeyDown(Keys.Space))
+        if (keyboardState.IsKeyDown(Keys.Space) && _previousKeyboardState.IsKeyUp(Keys.Space))
         {
             float x1 = player.Position.X;
             float y1 = player.Position.Y;
@@ -22,6 +22,11 @@ public class PlayerInputComponent
             double angle = Math.Atan2(deltaY, deltaX);
 
             player.Attack(angle);
+        }
+
+        if (keyboardState.IsKeyDown(Keys.R) && _previousKeyboardState.IsKeyUp(Keys.R))
+        {
+            player.HolyFire.isActive = !player.HolyFire.isActive;
         }
 
         Vector2 movementDirection = Vector2.Zero;
