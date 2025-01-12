@@ -6,7 +6,7 @@ public interface IHitbox
     bool Intersects(IHitbox other);
 }
 
-// TODO: visitor pattern
+// TODO: refactor
 public class RectangleHitbox(int x, int y, int width, int height) : IHitbox
 {
     public Rectangle Bounds { get; set; } = new(x, y, width, height);
@@ -28,7 +28,12 @@ public class RectangleHitbox(int x, int y, int width, int height) : IHitbox
 
     public bool Intersects(CircleHitbox circleHitbox)
     {
-        throw new NotImplementedException();
+        float closestX = Math.Clamp(circleHitbox.Center.X, Bounds.Left, Bounds.Right);
+        float closestY = Math.Clamp(circleHitbox.Center.Y, Bounds.Top, Bounds.Bottom);
+        float distanceX = circleHitbox.Center.X - closestX;
+        float distanceY = circleHitbox.Center.Y - closestY;
+        return (distanceX * distanceX + distanceY * distanceY)
+            <= (circleHitbox.Radius * circleHitbox.Radius);
     }
 }
 
@@ -59,14 +64,10 @@ public class CircleHitbox(Vector2 center, double radius) : IHitbox
 
     public bool Intersects(Rectangle rectangle)
     {
-        throw new NotImplementedException();
-        // case 1: circle center is in rectangle
-        // point in polygon - 0 ≤ AP·AB ≤ AB·AB and 0 ≤ AP·AD ≤ AD·AD
-
-        // case 2: circle intersects polygon vertices
-        // foot of the perpendicular from Center to the line is close enough and between the endpoints,
-        // and check the endpoints otherwise
-
-        // return false;
+        float closestX = Math.Clamp(Center.X, rectangle.Left, rectangle.Right);
+        float closestY = Math.Clamp(Center.Y, rectangle.Top, rectangle.Bottom);
+        float distanceX = Center.X - closestX;
+        float distanceY = Center.Y - closestY;
+        return (distanceX * distanceX + distanceY * distanceY) <= (Radius * Radius);
     }
 }

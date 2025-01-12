@@ -17,20 +17,27 @@ public class Player : IActor
         get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
     }
     public Vector2 Size => new(140, 140);
-    public HolyFire HolyFire = new();
+    public HolyFire HolyFire;
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
+
+    public Player()
+    {
+        HolyFire = new(this);
+    }
 
     public void Update(GameTime gameTime)
     {
         _inputComponent.Update(this, gameTime);
         _graphicsComponent.Update(this, gameTime);
+        HolyFire.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
         _graphicsComponent.Draw(this, spriteBatch, device);
+        HolyFire.Draw(spriteBatch, device);
     }
 
     public void TransitionState(ActorState newState)
