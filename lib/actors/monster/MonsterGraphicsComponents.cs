@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class MonsterGraphicsComponent
 {
     private Asset _idleAsset = Assets.Monsters.Skeleton.Idle;
+    private Asset _attackAsset = Assets.Monsters.Skeleton.Attack;
     private Asset _walkAsset = Assets.Monsters.Skeleton.Walk;
     private Asset _deathAsset = Assets.Monsters.Skeleton.Death; // TODO: add one of the two corpse frames
     private readonly float _frameTime = 0.15f;
@@ -50,27 +51,13 @@ public class MonsterGraphicsComponent
 
     public void Draw(Monster monster, SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        Asset asset;
-        switch (monster.State)
+        Asset asset = monster.State switch
         {
-            case ActorState.Idling:
-            {
-                asset = _idleAsset;
-                break;
-            }
-            case ActorState.Walking:
-            {
-                asset = _walkAsset;
-                break;
-            }
-            case ActorState.Dead:
-            {
-                asset = _deathAsset;
-                break;
-            }
-            default:
-                throw new SystemException("Unhandled ActorState");
-        }
+            ActorState.Idling => _idleAsset,
+            ActorState.Walking => _walkAsset,
+            ActorState.Dead => _deathAsset,
+            _ => throw new SystemException("Unhandled ActorState")
+        };
 
         var effect =
             monster.Facing == ActorFacing.Right

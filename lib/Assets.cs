@@ -53,6 +53,7 @@ public static class Assets
         {
             public static Asset Idle => GetTexture("monsters/skeleton_ready");
             public static Asset Walk => GetTexture("monsters/skeleton_walk");
+            public static Asset Attack => GetTexture("monsters/skeleton_attack");
             public static Asset Death => GetTexture("monsters/skeleton_dead_near");
             public static Asset Corpse => GetTexture("monsters/skeleton_corpse");
         }
@@ -75,6 +76,7 @@ public static class Assets
 
         AddTexture(contentManager, "monsters/skeleton_ready", 3);
         AddTexture(contentManager, "monsters/skeleton_walk", 6);
+        AddTexture(contentManager, "monsters/skeleton_attack", 6);
         AddTexture(contentManager, "monsters/skeleton_dead_near", 5);
         AddTexture(contentManager, "monsters/skeleton_corpse_1", 1);
         AddTexture(contentManager, "monsters/skeleton_corpse_2", 1);
