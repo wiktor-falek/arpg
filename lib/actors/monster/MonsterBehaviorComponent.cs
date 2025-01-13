@@ -5,6 +5,7 @@ public class MonsterBehaviorComponent
 {
     private float _corpseDespawnTime = 10f;
     private float _timeSinceDeath = 0f;
+    private bool hasAggro = false;
 
     public void Update(Monster monster, GameTime time)
     {
@@ -35,7 +36,8 @@ public class MonsterBehaviorComponent
         }
 
         double distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
-        if (distance <= 300)
+
+        if (hasAggro)
         {
             float deltaX = x2 - x1;
             float deltaY = y2 - y1;
@@ -46,6 +48,11 @@ public class MonsterBehaviorComponent
             double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
             monster.Position = new((float)x, (float)y);
             monster.TransitionState(ActorState.Walking);
+        }
+        else if (distance <= 300)
+        {
+
+            hasAggro = true;
         }
         else
         {
