@@ -1,91 +1,34 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-public class HolyFire(Player player) : IEntity
+public class HolyFire(IActor owner) : ISkill
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public Vector2 Position { get; set; }
-    public IHitbox Hitbox
+    public string Name { get; } = "Holy Fire";
+    public Cooldown Cooldown = new(1f);
+    private IActor _owner = owner;
+    private bool isActive = false;
+    private HolyFireEntity _entity;
+
+    public void Cast()
     {
-        get => new CircleHitbox(Position, Radius);
-        set => _hitbox = value;
-    }
-    public double Radius = 100d;
-    public bool isActive = false;
+        if (!Cooldown.CanCast())
+            return;
 
-    private Player _player = player;
-    private IHitbox _hitbox;
-
-    private float _tickRate = 0.25f;
-    private float _frameTime = 0f;
-
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
-    {
-        if (!isActive) return;
-
-        Texture2D circleTexture = CreateCircleTexture(device, (int)Radius);
-        spriteBatch.Draw(
-            circleTexture,
-            new((int)(Position.X - Radius), (int)(Position.Y - Radius)),
-            null,
-            new Color(205, 45, 10, 64),
-            0f,
-            Vector2.Zero,
-            1f,
-            SpriteEffects.None,
-            Layer.PlayerOnGroundEffect
-        );
-    }
-
-    public void Update(GameTime gameTime)
-    {
-        if (!isActive) return;
-        _frameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        Position = new(_player.Position.X + 0, _player.Position.Y + 20);
-        if (_frameTime >= _tickRate)
+        if (!isActive)
         {
-            int selfDps = 4;
-            int dps = 20;
-            _player.TakeDamage(selfDps * _tickRate);
-            foreach (var actor in GameState.Actors)
+            HolyFireEntity holyFireEntity = new(_owner)
             {
-                if (actor is Monster && actor.Hitbox.Intersects(Hitbox))
-                {
-                    actor.TakeDamage(dps * _tickRate);
-                }
-            }
-            _frameTime -= _tickRate;
+                Position = new(_owner.Position.X, _owner.Position.Y),
+                Radius = 100f,
+            };
+            GameState.Entities.Add(holyFireEntity);
+
+            _entity = holyFireEntity;
+            isActive = true;
         }
-    }
-
-    Texture2D CreateCircleTexture(GraphicsDevice device, int radius)
-    {
-        int diameter = radius * 2;
-        Texture2D texture = new Texture2D(device, diameter, diameter);
-        Color[] colorData = new Color[diameter * diameter];
-
-        float radiusSquared = radius * radius;
-
-        for (int x = 0; x < diameter; x++)
+        else
         {
-            for (int y = 0; y < diameter; y++)
-            {
-                int index = x + y * diameter;
-                Vector2 pos = new(x - radius, y - radius);
-                if (pos.LengthSquared() <= radiusSquared)
-                {
-                    colorData[index] = Color.White;
-                }
-                else
-                {
-                    colorData[index] = Color.Transparent;
-                }
-            }
+            GameState.Entities.Remove(_entity);
+            isActive = false;
         }
 
-        texture.SetData(colorData);
-        return texture;
+        Cooldown.StartCooldown();
     }
 }

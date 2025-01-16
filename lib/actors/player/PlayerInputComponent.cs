@@ -26,7 +26,7 @@ public class PlayerInputComponent
 
         if (keyboardState.IsKeyDown(Keys.R) && _previousKeyboardState.IsKeyUp(Keys.R))
         {
-            player.HolyFire.isActive = !player.HolyFire.isActive;
+            player.Skills.HolyFire.Cast();
         }
 
         Vector2 movementDirection = Vector2.Zero;

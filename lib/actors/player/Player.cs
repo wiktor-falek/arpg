@@ -33,13 +33,13 @@ public class Player : IActor
     {
         _inputComponent.Update(this, gameTime);
         _graphicsComponent.Update(this, gameTime);
-        HolyFire.Update(gameTime);
+        // HolyFire.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
         _graphicsComponent.Draw(this, spriteBatch, device);
-        HolyFire.Draw(spriteBatch, device);
+        // HolyFire.Draw(spriteBatch, device);
     }
 
     public void TransitionState(ActorState newState)
