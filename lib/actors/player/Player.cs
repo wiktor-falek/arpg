@@ -8,7 +8,7 @@ public class Player : IActor
     public ActorState State { get; set; } = ActorState.Idling;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public float Speed { get; set; } = 150f;
+    public float Speed { get; set; } = 125f;
     public int Health { get; set; } = 500;
     public int MaxHealth { get; set; } = 500;
     public bool IsAlive => Health > 0;

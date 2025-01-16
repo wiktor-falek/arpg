@@ -11,17 +11,22 @@ public class PlayerInputComponent
         KeyboardState keyboardState = Keyboard.GetState();
         Vector2 mousePosition = MouseManager.GetMousePosition();
 
+        float x1 = player.Position.X;
+        float y1 = player.Position.Y;
+        float x2 = mousePosition.X;
+        float y2 = mousePosition.Y;
+        float deltaX = x2 - x1;
+        float deltaY = y2 - y1;
+        double angle = Math.Atan2(deltaY, deltaX);
+
         if (keyboardState.IsKeyDown(Keys.Space))
         {
-            float x1 = player.Position.X;
-            float y1 = player.Position.Y;
-            float x2 = mousePosition.X;
-            float y2 = mousePosition.Y;
-            float deltaX = x2 - x1;
-            float deltaY = y2 - y1;
-            double angle = Math.Atan2(deltaY, deltaX);
-
             player.Skills.Fireball.Cast(angle);
+        }
+
+        if (keyboardState.IsKeyDown(Keys.Q))
+        {
+            player.Skills.FrozenOrb.Cast(angle);
         }
 
         if (keyboardState.IsKeyDown(Keys.R) && _previousKeyboardState.IsKeyUp(Keys.R))
