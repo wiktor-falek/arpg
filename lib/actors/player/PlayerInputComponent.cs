@@ -11,7 +11,7 @@ public class PlayerInputComponent
         KeyboardState keyboardState = Keyboard.GetState();
         Vector2 mousePosition = MouseManager.GetMousePosition();
 
-        if (keyboardState.IsKeyDown(Keys.Space) && _previousKeyboardState.IsKeyUp(Keys.Space))
+        if (keyboardState.IsKeyDown(Keys.Space))
         {
             float x1 = player.Position.X;
             float y1 = player.Position.Y;

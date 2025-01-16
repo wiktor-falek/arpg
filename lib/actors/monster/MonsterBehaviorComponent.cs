@@ -37,7 +37,7 @@ public class MonsterBehaviorComponent
 
         double distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
 
-        if (hasAggro)
+        if (hasAggro || monster.isHit)
         {
             float deltaX = x2 - x1;
             float deltaY = y2 - y1;
@@ -53,7 +53,6 @@ public class MonsterBehaviorComponent
         }
         else if (distance <= 300)
         {
-
             hasAggro = true;
         }
         else

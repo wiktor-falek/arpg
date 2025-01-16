@@ -12,6 +12,7 @@ public class Monster : IActor
     public int Health { get; set; } = 100;
     public int MaxHealth { get; set; } = 1000;
     public bool IsAlive => Health > 0;
+    public bool isHit = false;
     public IHitbox Hitbox
     {
         get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
@@ -40,6 +41,7 @@ public class Monster : IActor
     {
         Health -= (int)Math.Floor(amount);
         Health = Math.Max(Health, 0);
+        isHit = true;
     }
 
     public void TransitionState(ActorState newState)

@@ -1,7 +1,7 @@
 public class Fireball(IActor owner) : ISkill
 {
     public string Name { get; } = "Fireball";
-    public Cooldown Cooldown = new(2f);
+    public Cooldown Cooldown = new(1.5f);
     private IActor _owner = owner;
 
     public void Cast(double angle)
