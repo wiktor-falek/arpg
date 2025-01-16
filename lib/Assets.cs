@@ -45,6 +45,7 @@ public static class Assets
     {
         public static Asset Fireball => GetTexture("spells/fireball");
         public static Asset Spark => GetTexture("spells/spark");
+        public static Asset FrozenOrb => GetTexture("spells/shitty_orb");
     }
 
     public static class Monsters
@@ -73,6 +74,7 @@ public static class Assets
 
         AddTexture(contentManager, "spells/fireball", 5);
         AddTexture(contentManager, "spells/spark", 6);
+        AddTexture(contentManager, "spells/shitty_orb", 1);
 
         AddTexture(contentManager, "monsters/skeleton_ready", 3);
         AddTexture(contentManager, "monsters/skeleton_walk", 6);
