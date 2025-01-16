@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Fireball : IEntity
+public class FireballEntity : IEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public Vector2 Position { get; set; }

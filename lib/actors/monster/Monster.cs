@@ -36,8 +36,6 @@ public class Monster : IActor
         _graphicsComponent.Draw(this, spriteBatch, device);
     }
 
-    public void Attack(double angle) { }
-
     public void TakeDamage(float amount)
     {
         Health -= (int)Math.Floor(amount);

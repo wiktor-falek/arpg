@@ -17,6 +17,7 @@ public class Player : IActor
         get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
     }
     public Vector2 Size => new(140, 140);
+    public SkillCollection Skills;
     public HolyFire HolyFire;
 
     private PlayerInputComponent _inputComponent = new();
@@ -25,6 +26,7 @@ public class Player : IActor
     public Player()
     {
         HolyFire = new(this);
+        Skills = new(this);
     }
 
     public void Update(GameTime gameTime)
@@ -48,12 +50,6 @@ public class Player : IActor
             State = newState;
             _graphicsComponent.ResetFrames();
         }
-    }
-
-    public void Attack(double angle)
-    {
-        Fireball fireball = new() { Position = new(Position.X, Position.Y), Angle = angle };
-        GameState.Entities.Add(fireball);
     }
 
     public void TakeDamage(float amount)

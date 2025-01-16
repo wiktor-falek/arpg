@@ -28,6 +28,5 @@ public interface IActor
 
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch, GraphicsDevice device);
-    void Attack(double angle);
     void TakeDamage(float amount);
 }

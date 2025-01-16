@@ -46,6 +46,8 @@ public class MonsterBehaviorComponent
             var elapsedTime = time.ElapsedGameTime.TotalSeconds;
             double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
             double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
+
+            // TODO: stop at attack reach distance
             monster.Position = new((float)x, (float)y);
             monster.TransitionState(ActorState.Walking);
         }

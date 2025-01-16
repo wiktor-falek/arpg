@@ -7,7 +7,7 @@ public class FireballBehaviorComponent
     private List<string> _hitActors = [];
     public float CurrentDuration = 0f;
 
-    public void Update(Fireball fireball, GameTime gameTime)
+    public void Update(FireballEntity fireball, GameTime gameTime)
     {
         var elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         CurrentDuration += elapsedTime;

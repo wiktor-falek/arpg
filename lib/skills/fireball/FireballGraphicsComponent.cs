@@ -8,7 +8,7 @@ public class FireballGraphicsComponent
     private Asset _asset = Assets.Spells.Fireball;
     private int _currentFrame = 0;
 
-    public void Draw(Fireball fireball, SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(FireballEntity fireball, SpriteBatch spriteBatch, GraphicsDevice device)
     {
         _currentFrame++;
         if (_currentFrame >= _asset.Frames.Count)

@@ -21,7 +21,7 @@ public class PlayerInputComponent
             float deltaY = y2 - y1;
             double angle = Math.Atan2(deltaY, deltaX);
 
-            player.Attack(angle);
+            player.Skills.Fireball.Cast(angle);
         }
 
         if (keyboardState.IsKeyDown(Keys.R) && _previousKeyboardState.IsKeyUp(Keys.R))
