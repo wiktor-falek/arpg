@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 
 public class FrozenOrbSecondaryBehaviorComponent
 {
     public float CurrentDuration = 0f;
-    private float _speed = 150f;
+    private List<string> _hitActors = [];
+    private float _speed = 50f;
 
     public void Update(FrozenOrbSecondaryEntity secondaryEntity, GameTime gameTime)
     {
@@ -22,5 +25,14 @@ public class FrozenOrbSecondaryBehaviorComponent
         double y =
             secondaryEntity.Position.Y + (_speed * elapsedTime * Math.Sin(secondaryEntity.Angle));
         secondaryEntity.Position = new((float)x, (float)y);
+
+        foreach (IActor actor in GameState.Actors.Where(actor => actor is Monster))
+        {
+            if (!_hitActors.Contains(actor.Id) && secondaryEntity.Hitbox.Intersects(actor.Hitbox))
+            {
+                actor.TakeDamage(secondaryEntity.Damage);
+                _hitActors.Add(actor.Id);
+            }
+        }
     }
 }

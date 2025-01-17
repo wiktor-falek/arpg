@@ -1,3 +1,4 @@
+using System;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +13,29 @@ public class FrozenOrbSecondaryGraphicsComponent
         GraphicsDevice device
     )
     {
+        if (GameState.IsDebugMode)
+        {
+            if (frozenOrbSecondary.Hitbox is RectangleHitbox rectangleHitbox)
+            {
+                var rectangleTexture = new Texture2D(device, 1, 1);
+                rectangleTexture.SetData([Color.Yellow]);
+                spriteBatch.Draw(
+                    rectangleTexture,
+                    rectangleHitbox.Bounds,
+                    null,
+                    Color.Yellow,
+                    0f,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    Layer.Hitbox
+                );
+            }
+            else
+            {
+                throw new NotImplementedException("Unhandled hitbox type");
+            }
+        }
+
         spriteBatch.Draw(
             _asset.Texture,
             new((int)frozenOrbSecondary.Position.X, (int)frozenOrbSecondary.Position.Y),

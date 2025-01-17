@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 
 public class FireballBehaviorComponent
@@ -22,13 +23,9 @@ public class FireballBehaviorComponent
         double y = fireball.Position.Y + (fireball.Speed * elapsedTime * Math.Sin(fireball.Angle));
         fireball.Position = new((float)x, (float)y);
 
-        foreach (var actor in GameState.Actors)
+        foreach (var actor in GameState.Actors.Where(actor => actor is Monster))
         {
-            if (
-                actor is Monster
-                && !_hitActors.Contains(actor.Id)
-                && fireball.Hitbox.Intersects(actor.Hitbox)
-            )
+            if (!_hitActors.Contains(actor.Id) && fireball.Hitbox.Intersects(actor.Hitbox))
             {
                 actor.TakeDamage(fireball.Damage);
                 _hitActors.Add(actor.Id);
