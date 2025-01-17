@@ -13,14 +13,16 @@ public class FrozenOrbSecondaryEntity : IEntity
     {
         get => new RectangleHitbox(0, 0, 0, 0);
     }
+    private FrozenOrbSecondaryGraphicsComponent _frozenOrbSecondaryGraphicsComponent = new();
+    private FrozenOrbSecondaryBehaviorComponent _frozenOrbSecondaryBehaviorComponent = new();
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        // _frozenOrbGraphicsComponent.Draw(this, spriteBatch, device);
+        _frozenOrbSecondaryGraphicsComponent.Draw(this, spriteBatch, device);
     }
 
     public void Update(GameTime gameTime)
     {
-        // _frozenOrbBehaviorComponent.Update(this, gameTime);
+        _frozenOrbSecondaryBehaviorComponent.Update(this, gameTime);
     }
 }

@@ -38,7 +38,11 @@ public class FrozenOrbBehaviorComponent
 
         if (_frameTime >= _secondaryProjectileInterval)
         {
-            FrozenOrbSecondaryEntity secondaryEntity = new();
+            FrozenOrbSecondaryEntity secondaryEntity = new()
+            {
+                Position = new(frozenOrb.Position.X, frozenOrb.Position.Y),
+                Angle = frozenOrb.Rotation,
+            };
             SecondaryEntities.Add(secondaryEntity);
             GameState.Entities.Add(secondaryEntity);
             _frameTime -= _secondaryProjectileInterval;

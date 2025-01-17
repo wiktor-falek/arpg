@@ -188,7 +188,7 @@
 /processorParam:TextureFormat=Color
 /build:spells/fireball.png
 
-#begin spells/shitty_orb.png
+#begin spells/frozen_orb_secondary.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -198,7 +198,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:spells/shitty_orb.png
+/build:spells/frozen_orb_secondary.png
+
+#begin spells/frozen_orb.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spells/frozen_orb.png
 
 #begin spells/spark.png
 /importer:TextureImporter
