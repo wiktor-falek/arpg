@@ -12,7 +12,7 @@ public enum ActorActionState
 {
     None,
     Swinging,
-    Casting
+    Casting,
 }
 
 public enum ActorFacing

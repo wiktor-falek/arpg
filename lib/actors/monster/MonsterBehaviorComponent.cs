@@ -4,14 +4,17 @@ using Microsoft.Xna.Framework;
 public class MonsterBehaviorComponent
 {
     private float _corpseDespawnTime = 10f;
+    private bool _attackStarted = false;
     private float _timeSinceDeath = 0f;
-    private bool hasAggro = false;
+    private float _attackInterval = 0.9f;
+    private double _swingTimer = 0.3f;
 
     public void Update(Monster monster, GameTime time)
     {
+        double elapsedTime = time.ElapsedGameTime.TotalSeconds;
+
         if (monster.State == ActorState.Dead)
         {
-            double elapsedTime = time.ElapsedGameTime.TotalSeconds;
             _timeSinceDeath += (float)elapsedTime;
 
             if (_timeSinceDeath >= _corpseDespawnTime)
@@ -37,27 +40,51 @@ public class MonsterBehaviorComponent
 
         double distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
 
-        if (hasAggro || monster.isHit)
+        if (distance <= 150)
         {
-            float deltaX = x2 - x1;
-            float deltaY = y2 - y1;
-            double angle = Math.Atan2(deltaY, deltaX);
-
-            var elapsedTime = time.ElapsedGameTime.TotalSeconds;
-            double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
-            double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
-
-            // TODO: stop at attack reach distance
-            monster.Position = new((float)x, (float)y);
-            monster.TransitionState(ActorState.Walking);
+            monster.IsLeashed = true;
         }
-        else if (distance <= 300)
+
+        if (!monster.IsLeashed)
         {
-            hasAggro = true;
+            monster.TransitionState(ActorState.Idling);
+            return;
+        }
+
+        float deltaX = x2 - x1;
+        float deltaY = y2 - y1;
+        double angle = Math.Atan2(deltaY, deltaX);
+
+        double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
+        double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
+
+        bool withinAttackHitDistance = distance <= 64;
+        bool withinAttackTriggerDistance = distance <= 32;
+
+        if (withinAttackTriggerDistance && !_attackStarted)
+        {
+            monster.TransitionState(ActorState.Idling);
+            monster.TransitionState(ActorActionState.Swinging);
+            _attackStarted = true;
+        }
+
+        if (_attackStarted)
+        {
+            _swingTimer += elapsedTime;
+            if (_swingTimer >= _attackInterval)
+            {
+                _swingTimer = 0f;
+                _attackStarted = false;
+
+                if (withinAttackHitDistance)
+                    GameState.Player.TakeDamage(10);
+            }
         }
         else
         {
-            monster.TransitionState(ActorState.Idling);
+            monster.Position = new((float)x, (float)y);
+            monster.TransitionState(ActorState.Walking);
+            monster.TransitionState(ActorActionState.None);
         }
     }
 }

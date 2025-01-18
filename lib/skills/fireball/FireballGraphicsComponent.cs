@@ -14,6 +14,18 @@ public class FireballGraphicsComponent
         if (_currentFrame >= _asset.Frames.Count)
             _currentFrame = 0;
 
+        spriteBatch.Draw(
+            _asset.Texture,
+            new((int)fireball.Position.X, (int)fireball.Position.Y),
+            _asset.Frames[_currentFrame],
+            Color.White,
+            (float)fireball.Angle,
+            new Vector2(_asset.Texture.Width / _asset.Frames.Count / 2, _asset.Texture.Height / 2),
+            1f,
+            SpriteEffects.None,
+            Layer.Entity
+        );
+
         if (GameState.IsDebugMode)
         {
             if (fireball.Hitbox is RectangleHitbox rectangleHitbox)
@@ -36,17 +48,5 @@ public class FireballGraphicsComponent
                 throw new NotImplementedException("Unhandled hitbox type");
             }
         }
-
-        spriteBatch.Draw(
-            _asset.Texture,
-            new((int)fireball.Position.X, (int)fireball.Position.Y),
-            _asset.Frames[_currentFrame],
-            Color.White,
-            (float)fireball.Angle,
-            new Vector2(_asset.Texture.Width / _asset.Frames.Count / 2, _asset.Texture.Height / 2),
-            1f,
-            SpriteEffects.None,
-            Layer.Entity
-        );
     }
 }
