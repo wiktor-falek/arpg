@@ -45,11 +45,12 @@ public class MonsterGraphicsComponent
 
     public void Draw(Monster monster, SpriteBatch spriteBatch, GraphicsDevice device)
     {
-        Asset asset = monster.State switch
+        Asset asset = (monster.State, monster.ActionState) switch
         {
-            ActorState.Idling => _idleAsset,
-            ActorState.Walking => _walkAsset,
-            ActorState.Dead => _deathAsset,
+            (_, ActorActionState.Swinging) => _attackAsset,
+            (ActorState.Idling, _) => _idleAsset,
+            (ActorState.Walking, _) => _walkAsset,
+            (ActorState.Dead, _) => _deathAsset,
             _ => throw new SystemException("Unhandled ActorState"),
         };
 
@@ -57,6 +58,18 @@ public class MonsterGraphicsComponent
             monster.Facing == ActorFacing.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
+
+        spriteBatch.Draw(
+            asset.Texture,
+            new((int)monster.Position.X, (int)monster.Position.Y),
+            asset.Frames[_currentFrame],
+            Color.White,
+            0f,
+            new Vector2(asset.Texture.Width / asset.Frames.Count / 2, asset.Texture.Height / 2),
+            1f,
+            effect,
+            Layer.Monster
+        );
 
         if (GameState.IsDebugMode)
         {
@@ -80,18 +93,6 @@ public class MonsterGraphicsComponent
                 throw new NotImplementedException("Unhandled hitbox type");
             }
         }
-
-        spriteBatch.Draw(
-            asset.Texture,
-            new((int)monster.Position.X, (int)monster.Position.Y),
-            asset.Frames[_currentFrame],
-            Color.White,
-            0f,
-            new Vector2(asset.Texture.Width / asset.Frames.Count / 2, asset.Texture.Height / 2),
-            1f,
-            effect,
-            Layer.Monster
-        );
 
         string monsterHealth = $"{monster.Health}";
         Vector2 monsterHealthOrigin = Assets.Fonts.MonogramExtened.MeasureString(monsterHealth);

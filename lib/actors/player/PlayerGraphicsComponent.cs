@@ -74,7 +74,7 @@ public class PlayerGraphicsComponent
             new Vector2(frame.Width / 2, frame.Height / 2),
             1f,
             effect,
-            Layer.Text
+            Layer.Player
         );
     }
 
