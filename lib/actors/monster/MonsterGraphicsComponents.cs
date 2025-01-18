@@ -21,11 +21,13 @@ public class MonsterGraphicsComponent
         {
             _elapsedTime = 0f;
 
-            var asset = monster.State switch
+            var asset = (monster.State, monster.ActionState) switch
             {
-                ActorState.Idling => _idleAsset,
-                ActorState.Walking => _walkAsset,
-                ActorState.Dead => _deathAsset,
+                // (ActorState.Walking, ActorActionState.Swinging) => _walkAttackAsset,
+                (_, ActorActionState.Swinging) => _attackAsset,
+                (ActorState.Idling, _) => _idleAsset,
+                (ActorState.Walking, _) => _walkAsset,
+                (ActorState.Dead, _) => _deathAsset,
                 _ => throw new SystemException("Unhandled ActorState"),
             };
 

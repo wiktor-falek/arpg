@@ -47,9 +47,18 @@ public class MonsterBehaviorComponent
             double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
             double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
 
-            // TODO: stop at attack reach distance
-            monster.Position = new((float)x, (float)y);
-            monster.TransitionState(ActorState.Walking);
+            int attackReachDistance = 32;
+            if (distance > attackReachDistance)
+            {
+                monster.Position = new((float)x, (float)y);
+                monster.TransitionState(ActorState.Walking);
+                monster.TransitionState(ActorActionState.None); // here or somewhere else?
+            }
+            else
+            {
+                monster.TransitionState(ActorActionState.Swinging);
+                // swing in player direction
+            }
         }
         else if (distance <= 300)
         {
