@@ -19,25 +19,14 @@ public class PlayerGraphicsComponent
         {
             _elapsedTime = 0f;
 
-            _currentFrame++;
-            if (player.State == ActorState.Idling)
+            var asset = player.State switch
             {
-                if (_currentFrame >= _idleAsset.Frames.Count)
-                {
-                    _currentFrame = 0;
-                }
-            }
-            else if (player.State == ActorState.Walking)
-            {
-                if (_currentFrame >= _walkAsset.Frames.Count)
-                {
-                    _currentFrame = 0;
-                }
-            }
-            else
-            {
-                throw new SystemException("Unhandled ActorState");
-            }
+                ActorState.Idling => _idleAsset,
+                ActorState.Walking => _walkAsset,
+                _ => throw new SystemException("Unhandled ActorState"),
+            };
+
+            _currentFrame = (_currentFrame + 1) % asset.Frames.Count;
         }
     }
 

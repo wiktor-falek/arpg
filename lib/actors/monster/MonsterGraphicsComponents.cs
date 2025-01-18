@@ -21,30 +21,22 @@ public class MonsterGraphicsComponent
         {
             _elapsedTime = 0f;
 
-            if (monster.State == ActorState.Idling)
+            var asset = monster.State switch
             {
-                _currentFrame++;
-                if (_currentFrame >= _idleAsset.Frames.Count)
-                {
-                    _currentFrame = 0;
-                }
-            }
-            else if (monster.State == ActorState.Walking)
+                ActorState.Idling => _idleAsset,
+                ActorState.Walking => _walkAsset,
+                ActorState.Dead => _deathAsset,
+                _ => throw new SystemException("Unhandled ActorState"),
+            };
+
+            if (asset == _deathAsset)
             {
-                _currentFrame++;
-                if (_currentFrame >= _walkAsset.Frames.Count)
-                {
-                    _currentFrame = 0;
-                }
-            }
-            else if (monster.State == ActorState.Dead)
-            {
-                if (_currentFrame != _deathAsset.Frames.Count - 1)
+                if (_currentFrame != asset.Frames.Count - 1)
                     _currentFrame++;
             }
             else
             {
-                throw new SystemException("Unhandled ActorState");
+                _currentFrame = (_currentFrame + 1) % asset.Frames.Count;
             }
         }
     }
@@ -56,7 +48,7 @@ public class MonsterGraphicsComponent
             ActorState.Idling => _idleAsset,
             ActorState.Walking => _walkAsset,
             ActorState.Dead => _deathAsset,
-            _ => throw new SystemException("Unhandled ActorState")
+            _ => throw new SystemException("Unhandled ActorState"),
         };
 
         var effect =
