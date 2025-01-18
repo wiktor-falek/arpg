@@ -8,7 +8,7 @@ public class FrozenOrbBehaviorComponent
     private List<FrozenOrbSecondaryEntity> SecondaryEntities = [];
     private float _frameTime = 0f;
     private float _secondaryProjectileInterval = 0.1f;
-    private float _rotationSpeed = 15f;
+    private float _rotationIncreasePerProjectile = MathHelper.ToRadians(75f);
 
     public void Update(FrozenOrbEntity frozenOrb, GameTime gameTime)
     {
@@ -28,14 +28,9 @@ public class FrozenOrbBehaviorComponent
             frozenOrb.Position.Y + (frozenOrb.Speed * elapsedTime * Math.Sin(frozenOrb.Angle));
         frozenOrb.Position = new((float)x, (float)y);
 
-        // TODO: review
-        frozenOrb.Rotation = (frozenOrb.Rotation + _rotationSpeed * elapsedTime) % 360;
-        if (frozenOrb.Rotation < 0)
-        {
-            frozenOrb.Rotation += 360;
-        }
-        frozenOrb.Rotation += 1;
-
+        float rotationIncreasePerSecond = _rotationIncreasePerProjectile / _secondaryProjectileInterval;
+        frozenOrb.Rotation = ((float)frozenOrb.Rotation + rotationIncreasePerSecond * elapsedTime) % 360;
+ 
         if (_frameTime >= _secondaryProjectileInterval)
         {
             int offset = 16;

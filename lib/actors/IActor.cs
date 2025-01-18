@@ -8,6 +8,13 @@ public enum ActorState
     Dead,
 }
 
+public enum ActorActionState
+{
+    None,
+    Swinging,
+    Casting
+}
+
 public enum ActorFacing
 {
     Left,
@@ -16,13 +23,14 @@ public enum ActorFacing
 
 public interface IActor
 {
-    string Id { get; set; }
-    ActorState State { get; set; }
-    ActorFacing Facing { get; set; }
-    Vector2 Position { get; set; }
-    float Speed { get; set; }
-    int Health { get; set; }
-    int MaxHealth { get; set; }
+    string Id { get; }
+    ActorState State { get; }
+    ActorActionState ActionState { get; }
+    ActorFacing Facing { get; }
+    Vector2 Position { get; }
+    float Speed { get; }
+    int Health { get; }
+    int MaxHealth { get; }
     bool IsAlive { get; }
     IHitbox Hitbox { get; }
 

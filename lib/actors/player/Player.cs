@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class Player : IActor
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string Id { get; } = Guid.NewGuid().ToString();
     public ActorState State { get; set; } = ActorState.Idling;
-    public ActorFacing Facing { get; set; } = ActorFacing.Right;
+    public ActorActionState ActionState { get; set; } = ActorActionState.None;
+    public ActorFacing Facing { get; set;} = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public float Speed { get; set; } = 100f;
-    public int Health { get; set; } = 500;
-    public int MaxHealth { get; set; } = 500;
+    public float Speed { get; private set; } = 100f;
+    public int Health { get; private set; } = 500;
+    public int MaxHealth { get; } = 500;
     public bool IsAlive => Health > 0;
     public IHitbox Hitbox
     {
@@ -18,14 +19,12 @@ public class Player : IActor
     }
     public Vector2 Size => new(140, 140);
     public SkillCollection Skills;
-    public HolyFire HolyFire;
 
     private PlayerInputComponent _inputComponent = new();
     private PlayerGraphicsComponent _graphicsComponent = new();
 
     public Player()
     {
-        HolyFire = new(this);
         Skills = new(this);
     }
 
@@ -33,13 +32,11 @@ public class Player : IActor
     {
         _inputComponent.Update(this, gameTime);
         _graphicsComponent.Update(this, gameTime);
-        // HolyFire.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
     {
         _graphicsComponent.Draw(this, spriteBatch, device);
-        // HolyFire.Draw(spriteBatch, device);
     }
 
     public void TransitionState(ActorState newState)
