@@ -2,6 +2,21 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/*
+Behaviors:
+    - Melee
+    - Caster
+
+AI types:
+    - Chasing
+    - Distant
+*/
+
+// How to reuse behaviors? I.e. caster/melee behavior, different AI
+// Base Monster class?
+// MeleeSkeleton(MeleeBehavior, ChasingAI, _graphicsComponent) extends Monster (impls: TransitionState, TakeDamage, Update)
+// CasterSkeleton
+
 public class Monster : IActor
 {
     public string Id { get; } = Guid.NewGuid().ToString();

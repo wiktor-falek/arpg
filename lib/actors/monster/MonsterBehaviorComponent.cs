@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 
+// Separate AI from behavior?
+
 public class MonsterBehaviorComponent
 {
     private float _corpseDespawnTime = 10f;
