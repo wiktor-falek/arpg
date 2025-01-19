@@ -4,10 +4,12 @@ using Microsoft.Xna.Framework;
 public class MonsterBehaviorComponent
 {
     private float _corpseDespawnTime = 10f;
-    private bool _attackStarted = false;
+    private bool _playerWasHit = false;
+    private bool _isAttacking = false;
     private float _timeSinceDeath = 0f;
     private float _attackInterval = 0.9f;
     private double _swingTimer = 0.3f;
+    private const float _ATTACK_LAND_FRAME = 0.6f;
 
     public void Update(Monster monster, GameTime time)
     {
@@ -61,23 +63,33 @@ public class MonsterBehaviorComponent
         bool withinAttackHitDistance = distance <= 64;
         bool withinAttackTriggerDistance = distance <= 32;
 
-        if (withinAttackTriggerDistance && !_attackStarted)
+        if (withinAttackTriggerDistance && !_isAttacking)
         {
             monster.TransitionState(ActorState.Idling);
             monster.TransitionState(ActorActionState.Swinging);
-            _attackStarted = true;
+            _isAttacking = true;
         }
 
-        if (_attackStarted)
+        if (_isAttacking)
         {
             _swingTimer += elapsedTime;
+
+            if (_swingTimer >= _ATTACK_LAND_FRAME)
+            {
+                // TODO: there should be an attack duration i.e. how long can you get hit for after starting swinging
+                if (withinAttackHitDistance && !_playerWasHit)
+                {
+                    // TODO: proper hitbox checking
+                    GameState.Player.TakeDamage(10);
+                    _playerWasHit = true;
+                }
+            }
+
             if (_swingTimer >= _attackInterval)
             {
                 _swingTimer = 0f;
-                _attackStarted = false;
-
-                if (withinAttackHitDistance)
-                    GameState.Player.TakeDamage(10);
+                _isAttacking = false;
+                _playerWasHit = false;
             }
         }
         else
