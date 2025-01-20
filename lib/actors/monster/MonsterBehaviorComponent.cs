@@ -23,6 +23,9 @@ public class MonsterBehaviorComponent
             {
                 GameState.RemoveActor(monster);
             }
+
+            monster.ActionState = ActorActionState.None;
+
             return;
         }
 
