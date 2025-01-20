@@ -7,7 +7,6 @@ public class FrozenOrbSecondaryBehaviorComponent
 {
     public float CurrentDuration = 0f;
     private List<string> _hitActors = [];
-    private float _speed = 50f;
 
     public void Update(FrozenOrbSecondaryEntity secondaryEntity, GameTime gameTime)
     {
@@ -21,9 +20,9 @@ public class FrozenOrbSecondaryBehaviorComponent
         }
 
         double x =
-            secondaryEntity.Position.X + (_speed * elapsedTime * Math.Cos(secondaryEntity.Angle));
+            secondaryEntity.Position.X + (secondaryEntity.Speed * elapsedTime * Math.Cos(secondaryEntity.Angle));
         double y =
-            secondaryEntity.Position.Y + (_speed * elapsedTime * Math.Sin(secondaryEntity.Angle));
+            secondaryEntity.Position.Y + (secondaryEntity.Speed * elapsedTime * Math.Sin(secondaryEntity.Angle));
         secondaryEntity.Position = new((float)x, (float)y);
 
         foreach (IActor actor in GameState.Actors.Where(actor => actor is Monster))

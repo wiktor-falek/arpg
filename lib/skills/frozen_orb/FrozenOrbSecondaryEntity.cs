@@ -6,9 +6,9 @@ public class FrozenOrbSecondaryEntity : IEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public Vector2 Position { get; set; }
-    public float Speed { get; set; } = 250f;
+    public float Speed { get; set; } = 100f;
     public double Angle = 0d;
-    public float Damage = 10f;
+    public float Damage = 5f;
     public readonly float MaxDuration = 1.5f;
     public IHitbox Hitbox
     {
