@@ -9,7 +9,7 @@ public class FrozenOrbEntity(IActor owner) : IEntity
     public float Speed { get; set; } = 110f;
     public readonly float MaxDuration = 3f;
     public double Angle = 0d;
-    public double Rotation = 0d;
+    public float Rotation = 0f;
     public IHitbox Hitbox
     {
         get => new RectangleHitbox(0, 0, 0, 0);
@@ -26,6 +26,7 @@ public class FrozenOrbEntity(IActor owner) : IEntity
 
     public void Update(GameTime gameTime)
     {
+        Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 3f;
         _frozenOrbBehaviorComponent.Update(this, gameTime);
     }
 }
