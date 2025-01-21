@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
+using arpg;
 using Microsoft.Xna.Framework;
+
 
 public class MonsterSpawner(Player player, double frequency, int offscreenDistance)
 {
     public double Frequency = frequency;
-    public int OffscreenDistance = offscreenDistance;
     public Rectangle SpawnEdge { 
         get => new(
-            (int)player.Position.X - OffscreenDistance - 640 / 2,
-            (int)player.Position.Y - OffscreenDistance - 360 / 2,
-            640 + OffscreenDistance * 2,
-            360 + OffscreenDistance * 2
+            (int)player.Position.X - _offscreenDistance - HALF_WINDOW_WIDTH,
+            (int)player.Position.Y - _offscreenDistance - HALF_WINDOW_HEIGHT,
+            Game1.NativeResolution.Width + _offscreenDistance * 2,
+            Game1.NativeResolution.Height + _offscreenDistance * 2
         ); 
     }
+    private const int HALF_WINDOW_WIDTH = Game1.NativeResolution.Width / 2;
+    private const int HALF_WINDOW_HEIGHT = Game1.NativeResolution.Height / 2;
+    private int _offscreenDistance = offscreenDistance;
     private double _timer = 0f;
 
     public void Update(GameTime gameTime)
@@ -23,10 +27,11 @@ public class MonsterSpawner(Player player, double frequency, int offscreenDistan
 
         if (_timer >= Frequency)
         {
-            Vector2 topLeftCorner = new(SpawnEdge.Left, SpawnEdge.Top);
-            Vector2 topRightCorner = new(SpawnEdge.Right, SpawnEdge.Top);
-            Vector2 bottomLeftCorner = new(SpawnEdge.Left, SpawnEdge.Bottom);
-            Vector2 bottomRightCorner = new(SpawnEdge.Right, SpawnEdge.Bottom);
+            Rectangle spawnEdge = SpawnEdge;
+            Vector2 topLeftCorner = new(spawnEdge.Left, spawnEdge.Top);
+            Vector2 topRightCorner = new(spawnEdge.Right, spawnEdge.Top);
+            Vector2 bottomLeftCorner = new(spawnEdge.Left, spawnEdge.Bottom);
+            Vector2 bottomRightCorner = new(spawnEdge.Right, spawnEdge.Bottom);
 
             List<(Vector2, Vector2)> lineSegments = [
                 (topLeftCorner, topRightCorner),

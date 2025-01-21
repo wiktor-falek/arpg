@@ -6,6 +6,10 @@ namespace arpg;
 public class Game1 : Game
 {
     public static Config Config { get; private set; }
+    public static class NativeResolution {
+        public const int Width = 640;
+        public const int Height = 360;
+    }
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
