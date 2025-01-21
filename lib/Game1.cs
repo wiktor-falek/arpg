@@ -28,7 +28,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _renderTarget = new(GraphicsDevice, 640, 360);
+        _renderTarget = new(GraphicsDevice, NativeResolution.Width, NativeResolution.Height);
         Config = new(_graphics, GraphicsDevice, _renderTarget);
         _hud = new Hud();
         _background = new Background();

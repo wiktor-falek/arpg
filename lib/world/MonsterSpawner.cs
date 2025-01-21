@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using arpg;
 using Microsoft.Xna.Framework;
 
-
 public class MonsterSpawner(Player player, double frequency, int offscreenDistance)
 {
     public double Frequency = frequency;
@@ -45,12 +44,12 @@ public class MonsterSpawner(Player player, double frequency, int offscreenDistan
 
             var (start, end) = lineSegments[index];
 
-            bool isXAxis = start.Y == end.Y;
+            bool isHorizontalEdge = start.Y == end.Y;
 
             int x;
             int y;
 
-            if (isXAxis)
+            if (isHorizontalEdge)
             {
                 int rngMin = (int)Math.Min(start.X, end.X);
                 int rngMax = (int)Math.Max(start.X, end.X);

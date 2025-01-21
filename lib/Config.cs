@@ -1,3 +1,4 @@
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -25,8 +26,8 @@ public class Config
 
     public void ChangeResolutionScale(int scale)
     {
-        _graphics.PreferredBackBufferWidth = 640 * scale;
-        _graphics.PreferredBackBufferHeight = 360 * scale;
+        _graphics.PreferredBackBufferWidth = Game1.NativeResolution.Width * scale;
+        _graphics.PreferredBackBufferHeight = Game1.NativeResolution.Height * scale;
         Scale = scale;
     }
 
