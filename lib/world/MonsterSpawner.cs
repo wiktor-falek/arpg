@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-public class MonsterSpawner(double frequency, int offscreenDistance)
+public class MonsterSpawner(Player player, double frequency, int offscreenDistance)
 {
-    // public List<Monster> MonsterPool = [];
     public double Frequency = frequency;
     public int OffscreenDistance = offscreenDistance;
     public Rectangle SpawnEdge { 
         get => new(
-            // TODO: relative to the player
-            640 / 2 - OffscreenDistance,
-            360 / 2 - OffscreenDistance,
+            (int)player.Position.X - OffscreenDistance - 640 / 2,
+            (int)player.Position.Y - OffscreenDistance - 360 / 2,
             640 + OffscreenDistance * 2,
             360 + OffscreenDistance * 2
         ); 
