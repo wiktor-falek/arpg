@@ -41,21 +41,8 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         _keyboardInputManager.Update();
-
-        GameState.Player.Update(gameTime);
-        Camera.Follow(GameState.Player);
-
-        for (int i = GameState.Actors.Count - 1; i >= 0; i--)
-        {
-            IActor actor = GameState.Actors[i];
-            actor.Update(gameTime);
-        }
-
-        for (int i = GameState.Entities.Count - 1; i >= 0; i--)
-        {
-            IEntity entity = GameState.Entities[i];
-            entity.Update(gameTime);
-        }
+        
+        GameState.Update(gameTime);
 
         _hud.Update(gameTime);
 
