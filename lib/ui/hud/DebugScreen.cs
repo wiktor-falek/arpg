@@ -14,11 +14,11 @@ public class DebugScreen : IHudElement
         if (!GameState.IsDebugMode)
             return;
 
-        // string playerPositionXText = $"X:{GameState.Player.Position.X:F2}";
-        // string playerPositionYText = $"Y:{GameState.Player.Position.Y:F2}";
-        string playerPositionXText = $"X:{Game1.Config.ScaleX:F2}";
-        string playerPositionYText = $"Y:{Game1.Config.ScaleY:F2}";
-        string resolutionText = $"Resolution:{640 * Game1.Config.Scale}x{360 * Game1.Config.Scale}";
+        string playerPositionXText = $"X:{GameState.Player.Position.X:F2}";
+        string playerPositionYText = $"Y:{GameState.Player.Position.Y:F2}";
+        string resolutionText =
+            $"Resolution:{Game1.NativeResolution.Width * Game1.Config.Scale}" +
+            $"x{Game1.NativeResolution.Height * Game1.Config.Scale}";
         // string framerateText = $"FPS:{(int)FramerateCounter.Framerate}";
 
         spriteBatch.DrawString(

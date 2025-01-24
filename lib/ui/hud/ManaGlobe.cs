@@ -14,7 +14,7 @@ public class ManaGlobe : IHudElement
     public ManaGlobe()
     {
         Size = new Vector2(55, 55);
-        Position = new Vector2(640 - Size.X, 360 - Size.Y);
+        Position = new Vector2(Game1.NativeResolution.Width - Size.X, Game1.NativeResolution.Height - Size.Y);
     }
 
     public void Update(GameTime gameTime)

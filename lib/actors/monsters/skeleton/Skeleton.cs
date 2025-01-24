@@ -14,7 +14,7 @@ public class Skeleton : IActor
     public int Health { get; private set; } = 100;
     public int MaxHealth { get; } = 1000;
     public bool IsAlive => Health > 0;
-    public bool IsLeashed = false;
+    public bool IsLeashed = true;
     public IHitbox Hitbox
     {
         get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);

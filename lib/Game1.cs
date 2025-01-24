@@ -6,6 +6,10 @@ namespace arpg;
 public class Game1 : Game
 {
     public static Config Config { get; private set; }
+    public static class NativeResolution {
+        public const int Width = 640;
+        public const int Height = 360;
+    }
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
@@ -24,7 +28,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _renderTarget = new(GraphicsDevice, 640, 360);
+        _renderTarget = new(GraphicsDevice, NativeResolution.Width, NativeResolution.Height);
         Config = new(_graphics, GraphicsDevice, _renderTarget);
         _hud = new Hud();
         _background = new Background();
@@ -41,21 +45,8 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         _keyboardInputManager.Update();
-
-        GameState.Player.Update(gameTime);
-        Camera.Follow(GameState.Player);
-
-        for (int i = GameState.Actors.Count - 1; i >= 0; i--)
-        {
-            IActor actor = GameState.Actors[i];
-            actor.Update(gameTime);
-        }
-
-        for (int i = GameState.Entities.Count - 1; i >= 0; i--)
-        {
-            IEntity entity = GameState.Entities[i];
-            entity.Update(gameTime);
-        }
+        
+        GameState.Update(gameTime);
 
         _hud.Update(gameTime);
 
