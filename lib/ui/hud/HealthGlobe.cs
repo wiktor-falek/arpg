@@ -14,7 +14,7 @@ public class HealthGlobe : IHudElement
     public HealthGlobe()
     {
         Size = new Vector2(55, 55);
-        Position = new Vector2(0, 360 - Size.Y);
+        Position = new Vector2(0, Game1.NativeResolution.Height - Size.Y);
     }
 
     public void Update(GameTime gameTime)
