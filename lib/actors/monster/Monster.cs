@@ -2,9 +2,10 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Monster : IActor
+public class Skeleton : IActor
 {
     public string Id { get; } = Guid.NewGuid().ToString();
+    public ActorKind Kind { get; } = ActorKind.Monster;
     public ActorState State { get; set; } = ActorState.Idling;
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
@@ -19,8 +20,8 @@ public class Monster : IActor
         get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
     }
 
-    private MonsterGraphicsComponent _graphicsComponent = new();
-    private MonsterBehaviorComponent _behaviorComponent = new();
+    private SkeletonGraphicsComponent _graphicsComponent = new();
+    private SkeletonBehaviorComponent _behaviorComponent = new();
 
     public void Update(GameTime gameTime)
     {

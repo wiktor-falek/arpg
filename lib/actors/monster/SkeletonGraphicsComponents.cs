@@ -3,7 +3,7 @@ using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class MonsterGraphicsComponent
+public class SkeletonGraphicsComponent
 {
     private Asset _idleAsset = Assets.Monsters.Skeleton.Idle;
     private Asset _attackAsset = Assets.Monsters.Skeleton.Attack;
@@ -13,7 +13,7 @@ public class MonsterGraphicsComponent
     private int _currentFrame = 0;
     private float _elapsedTime = 0f;
 
-    public void Update(Monster monster, GameTime gameTime)
+    public void Update(Skeleton monster, GameTime gameTime)
     {
         _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -43,7 +43,7 @@ public class MonsterGraphicsComponent
         }
     }
 
-    public void Draw(Monster monster, SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(Skeleton monster, SpriteBatch spriteBatch, GraphicsDevice device)
     {
         Asset asset = (monster.State, monster.ActionState) switch
         {

@@ -1,6 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+public enum ActorKind
+{
+    Player,
+    Monster,
+}
+
 public enum ActorState
 {
     Idling,
@@ -24,6 +30,7 @@ public enum ActorFacing
 public interface IActor
 {
     string Id { get; }
+    ActorKind Kind { get; }
     ActorState State { get; }
     ActorActionState ActionState { get; }
     ActorFacing Facing { get; }

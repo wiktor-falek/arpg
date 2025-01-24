@@ -23,7 +23,7 @@ public class FireballBehaviorComponent
         double y = fireball.Position.Y + (fireball.Speed * elapsedTime * Math.Sin(fireball.Angle));
         fireball.Position = new((float)x, (float)y);
 
-        foreach (var actor in GameState.Actors.Where(actor => actor is Monster))
+        foreach (var actor in GameState.Actors.Where(actor => actor.Kind == ActorKind.Monster))
         {
             if (!_hitActors.Contains(actor.Id) && fireball.Hitbox.Intersects(actor.Hitbox))
             {

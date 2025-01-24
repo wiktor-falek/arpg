@@ -7,9 +7,9 @@ public static class GameState
     public static readonly List<IEntity> Entities = [];
     public static readonly List<IActor> Actors =
     [
-        new Monster() { Position = new(401, 200 + 0) },
-        new Monster() { Position = new(401, 200 + 100) },
-        new Monster() { Position = new(401, 200 + 200) },
+        new Skeleton() { Position = new(401, 200 + 0) },
+        new Skeleton() { Position = new(401, 200 + 100) },
+        new Skeleton() { Position = new(401, 200 + 200) },
     ];
 
     public static void RemoveEntity(IEntity entity)

@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-public class MonsterBehaviorComponent
+public class SkeletonBehaviorComponent
 {
     private float _corpseDespawnTime = 10f;
     private bool _playerWasHit = false;
@@ -11,7 +11,7 @@ public class MonsterBehaviorComponent
     private double _swingTimer = 0.3f;
     private const float _ATTACK_LAND_FRAME = 0.6f;
 
-    public void Update(Monster monster, GameTime time)
+    public void Update(Skeleton monster, GameTime time)
     {
         double elapsedTime = time.ElapsedGameTime.TotalSeconds;
 

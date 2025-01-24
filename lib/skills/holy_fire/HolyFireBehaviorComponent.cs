@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.Xna.Framework;
 
 public class HolyFireBehaviorComponent
@@ -15,9 +16,9 @@ public class HolyFireBehaviorComponent
             int selfDps = 4;
             int dps = 20;
             holyFire.Owner.TakeDamage(selfDps * _tickRate);
-            foreach (var actor in GameState.Actors)
+            foreach (var actor in GameState.Actors.Where(actor => actor.Kind == ActorKind.Monster))
             {
-                if (actor is Monster && actor.Hitbox.Intersects(holyFire.Hitbox))
+                if (actor.Hitbox.Intersects(holyFire.Hitbox))
                 {
                     actor.TakeDamage(dps * _tickRate);
                 }
