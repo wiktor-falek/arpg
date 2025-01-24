@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class FireballEntity(IActor owner) : IEntity
 {
+    public IActor Owner = owner;
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 350f;
@@ -16,7 +17,6 @@ public class FireballEntity(IActor owner) : IEntity
         set => _hitbox = value;
     }
 
-    private IActor _owner = owner;
     private IHitbox _hitbox;
     private FireballGraphicsComponent _fireballGraphicsComponent = new();
     private FireballBehaviorComponent _fireballBehaviorComponent = new();

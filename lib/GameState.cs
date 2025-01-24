@@ -6,10 +6,14 @@ public static class GameState
     public static bool IsDebugMode = false;
     public static readonly Player Player = new() { Position = new(0, 0) };
     public static readonly List<IEntity> Entities = [];
+    public static readonly List<IActor> Actors =
+    [
+        new CasterSkeleton() { Position = new(100, 100) },
+        new CasterSkeleton() { Position = new(300, 100) },
+        new CasterSkeleton() { Position = new(500, 100) },
+    ];
 
-    public static readonly List<IActor> Actors = [];
-
-    private static MonsterSpawner _monsterSpawner = new(Player, 1d, 100);
+    private static MonsterSpawner _monsterSpawner = new(Player, 1_000_000d, offscreenDistance: 100);
 
     public static void Update(GameTime gameTime)
     {

@@ -25,7 +25,6 @@ public class SkeletonBehaviorComponent
             }
 
             monster.ActionState = ActorActionState.None;
-
             return;
         }
 
