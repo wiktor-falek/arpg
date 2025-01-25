@@ -25,6 +25,8 @@ public class Asset
 
 public static class Assets
 {
+    public static Texture2D RectangleTexture;
+
     public static class Fonts
     {
         public static SpriteFont MonogramExtened => GetFont("fonts/monogram_extended");
@@ -64,8 +66,11 @@ public static class Assets
     private static Dictionary<string, SpriteFont> _fonts = [];
     private static Dictionary<string, Asset> _textures = [];
 
-    public static void Load(ContentManager contentManager)
+    public static void Load(ContentManager contentManager, GraphicsDevice graphicsDevice)
     {
+        RectangleTexture = new Texture2D(graphicsDevice, 1, 1);
+        RectangleTexture.SetData([Color.Yellow]);
+
         AddFont(contentManager, "fonts/monogram_extended");
 
         AddTexture(contentManager, "environment/cobblestone_3", 1);
@@ -84,6 +89,35 @@ public static class Assets
         AddTexture(contentManager, "monsters/skeleton_dead_near", 5);
         AddTexture(contentManager, "monsters/skeleton_corpse_1", 1);
         AddTexture(contentManager, "monsters/skeleton_corpse_2", 1);
+    }
+
+    public static Texture2D CreateCircleTexture(int radius)
+    {
+        int diameter = radius * 2;
+        Texture2D texture = new(Game1.GraphicsDevice, diameter, diameter);
+        Color[] colorData = new Color[diameter * diameter];
+
+        float radiusSquared = radius * radius;
+
+        for (int x = 0; x < diameter; x++)
+        {
+            for (int y = 0; y < diameter; y++)
+            {
+                int index = x + y * diameter;
+                Vector2 pos = new(x - radius, y - radius);
+                if (pos.LengthSquared() <= radiusSquared)
+                {
+                    colorData[index] = Color.White;
+                }
+                else
+                {
+                    colorData[index] = Color.Transparent;
+                }
+            }
+        }
+
+        texture.SetData(colorData);
+        return texture;
     }
 
     private static void AddFont(ContentManager contentManager, string path)

@@ -30,7 +30,7 @@ public class PlayerGraphicsComponent
         }
     }
 
-    public void Draw(Player player, SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(Player player, SpriteBatch spriteBatch)
     {
         var texture = player.State == ActorState.Idling ? _idleAsset.Texture : _walkAsset.Texture;
         var frame =
@@ -46,10 +46,8 @@ public class PlayerGraphicsComponent
         {
             if (player.Hitbox is RectangleHitbox rectangleHitbox)
             {
-                var rectangleTexture = new Texture2D(device, 1, 1);
-                rectangleTexture.SetData([Color.Yellow]);
                 spriteBatch.Draw(
-                    rectangleTexture,
+                    Assets.RectangleTexture,
                     rectangleHitbox.Bounds,
                     null,
                     Color.Yellow,

@@ -6,7 +6,7 @@ public class FrozenOrbGraphicsComponent
 {
     private Asset _asset = Assets.Spells.FrozenOrb;
 
-    public void Draw(FrozenOrbEntity frozenOrb, SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(FrozenOrbEntity frozenOrb, SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(
             _asset.Texture,

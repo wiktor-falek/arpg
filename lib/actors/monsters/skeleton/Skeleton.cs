@@ -34,9 +34,9 @@ public class Skeleton : IActor
         _behaviorComponent.Update(this, gameTime);
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        _graphicsComponent.Draw(this, spriteBatch, device);
+        _graphicsComponent.Draw(this, spriteBatch);
     }
 
     public void TakeDamage(float amount)

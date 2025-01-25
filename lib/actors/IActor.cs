@@ -42,6 +42,6 @@ public interface IActor
     IHitbox Hitbox { get; }
 
     void Update(GameTime gameTime);
-    void Draw(SpriteBatch spriteBatch, GraphicsDevice device);
+    void Draw(SpriteBatch spriteBatch);
     void TakeDamage(float amount);
 }

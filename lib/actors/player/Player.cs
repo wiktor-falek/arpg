@@ -35,9 +35,9 @@ public class Player : IActor
         _graphicsComponent.Update(this, gameTime);
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        _graphicsComponent.Draw(this, spriteBatch, device);
+        _graphicsComponent.Draw(this, spriteBatch);
     }
 
     public void TransitionState(ActorState newState)

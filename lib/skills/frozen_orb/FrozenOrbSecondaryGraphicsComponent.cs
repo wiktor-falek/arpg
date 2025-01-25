@@ -9,18 +9,15 @@ public class FrozenOrbSecondaryGraphicsComponent
 
     public void Draw(
         FrozenOrbSecondaryEntity frozenOrbSecondary,
-        SpriteBatch spriteBatch,
-        GraphicsDevice device
+        SpriteBatch spriteBatch
     )
     {
         if (GameState.IsDebugMode)
         {
             if (frozenOrbSecondary.Hitbox is RectangleHitbox rectangleHitbox)
             {
-                var rectangleTexture = new Texture2D(device, 1, 1);
-                rectangleTexture.SetData([Color.Yellow]);
                 spriteBatch.Draw(
-                    rectangleTexture,
+                    Assets.RectangleTexture,
                     rectangleHitbox.Bounds,
                     null,
                     Color.Yellow,

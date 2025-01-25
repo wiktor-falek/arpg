@@ -21,9 +21,9 @@ public class FireballEntity(IActor owner) : IEntity
     private FireballGraphicsComponent _fireballGraphicsComponent = new();
     private FireballBehaviorComponent _fireballBehaviorComponent = new();
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        _fireballGraphicsComponent.Draw(this, spriteBatch, device);
+        _fireballGraphicsComponent.Draw(this, spriteBatch);
     }
 
     public void Update(GameTime gameTime)

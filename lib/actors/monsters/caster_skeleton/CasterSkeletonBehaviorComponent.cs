@@ -72,6 +72,13 @@ public class CasterSkeletonBehaviorComponent
         }
         else
         {
+            /*
+                dude is within attack range
+                now he wants to start channeling and cast
+                stand still a bit
+                reposition staying within range 
+            */
+
             // start casting
             FireballEntity fireballEntity = new(monster)
             {

@@ -19,9 +19,9 @@ public class FrozenOrbEntity(IActor owner) : IEntity
     private FrozenOrbGraphicsComponent _frozenOrbGraphicsComponent = new();
     private FrozenOrbBehaviorComponent _frozenOrbBehaviorComponent = new();
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        _frozenOrbGraphicsComponent.Draw(this, spriteBatch, device);
+        _frozenOrbGraphicsComponent.Draw(this, spriteBatch);
     }
 
     public void Update(GameTime gameTime)

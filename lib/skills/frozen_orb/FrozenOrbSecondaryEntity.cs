@@ -18,9 +18,9 @@ public class FrozenOrbSecondaryEntity : IEntity
     private FrozenOrbSecondaryGraphicsComponent _frozenOrbSecondaryGraphicsComponent = new();
     private FrozenOrbSecondaryBehaviorComponent _frozenOrbSecondaryBehaviorComponent = new();
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        _frozenOrbSecondaryGraphicsComponent.Draw(this, spriteBatch, device);
+        _frozenOrbSecondaryGraphicsComponent.Draw(this, spriteBatch);
     }
 
     public void Update(GameTime gameTime)

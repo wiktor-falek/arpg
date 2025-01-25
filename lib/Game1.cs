@@ -10,6 +10,7 @@ public class Game1 : Game
         public const int Width = 640;
         public const int Height = 360;
     }
+    public static new GraphicsDevice GraphicsDevice;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
@@ -28,6 +29,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        GraphicsDevice = base.GraphicsDevice;
         _renderTarget = new(GraphicsDevice, NativeResolution.Width, NativeResolution.Height);
         Config = new(_graphics, GraphicsDevice, _renderTarget);
         _hud = new Hud();
@@ -39,7 +41,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        Assets.Load(Content);
+        Assets.Load(Content, GraphicsDevice);
     }
 
     protected override void Update(GameTime gameTime)
@@ -68,16 +70,16 @@ public class Game1 : Game
             samplerState: SamplerState.PointClamp
         );
 
+        GameState.Player.Draw(_spriteBatch);
+
         foreach (var actor in GameState.Actors)
         {
-            actor.Draw(_spriteBatch, GraphicsDevice);
+            actor.Draw(_spriteBatch);
         }
-
-        GameState.Player.Draw(_spriteBatch, GraphicsDevice);
 
         foreach (var entity in GameState.Entities)
         {
-            entity.Draw(_spriteBatch, GraphicsDevice);
+            entity.Draw(_spriteBatch);
         }
 
         _spriteBatch.End();

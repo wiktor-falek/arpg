@@ -43,7 +43,7 @@ public class CasterSkeletonGraphicsComponent
         }
     }
 
-    public void Draw(CasterSkeleton monster, SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(CasterSkeleton monster, SpriteBatch spriteBatch)
     {
         Asset asset = (monster.State, monster.ActionState) switch
         {
@@ -75,10 +75,8 @@ public class CasterSkeletonGraphicsComponent
         {
             if (monster.Hitbox is RectangleHitbox rectangleHitbox)
             {
-                var rectangleTexture = new Texture2D(device, 1, 1);
-                rectangleTexture.SetData([Color.Yellow]);
                 spriteBatch.Draw(
-                    rectangleTexture,
+                    Assets.RectangleTexture,
                     rectangleHitbox.Bounds,
                     null,
                     Color.Yellow,

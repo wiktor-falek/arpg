@@ -8,7 +8,7 @@ public class FireballGraphicsComponent
     private Asset _asset = Assets.Spells.Fireball;
     private int _currentFrame = 0;
 
-    public void Draw(FireballEntity fireball, SpriteBatch spriteBatch, GraphicsDevice device)
+    public void Draw(FireballEntity fireball, SpriteBatch spriteBatch)
     {
         _currentFrame++;
         if (_currentFrame >= _asset.Frames.Count)
@@ -30,10 +30,8 @@ public class FireballGraphicsComponent
         {
             if (fireball.Hitbox is RectangleHitbox rectangleHitbox)
             {
-                var rectangleTexture = new Texture2D(device, 1, 1);
-                rectangleTexture.SetData([Color.Yellow]);
                 spriteBatch.Draw(
-                    rectangleTexture,
+                    Assets.RectangleTexture,
                     rectangleHitbox.Bounds,
                     null,
                     Color.Yellow,

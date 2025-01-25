@@ -8,5 +8,5 @@ public interface IEntity
     public Vector2 Position { get; set; }
 
     void Update(GameTime gameTime);
-    void Draw(SpriteBatch spriteBatch, GraphicsDevice device);
+    void Draw(SpriteBatch spriteBatch);
 }
