@@ -70,8 +70,6 @@ public class Game1 : Game
             samplerState: SamplerState.PointClamp
         );
 
-        GameState.Player.Draw(_spriteBatch);
-
         foreach (var actor in GameState.Actors)
         {
             actor.Draw(_spriteBatch);

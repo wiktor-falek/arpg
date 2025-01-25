@@ -8,17 +8,16 @@ public static class GameState
     public static readonly List<IEntity> Entities = [];
     public static readonly List<IActor> Actors =
     [
+        Player,
         new CasterSkeleton() { Position = new(100, 100) },
         new CasterSkeleton() { Position = new(300, 100) },
-        new CasterSkeleton() { Position = new(500, 100) },
+        new CasterSkeleton() { Position = new(500, 100) }
     ];
 
     private static MonsterSpawner _monsterSpawner = new(Player, 1_000_000d, offscreenDistance: 100);
 
     public static void Update(GameTime gameTime)
     {
-        Player.Update(gameTime);
-
         _monsterSpawner.Update(gameTime);
 
         for (int i = Actors.Count - 1; i >= 0; i--)

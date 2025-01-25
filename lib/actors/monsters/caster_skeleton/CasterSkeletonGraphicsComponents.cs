@@ -23,8 +23,7 @@ public class CasterSkeletonGraphicsComponent
 
             var asset = (monster.State, monster.ActionState) switch
             {
-                // (ActorState.Walking, ActorActionState.Swinging) => _walkAttackAsset,
-                (_, ActorActionState.Swinging) => _attackAsset,
+                (_, ActorActionState.Casting) => _attackAsset,
                 (ActorState.Idling, _) => _idleAsset,
                 (ActorState.Walking, _) => _walkAsset,
                 (ActorState.Dead, _) => _deathAsset,

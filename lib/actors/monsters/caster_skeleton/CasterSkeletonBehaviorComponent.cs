@@ -4,12 +4,11 @@ using Microsoft.Xna.Framework;
 public class CasterSkeletonBehaviorComponent
 {
     private float _corpseDespawnTime = 10f;
-    private bool _playerWasHit = false;
-    private bool _isAttacking = false;
+    private bool _isCasting = false;
     private float _timeSinceDeath = 0f;
-    private float _attackInterval = 0.9f;
-    private double _castTimer = 0.3f;
-    private const float _ATTACK_LAND_FRAME = 0.6f;
+    private const double _CAST_DURATION = 1d;
+    private double _castTimer = 0d;
+    // private double _afterCastIdleTime = 0.5d;
 
     public void Update(CasterSkeleton monster, GameTime time)
     {
@@ -68,63 +67,32 @@ public class CasterSkeletonBehaviorComponent
             double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
             double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
 
+            monster.TransitionState(ActorState.Walking);
             monster.Position = new((float)x, (float)y);
         }
         else
         {
-            /*
-                dude is within attack range
-                now he wants to start channeling and cast
-                stand still a bit
-                reposition staying within range 
-            */
+            _castTimer += elapsedTime;
 
-            // start casting
-            FireballEntity fireballEntity = new(monster)
+            if (_castTimer >= _CAST_DURATION)
             {
-                Position = new(monster.Position.X, monster.Position.Y),
-                Angle = angle,
-            };
-            GameState.Entities.Add(fireballEntity);
+                if (!_isCasting)
+                {
+                    _isCasting = true;
+                    FireballEntity fireballEntity = new(monster)
+                    {
+                        Position = new(monster.Position.X, monster.Position.Y),
+                        Angle = angle,
+                    };
+                    GameState.Entities.Add(fireballEntity);
+                    monster.TransitionState(ActorState.Idling);
+                    monster.TransitionState(ActorActionState.Casting);
+                }
+
+                _castTimer -= _CAST_DURATION;
+                _isCasting = false;
+                monster.TransitionState(ActorActionState.None);
+            }
         }
-
-        //     bool withinAttackHitDistance = distance <= 64;
-        //     bool withinAttackTriggerDistance = distance <= 32;
-
-        //     if (withinAttackTriggerDistance && !_isAttacking)
-        //     {
-        //         monster.TransitionState(ActorState.Idling);
-        //         monster.TransitionState(ActorActionState.Swinging);
-        //         _isAttacking = true;
-        //     }
-
-        //     if (_isAttacking)
-        //     {
-        //         _castTimer += elapsedTime;
-
-        //         if (_castTimer >= _ATTACK_LAND_FRAME)
-        //         {
-        //             // TODO: there should be an attack duration i.e. how long can you get hit for after starting swinging
-        //             if (withinAttackHitDistance && !_playerWasHit)
-        //             {
-        //                 // TODO: proper hitbox checking
-        //                 GameState.Player.TakeDamage(10);
-        //                 _playerWasHit = true;
-        //             }
-        //         }
-
-        //         if (_castTimer >= _attackInterval)
-        //         {
-        //             _castTimer = 0f;
-        //             _isAttacking = false;
-        //             _playerWasHit = false;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         monster.Position = new((float)x, (float)y);
-        //         monster.TransitionState(ActorState.Walking);
-        //         monster.TransitionState(ActorActionState.None);
-        //     }
     }
 }
