@@ -2,19 +2,19 @@ using System;
 using Microsoft.Xna.Framework;
 
 public class ActorBaseStats {
-    public int Health { get; set; }
-    public int MaxHealth { get; set; }
-    public int HealthRegen { get; set; }
-    public int HealthDegen { get; set; }
-    public int Mana { get; set; }
-    public int MaxMana { get; set; }
-    public int ManaRegen { get; set; }
-    public int ManaDegen { get; set; }
+    public double Health { get; set; }
+    public double MaxHealth { get; set; }
+    public double HealthRegen { get; set; }
+    public double HealthDegen { get; set; }
+    public double Mana { get; set; }
+    public double MaxMana { get; set; }
+    public double ManaRegen { get; set; }
+    public double ManaDegen { get; set; }
 
-    private const double REGEN_TICK_TIME = 0.25d;
+    private const double TICK_TIME = 0.25d;
     private double _regenTimer = 0f;
 
-    public ActorBaseStats(int health, int mana = 0, int healthRegen = 0, int manaRegen = 0)
+    public ActorBaseStats(double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)
     {
         Health = MaxHealth = health;
         Mana = MaxMana = mana;
@@ -27,15 +27,25 @@ public class ActorBaseStats {
     public void Update(GameTime gameTime)
     {
         _regenTimer += gameTime.ElapsedGameTime.TotalSeconds;
-        if (_regenTimer >= REGEN_TICK_TIME)
+        if (_regenTimer >= TICK_TIME)
         {
-            Health = Math.Min(Health + HealthRegen, MaxHealth);
-            Mana = Math.Min(Mana + ManaRegen, MaxMana);
+            double netHealthChange = (HealthRegen - HealthDegen) * TICK_TIME;
+            double netManaChange = (ManaRegen - ManaDegen) * TICK_TIME;
 
-            Health = Math.Max(Health - HealthDegen, 0);
-            Mana = Math.Max(Mana - ManaDegen, 0);
+            Health = Math.Clamp(Health + netHealthChange, 0, MaxHealth);
+            Mana = Math.Clamp(Mana + netManaChange, 0, MaxHealth);
 
-            _regenTimer -= REGEN_TICK_TIME;
+            _regenTimer -= TICK_TIME;
         }
-    } 
+    }
+
+    public void AddHealthDegen(double damagePerSecond)
+    {
+        HealthDegen += damagePerSecond;
+    }
+
+    public void SubtractHealthDegen(double damagePerSecond)
+    {
+        HealthDegen -= damagePerSecond;
+    }
 }

@@ -29,6 +29,8 @@ public class CasterSkeleton : IActor
 
     public void Update(GameTime gameTime)
     {
+        Stats.Update(gameTime);
+
         if (!IsAlive)
         {
             TransitionState(ActorState.Dead);

@@ -30,4 +30,6 @@ public class FireballEntity(IActor owner) : IEntity
     {
         _fireballBehaviorComponent.Update(this, gameTime);
     }
+
+    public void Destroy() { }
 }

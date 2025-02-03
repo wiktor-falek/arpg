@@ -19,8 +19,6 @@ public class Player : IActor
     }
     public Vector2 Size => new(140, 140);
 
-    ActorBaseStats IActor.Stats => throw new NotImplementedException();
-
     public SkillCollection Skills;
 
     private PlayerInputComponent _inputComponent = new();
@@ -34,9 +32,9 @@ public class Player : IActor
 
     public void Update(GameTime gameTime)
     {
+        Stats.Update(gameTime);
         _inputComponent.Update(this, gameTime);
         _graphicsComponent.Update(this, gameTime);
-        Stats.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)

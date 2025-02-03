@@ -1,11 +1,12 @@
+using System;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class ManaGlobe : IHudElement
 {
-    public int Mana { get; set; } = 100;
-    public int MaxMana { get; set; } = 100;
+    public double Mana { get; set; } = 100;
+    public double MaxMana { get; set; } = 100;
 
     public Vector2 Size { get; set; }
     public Vector2 Position { get; set; }
@@ -19,8 +20,8 @@ public class ManaGlobe : IHudElement
 
     public void Update(GameTime gameTime)
     {
-        Mana = GameState.Player.Stats.Mana;
-        MaxMana = GameState.Player.Stats.MaxMana;
+        Mana = Math.Floor(GameState.Player.Stats.Mana);
+        MaxMana = Math.Floor(GameState.Player.Stats.MaxMana);
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

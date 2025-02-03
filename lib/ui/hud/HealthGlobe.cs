@@ -1,11 +1,12 @@
+using System;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class HealthGlobe : IHudElement
 {
-    public int Health { get; set; }
-    public int MaxHealth { get; set; }
+    public double Health { get; set; }
+    public double MaxHealth { get; set; }
 
     public Vector2 Size { get; set; }
     public Vector2 Position { get; set; }
@@ -19,7 +20,7 @@ public class HealthGlobe : IHudElement
 
     public void Update(GameTime gameTime)
     {
-        Health = GameState.Player.Stats.Health;
+        Health = Math.Floor(GameState.Player.Stats.Health);
         MaxHealth = GameState.Player.Stats.MaxHealth;
     }
 

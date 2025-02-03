@@ -29,4 +29,6 @@ public class FrozenOrbEntity(IActor owner) : IEntity
         Rotation += (float)gameTime.ElapsedGameTime.TotalSeconds * 3f;
         _frozenOrbBehaviorComponent.Update(this, gameTime);
     }
+
+    public void Destroy() { }
 }

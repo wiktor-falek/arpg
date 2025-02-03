@@ -1,29 +1,41 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
 public class HolyFireBehaviorComponent
 {
-    private float _tickRate = 0.25f;
-    private float _frameTime = 0f;
+    private List<IActor> _intersectingEntities = [];
+
+    public HolyFireBehaviorComponent(HolyFireEntity holyFire)
+    {
+        holyFire.Owner.Stats.AddHealthDegen(holyFire.SelfDamage);
+    }
 
     public void Update(HolyFireEntity holyFire, GameTime gameTime)
     {
-        _frameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+        // TODO: replace 20 with the half width of the visible player sprite
         holyFire.Position = new(holyFire.Owner.Position.X + 0, holyFire.Owner.Position.Y + 20);
-        if (_frameTime >= _tickRate)
+
+        foreach (var actor in GameState.Actors.Where(actor => actor.Kind != holyFire.Owner.Kind))
         {
-            int selfDps = 4;
-            int dps = 20;
-            holyFire.Owner.TakeDamage(selfDps * _tickRate);
-            foreach (var actor in GameState.Actors.Where(actor => actor.Kind == ActorKind.Monster))
+            bool wasAlreadyIntersecting = _intersectingEntities.Contains(actor);
+            bool intersects = actor.Hitbox.Intersects(holyFire.Hitbox);
+
+            if (!wasAlreadyIntersecting && intersects)
             {
-                if (actor.Hitbox.Intersects(holyFire.Hitbox))
-                {
-                    actor.TakeDamage(dps * _tickRate);
-                }
+                actor.Stats.AddHealthDegen(holyFire.Damage);
+                _intersectingEntities.Add(actor);
             }
-            _frameTime -= _tickRate;
+            else if (wasAlreadyIntersecting && !intersects)
+            {
+                actor.Stats.SubtractHealthDegen(holyFire.Damage);
+                _intersectingEntities.Remove(actor);
+            }
         }
+    }
+
+    public void Destroy(HolyFireEntity holyFire)
+    {
+        holyFire.Owner.Stats.SubtractHealthDegen(holyFire.SelfDamage);
     }
 }

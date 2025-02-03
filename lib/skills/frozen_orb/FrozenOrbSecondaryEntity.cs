@@ -27,4 +27,6 @@ public class FrozenOrbSecondaryEntity : IEntity
     {
         _frozenOrbSecondaryBehaviorComponent.Update(this, gameTime);
     }
+
+    public void Destroy() { }
 }

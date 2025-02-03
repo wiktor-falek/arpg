@@ -13,9 +13,10 @@ public class HolyFireEntity : IEntity
         set => _hitbox = value;
     }
     public double Radius = 100d;
+    public double Damage = 5d;
+    public double SelfDamage = 2d;
 
     private IHitbox _hitbox;
-
     private HolyFireGraphicsComponent _holyFireGraphicsComponent;
     private HolyFireBehaviorComponent _holyFireBehaviorComponent;
 
@@ -23,7 +24,7 @@ public class HolyFireEntity : IEntity
     {
         Owner = owner;
         _holyFireGraphicsComponent = new(this);
-        _holyFireBehaviorComponent = new();
+        _holyFireBehaviorComponent = new(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -34,5 +35,10 @@ public class HolyFireEntity : IEntity
     public void Update(GameTime gameTime)
     {
         _holyFireBehaviorComponent.Update(this, gameTime);
+    }
+
+    public void Destroy()
+    {
+        _holyFireBehaviorComponent.Destroy(this);
     }
 }

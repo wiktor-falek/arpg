@@ -91,7 +91,7 @@ public class CasterSkeletonGraphicsComponent
             }
         }
 
-        string monsterHealth = $"{monster.Stats.Health}";
+        string monsterHealth = $"{Math.Floor(monster.Stats.Health)}";
         Vector2 monsterHealthOrigin = Assets.Fonts.MonogramExtened.MeasureString(monsterHealth);
 
         spriteBatch.DrawString(
