@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 public class FrozenOrbBehaviorComponent
 {
     public float CurrentDuration = 0f;
-    private List<FrozenOrbSecondaryEntity> SecondaryEntities = [];
+    private readonly List<FrozenOrbSecondaryEntity> SecondaryEntities = [];
     private float _frameTime = 0f;
     private float _secondaryProjectileAngle = 0f;
     private float _secondaryProjectileInterval = 0.1f;

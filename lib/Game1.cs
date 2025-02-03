@@ -6,7 +6,7 @@ namespace arpg;
 public class Game1 : Game
 {
     public static Config Config { get; private set; }
-    public static class NativeResolution {
+    public struct NativeResolution {
         public const int Width = 640;
         public const int Height = 360;
     }

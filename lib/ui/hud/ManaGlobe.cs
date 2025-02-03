@@ -19,8 +19,8 @@ public class ManaGlobe : IHudElement
 
     public void Update(GameTime gameTime)
     {
-        // Mana = GameState.Player.Mana;
-        // MaxMana = GameState.Player.MaxMana;
+        Mana = GameState.Player.Stats.Mana;
+        MaxMana = GameState.Player.Stats.MaxMana;
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

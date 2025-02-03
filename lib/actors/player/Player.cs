@@ -11,14 +11,16 @@ public class Player : IActor
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; private set; } = 100f;
-    public int Health { get; private set; } = 500;
-    public int MaxHealth { get; } = 500;
-    public bool IsAlive => Health > 0;
+    public ActorBaseStats Stats { get; }
+    public bool IsAlive => Stats.Health > 0;
     public IHitbox Hitbox
     {
         get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
     }
     public Vector2 Size => new(140, 140);
+
+    ActorBaseStats IActor.Stats => throw new NotImplementedException();
+
     public SkillCollection Skills;
 
     private PlayerInputComponent _inputComponent = new();
@@ -27,12 +29,14 @@ public class Player : IActor
     public Player()
     {
         Skills = new(this);
+        Stats = new(health: 100, mana: 100, healthRegen: 1, manaRegen: 2);
     }
 
     public void Update(GameTime gameTime)
     {
         _inputComponent.Update(this, gameTime);
         _graphicsComponent.Update(this, gameTime);
+        Stats.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -52,7 +56,7 @@ public class Player : IActor
 
     public void TakeDamage(float amount)
     {
-        Health -= (int)Math.Floor(amount);
-        Health = Math.Max(Health, 0);
+        Stats.Health -= (int)Math.Floor(amount);
+        Stats.Health = Math.Max(Stats.Health, 0);
     }
 }

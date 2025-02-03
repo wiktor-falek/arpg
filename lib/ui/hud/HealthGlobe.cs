@@ -19,8 +19,8 @@ public class HealthGlobe : IHudElement
 
     public void Update(GameTime gameTime)
     {
-        Health = GameState.Player.Health;
-        MaxHealth = GameState.Player.MaxHealth;
+        Health = GameState.Player.Stats.Health;
+        MaxHealth = GameState.Player.Stats.MaxHealth;
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)

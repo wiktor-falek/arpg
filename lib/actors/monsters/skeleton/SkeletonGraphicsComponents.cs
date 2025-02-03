@@ -92,7 +92,7 @@ public class SkeletonGraphicsComponent
             }
         }
 
-        string monsterHealth = $"{monster.Health}";
+        string monsterHealth = $"{monster.Stats.Health}";
         Vector2 monsterHealthOrigin = Assets.Fonts.MonogramExtened.MeasureString(monsterHealth);
 
         spriteBatch.DrawString(

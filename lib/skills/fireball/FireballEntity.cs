@@ -9,7 +9,7 @@ public class FireballEntity(IActor owner) : IEntity
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 350f;
     public double Angle = 0d;
-    public float Damage = 25f;
+    public float Damage = 10f;
     public readonly float MaxDuration = 2f;
     public IHitbox Hitbox
     {

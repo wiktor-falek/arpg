@@ -36,8 +36,7 @@ public interface IActor
     ActorFacing Facing { get; }
     Vector2 Position { get; }
     float Speed { get; }
-    int Health { get; }
-    int MaxHealth { get; }
+    ActorBaseStats Stats { get; }
     bool IsAlive { get; }
     IHitbox Hitbox { get; }
 

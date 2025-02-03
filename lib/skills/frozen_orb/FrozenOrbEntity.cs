@@ -6,7 +6,7 @@ public class FrozenOrbEntity(IActor owner) : IEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public Vector2 Position { get; set; }
-    public float Speed { get; set; } = 110f;
+    public float Speed { get; set; } = 100f;
     public readonly float MaxDuration = 3f;
     public double Angle = 0d;
     public float Rotation = 0f;

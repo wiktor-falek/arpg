@@ -11,9 +11,8 @@ public class CasterSkeleton : IActor
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public float Speed { get; } = 90f;
-    public int Health { get; private set; } = 100;
-    public int MaxHealth { get; } = 1000;
-    public bool IsAlive => Health > 0;
+    public ActorBaseStats Stats { get; }
+    public bool IsAlive => Stats.Health > 0;
     public bool IsLeashed = false;
     public IHitbox Hitbox
     {
@@ -22,6 +21,11 @@ public class CasterSkeleton : IActor
 
     private CasterSkeletonGraphicsComponent _graphicsComponent = new();
     private CasterSkeletonBehaviorComponent _behaviorComponent = new();
+
+    public CasterSkeleton()
+    {
+        Stats = new(health: 30, mana: 100);
+    }
 
     public void Update(GameTime gameTime)
     {
@@ -41,8 +45,8 @@ public class CasterSkeleton : IActor
 
     public void TakeDamage(float amount)
     {
-        Health -= (int)Math.Floor(amount);
-        Health = Math.Max(Health, 0);
+        Stats.Health -= (int)Math.Floor(amount);
+        Stats.Health = Math.Max(Stats.Health, 0);
         IsLeashed = true;
     }
 
