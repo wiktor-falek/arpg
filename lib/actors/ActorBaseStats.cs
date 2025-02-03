@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 public class ActorBaseStats {
+    public float Speed { get; set ; }
     public double Health { get; set; }
     public double MaxHealth { get; set; }
     public double HealthRegen { get; set; }
@@ -14,8 +15,9 @@ public class ActorBaseStats {
     private const double TICK_TIME = 0.25d;
     private double _regenTimer = 0f;
 
-    public ActorBaseStats(double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)
+    public ActorBaseStats(float speed, double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)
     {
+        Speed = speed;
         Health = MaxHealth = health;
         Mana = MaxMana = mana;
         HealthRegen = healthRegen;

@@ -10,9 +10,9 @@ public class Player : IActor
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public float Speed { get; private set; } = 100f;
     public ActorBaseStats Stats { get; }
     public bool IsAlive => Stats.Health > 0;
+    public PlayerLevel Level;
     public IHitbox Hitbox
     {
         get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
@@ -27,7 +27,8 @@ public class Player : IActor
     public Player()
     {
         Skills = new(this);
-        Stats = new(health: 100, mana: 100, healthRegen: 1, manaRegen: 2);
+        Stats = new(speed: 100, health: 100, mana: 100, healthRegen: 1, manaRegen: 2);
+        Level = new();
     }
 
     public void Update(GameTime gameTime)

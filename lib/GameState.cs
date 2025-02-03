@@ -14,7 +14,7 @@ public static class GameState
         new CasterSkeleton() { Position = new(500, 100) }
     ];
 
-    private static MonsterSpawner _monsterSpawner = new(Player, 1_000_000d, offscreenDistance: 100);
+    private static MonsterSpawner _monsterSpawner = new(Player, 3d, offscreenDistance: 100);
 
     public static void Update(GameTime gameTime)
     {

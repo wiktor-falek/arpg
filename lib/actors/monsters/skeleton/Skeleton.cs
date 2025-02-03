@@ -10,7 +10,6 @@ public class Skeleton : IActor
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public float Speed { get; } = 90f;
     public ActorBaseStats Stats { get; }
     public bool IsAlive => Stats.Health > 0;
     public bool IsLeashed = true;
@@ -24,7 +23,7 @@ public class Skeleton : IActor
 
     public Skeleton()
     {
-        Stats = new(health: 40);
+        Stats = new(speed: 90, health: 40);
     }
 
     public void Update(GameTime gameTime)

@@ -64,8 +64,8 @@ public class CasterSkeletonBehaviorComponent
         if (distance > 200)
         {
             // follow player
-            double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
-            double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
+            double x = monster.Position.X + (monster.Stats.Speed * elapsedTime * Math.Cos(angle));
+            double y = monster.Position.Y + (monster.Stats.Speed * elapsedTime * Math.Sin(angle));
 
             monster.TransitionState(ActorState.Walking);
             monster.Position = new((float)x, (float)y);

@@ -59,8 +59,8 @@ public class SkeletonBehaviorComponent
         float deltaY = y2 - y1;
         double angle = Math.Atan2(deltaY, deltaX);
 
-        double x = monster.Position.X + (monster.Speed * elapsedTime * Math.Cos(angle));
-        double y = monster.Position.Y + (monster.Speed * elapsedTime * Math.Sin(angle));
+        double x = monster.Position.X + (monster.Stats.Speed * elapsedTime * Math.Cos(angle));
+        double y = monster.Position.Y + (monster.Stats.Speed * elapsedTime * Math.Sin(angle));
 
         bool withinAttackHitDistance = distance <= 64;
         bool withinAttackTriggerDistance = distance <= 32;

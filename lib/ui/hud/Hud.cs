@@ -11,6 +11,7 @@ public class Hud
         _elements.Add(new HealthGlobe());
         _elements.Add(new ManaGlobe());
         _elements.Add(new DebugScreen());
+        _elements.Add(new XpBar());
     }
 
     public void Update(GameTime gameTime)
@@ -25,6 +26,7 @@ public class Hud
     {
         foreach (var element in _elements)
         {
+            // TODO: texture creating in Assets, private members instead of creating on draw call
             element.Draw(spriteBatch, graphicsDevice);
         }
     }
