@@ -26,7 +26,7 @@ public class Player : IActor
     public Player()
     {
         Skills = new(this);
-        Stats = new PlayerStats(speed: 100, health: 100, mana: 100, healthRegen: 0, manaRegen: 2, healthOnKill: 1);
+        Stats = new PlayerStats(this, speed: 100, health: 100, mana: 100, healthRegen: 0, manaRegen: 2, healthOnKill: 1);
     }
 
     public void Update(GameTime gameTime)
@@ -51,10 +51,9 @@ public class Player : IActor
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(double amount)
     {
-        Stats.Health -= (int)Math.Floor(amount);
-        Stats.Health = Math.Max(Stats.Health, 0);
+        Stats.OffsetHealth(-amount);
     }
 
     public void OnKill(IMonsterActor monster)

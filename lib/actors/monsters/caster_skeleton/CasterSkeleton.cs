@@ -24,7 +24,7 @@ public class CasterSkeleton : IMonsterActor
 
     public CasterSkeleton()
     {
-        Stats = new(speed: 90, health: 30, mana: 100);
+        Stats = new(this, speed: 90, health: 30, mana: 100);
     }
 
     public void Update(GameTime gameTime)
@@ -45,13 +45,11 @@ public class CasterSkeleton : IMonsterActor
         _graphicsComponent.Draw(this, spriteBatch);
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(double amount)
     {
         if (Stats.Health <= 0) return;
         
-        Stats.Health -= (int)Math.Floor(amount);
-        Stats.Health = Math.Max(Stats.Health, 0);
-
+        Stats.OffsetHealth(-amount);
         if (Stats.Health <= 0)
         {
             GameState.Player.OnKill(this);

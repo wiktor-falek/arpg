@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 public class ActorBaseStats {
-    public float Speed { get; set ; }
+    public double Speed { get; set ; }
     public double Health { get; set; }
     public double MaxHealth { get; set; }
     public double HealthRegen { get; set; }
@@ -12,11 +12,13 @@ public class ActorBaseStats {
     public double ManaRegen { get; set; }
     public double ManaDegen { get; set; }
 
+    private IActor _actor;
     private const double TICK_TIME = 0.25d;
     private double _regenTimer = 0f;
 
-    public ActorBaseStats(float speed, double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)
+    public ActorBaseStats(IActor actor, double speed, double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)
     {
+        _actor = actor;
         Speed = speed;
         Health = MaxHealth = health;
         Mana = MaxMana = mana;
@@ -34,7 +36,15 @@ public class ActorBaseStats {
             double netHealthChange = (HealthRegen - HealthDegen) * TICK_TIME;
             double netManaChange = (ManaRegen - ManaDegen) * TICK_TIME;
 
-            OffsetHealth(netHealthChange);
+            if (netHealthChange < 0)
+            {
+                _actor.TakeDamage(-netHealthChange);
+            }
+            else
+            {
+                OffsetHealth(netHealthChange);
+            }
+
             OffsetMana(netManaChange);
 
             _regenTimer -= TICK_TIME;

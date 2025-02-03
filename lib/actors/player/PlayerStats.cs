@@ -5,14 +5,15 @@ public class PlayerStats : ActorBaseStats
     public int ManaOnKill { get; set; }
 
     public PlayerStats(
-        float speed,
+        IActor actor,
+        double speed,
         double health,
         double mana = 0,
         double healthRegen = 0,
         double manaRegen = 0,
         int healthOnKill = 0,
         int manaOnKill = 0
-        ): base(speed, health, mana, healthRegen, manaRegen)
+        ): base(actor, speed, health, mana, healthRegen, manaRegen)
     {
         Level = new();
         HealthOnKill = healthOnKill;

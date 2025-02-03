@@ -41,7 +41,7 @@ public interface IActor
 
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch);
-    void TakeDamage(float amount);
+    void TakeDamage(double amount);
 }
 
 public interface IMonster

@@ -73,7 +73,7 @@ public class PlayerInputComponent
         {
             player.TransitionState(ActorState.Idling);
         }
-        float updatedSpeed = player.Stats.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float updatedSpeed = (float)(player.Stats.Speed * gameTime.ElapsedGameTime.TotalSeconds);
         player.Position += movementDirection * updatedSpeed;
 
         _previousKeyboardState = keyboardState;
