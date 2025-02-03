@@ -84,7 +84,6 @@ public class CasterSkeletonBehaviorComponent
                         Position = new(monster.Position.X, monster.Position.Y),
                         Angle = angle,
                     };
-                    GameState.Entities.Add(fireballEntity);
                     monster.TransitionState(ActorState.Idling);
                     monster.TransitionState(ActorActionState.Casting);
                 }

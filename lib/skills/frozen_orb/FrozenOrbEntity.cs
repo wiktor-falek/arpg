@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class FrozenOrbEntity(IActor owner) : IEntity
+public class FrozenOrbEntity : IEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public Vector2 Position { get; set; }
@@ -15,9 +15,15 @@ public class FrozenOrbEntity(IActor owner) : IEntity
         get => new RectangleHitbox(0, 0, 0, 0);
     }
 
-    private IActor _owner = owner;
+    private IActor _owner;
     private FrozenOrbGraphicsComponent _frozenOrbGraphicsComponent = new();
     private FrozenOrbBehaviorComponent _frozenOrbBehaviorComponent = new();
+
+    public FrozenOrbEntity(IActor owner)
+    {
+        _owner = owner;
+        GameState.Entities.Add(this);
+    }
 
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -30,5 +36,8 @@ public class FrozenOrbEntity(IActor owner) : IEntity
         _frozenOrbBehaviorComponent.Update(this, gameTime);
     }
 
-    public void Destroy() { }
+    public void Destroy() 
+    {
+        GameState.RemoveEntity(this);
+    }
 }

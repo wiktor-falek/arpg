@@ -22,6 +22,7 @@ public class HolyFireEntity : IEntity
 
     public HolyFireEntity(IActor owner)
     {
+        GameState.Entities.Add(this);
         Owner = owner;
         _holyFireGraphicsComponent = new(this);
         _holyFireBehaviorComponent = new(this);
@@ -39,6 +40,7 @@ public class HolyFireEntity : IEntity
 
     public void Destroy()
     {
+        GameState.RemoveEntity(this);
         _holyFireBehaviorComponent.Destroy(this);
     }
 }

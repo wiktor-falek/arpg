@@ -15,7 +15,7 @@ public class FrozenOrbSecondaryBehaviorComponent
 
         if (CurrentDuration >= secondaryEntity.MaxDuration)
         {
-            GameState.RemoveEntity(secondaryEntity);
+            secondaryEntity.Destroy();
             return;
         }
 

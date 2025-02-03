@@ -37,5 +37,14 @@ public class HolyFireBehaviorComponent
     public void Destroy(HolyFireEntity holyFire)
     {
         holyFire.Owner.Stats.SubtractHealthDegen(holyFire.SelfDamage);
+
+        foreach (var actor in GameState.Actors.Where(actor => actor.Kind != holyFire.Owner.Kind))
+        {
+            bool wasAlreadyIntersecting = _intersectingEntities.Contains(actor);
+            if (wasAlreadyIntersecting)
+            {
+                actor.Stats.SubtractHealthDegen(holyFire.Damage);
+            }
+        }
     }
 }

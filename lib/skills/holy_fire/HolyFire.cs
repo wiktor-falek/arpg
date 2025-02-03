@@ -18,7 +18,6 @@ public class HolyFire(IActor owner) : ISkill
                 Position = new(_owner.Position.X, _owner.Position.Y),
                 Radius = 100f,
             };
-            GameState.Entities.Add(holyFireEntity);
 
             _entity = holyFireEntity;
             isActive = true;

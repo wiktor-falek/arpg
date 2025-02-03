@@ -15,7 +15,7 @@ public class FireballBehaviorComponent
 
         if (CurrentDuration >= fireball.MaxDuration)
         {
-            GameState.RemoveEntity(fireball);
+            fireball.Destroy();
             return;
         }
 

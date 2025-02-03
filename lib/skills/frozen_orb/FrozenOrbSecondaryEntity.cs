@@ -18,6 +18,11 @@ public class FrozenOrbSecondaryEntity : IEntity
     private FrozenOrbSecondaryGraphicsComponent _frozenOrbSecondaryGraphicsComponent = new();
     private FrozenOrbSecondaryBehaviorComponent _frozenOrbSecondaryBehaviorComponent = new();
 
+    public FrozenOrbSecondaryEntity()
+    {
+        GameState.Entities.Add(this);
+    }
+
     public void Draw(SpriteBatch spriteBatch)
     {
         _frozenOrbSecondaryGraphicsComponent.Draw(this, spriteBatch);
@@ -28,5 +33,8 @@ public class FrozenOrbSecondaryEntity : IEntity
         _frozenOrbSecondaryBehaviorComponent.Update(this, gameTime);
     }
 
-    public void Destroy() { }
+    public void Destroy()
+    {
+        GameState.RemoveEntity(this);
+    }
 }

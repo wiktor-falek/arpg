@@ -16,7 +16,7 @@ public class Fireball(IActor owner) : ISkill
             Position = new(_owner.Position.X, _owner.Position.Y),
             Angle = angle,
         };
-        GameState.Entities.Add(fireballEntity);
+
         Cooldown.StartCooldown();
     }
 }

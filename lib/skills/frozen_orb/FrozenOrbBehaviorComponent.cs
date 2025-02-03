@@ -19,7 +19,7 @@ public class FrozenOrbBehaviorComponent
 
         if (CurrentDuration >= frozenOrb.MaxDuration)
         {
-            GameState.RemoveEntity(frozenOrb);
+            frozenOrb.Destroy();
             return;
         }
 
@@ -31,7 +31,7 @@ public class FrozenOrbBehaviorComponent
 
         float rotationIncreasePerSecond = _rotationIncreasePerProjectile / _secondaryProjectileInterval;
         _secondaryProjectileAngle += (rotationIncreasePerSecond * elapsedTime) % 360;
- 
+
         if (_frameTime >= _secondaryProjectileInterval)
         {
             int offset = 16;
@@ -39,13 +39,14 @@ public class FrozenOrbBehaviorComponent
                 frozenOrb.Position.X + offset * (float)Math.Cos(_secondaryProjectileAngle),
                 frozenOrb.Position.Y + offset * (float)Math.Sin(_secondaryProjectileAngle)
             );
+
             FrozenOrbSecondaryEntity secondaryEntity = new()
             {
                 Position = position,
                 Angle = _secondaryProjectileAngle,
             };
             SecondaryEntities.Add(secondaryEntity);
-            GameState.Entities.Add(secondaryEntity);
+
             _frameTime -= _secondaryProjectileInterval;
         }
     }
