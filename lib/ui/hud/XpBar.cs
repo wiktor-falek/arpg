@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class XpBar : IHudElement
 {
     public Vector2 Position { get; set; }
+    public int Level { get; private set; }
     public int CurrentXP { get; private set; }
     public int RequiredXP { get; private set; }
 
@@ -15,8 +16,10 @@ public class XpBar : IHudElement
 
     public void Update(GameTime gameTime)
     {
-        CurrentXP = GameState.Player.Level.CurrentXP;
-        RequiredXP = GameState.Player.Level.RequiredXP;
+        PlayerStats playerStats = (PlayerStats)GameState.Player.Stats;
+        Level = playerStats.Level.Current;
+        CurrentXP = playerStats.Level.CurrentXP;
+        RequiredXP = playerStats.Level.RequiredXP;
     }
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -25,7 +28,7 @@ public class XpBar : IHudElement
         // globeTexture.SetData([new Color(150, 10, 10)]);
         // spriteBatch.Draw(globeTexture, Rectangle, Color.White);
 
-        string xpBarText = $"{CurrentXP}/{RequiredXP}";
+        string xpBarText = $"Lv:{Level} {CurrentXP}/{RequiredXP}";
         int xpBarTextWidth = (int)Assets.Fonts.MonogramExtened.MeasureString(xpBarText).X;
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,

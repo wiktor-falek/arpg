@@ -34,11 +34,21 @@ public class ActorBaseStats {
             double netHealthChange = (HealthRegen - HealthDegen) * TICK_TIME;
             double netManaChange = (ManaRegen - ManaDegen) * TICK_TIME;
 
-            Health = Math.Clamp(Health + netHealthChange, 0, MaxHealth);
-            Mana = Math.Clamp(Mana + netManaChange, 0, MaxHealth);
+            OffsetHealth(netHealthChange);
+            OffsetMana(netManaChange);
 
             _regenTimer -= TICK_TIME;
         }
+    }
+
+    public void OffsetHealth(double amount)
+    {
+        Health = Math.Clamp(Health + amount, 0, MaxHealth);
+    }
+
+    public void OffsetMana(double amount)
+    {
+        Mana = Math.Clamp(Mana + amount, 0, MaxMana);
     }
 
     public void AddHealthDegen(double damagePerSecond)

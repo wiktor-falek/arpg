@@ -12,7 +12,6 @@ public class Player : IActor
     public Vector2 Position { get; set; } = Vector2.Zero;
     public ActorBaseStats Stats { get; }
     public bool IsAlive => Stats.Health > 0;
-    public PlayerLevel Level;
     public IHitbox Hitbox
     {
         get => new RectangleHitbox((int)Position.X - 12, (int)Position.Y - 24, 20, 50);
@@ -27,8 +26,7 @@ public class Player : IActor
     public Player()
     {
         Skills = new(this);
-        Stats = new(speed: 100, health: 100, mana: 100, healthRegen: 1, manaRegen: 2);
-        Level = new();
+        Stats = new PlayerStats(speed: 100, health: 100, mana: 100, healthRegen: 0, manaRegen: 2, healthOnKill: 1);
     }
 
     public void Update(GameTime gameTime)
@@ -57,5 +55,13 @@ public class Player : IActor
     {
         Stats.Health -= (int)Math.Floor(amount);
         Stats.Health = Math.Max(Stats.Health, 0);
+    }
+
+    public void OnKill(IMonsterActor monster)
+    {
+        PlayerStats playerStats = (PlayerStats)Stats;
+        playerStats.Level.GrantXP(monster.XP);
+        playerStats.OffsetHealth(playerStats.HealthOnKill);
+        playerStats.OffsetMana(playerStats.ManaOnKill);
     }
 }

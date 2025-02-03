@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class CasterSkeleton : IActor
+public class CasterSkeleton : IMonsterActor
 {
     public string Id { get; } = Guid.NewGuid().ToString();
     public ActorKind Kind { get; } = ActorKind.Monster;
@@ -17,6 +17,7 @@ public class CasterSkeleton : IActor
     {
         get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
     }
+    int IMonster.XP { get; } = 10;
 
     private CasterSkeletonGraphicsComponent _graphicsComponent = new();
     private CasterSkeletonBehaviorComponent _behaviorComponent = new();
@@ -46,8 +47,16 @@ public class CasterSkeleton : IActor
 
     public void TakeDamage(float amount)
     {
+        if (Stats.Health <= 0) return;
+        
         Stats.Health -= (int)Math.Floor(amount);
         Stats.Health = Math.Max(Stats.Health, 0);
+
+        if (Stats.Health <= 0)
+        {
+            GameState.Player.OnKill(this);
+        }
+
         IsLeashed = true;
     }
 

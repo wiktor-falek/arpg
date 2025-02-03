@@ -36,7 +36,7 @@ public class FrozenOrbEntity : IEntity
         _frozenOrbBehaviorComponent.Update(this, gameTime);
     }
 
-    public void Destroy() 
+    public void Destroy()
     {
         GameState.RemoveEntity(this);
     }

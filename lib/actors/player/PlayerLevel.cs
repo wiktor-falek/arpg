@@ -6,6 +6,7 @@ public class PlayerLevel {
     public int RequiredXP { get; private set; }
 
     private const int LEVEL_CAP = 100;
+    private const int BASE_INCREMENT = 10;
     private const float GROWTH_RATE = 1.5f;
 
     public PlayerLevel()
@@ -22,7 +23,7 @@ public class PlayerLevel {
         CurrentXP += amount;
         while (CurrentXP > RequiredXP)
         {
-            int leftoverXP = CurrentXP + amount - RequiredXP;
+            int leftoverXP = CurrentXP - RequiredXP;
             CurrentXP = leftoverXP;
             RequiredXP = GetRequiredXP(++Current);
         }
@@ -30,6 +31,6 @@ public class PlayerLevel {
 
     private int GetRequiredXP(int level)
     {
-        return (int)Math.Floor(100 * Current * GROWTH_RATE);
+        return (int)Math.Floor(BASE_INCREMENT * Current * GROWTH_RATE);
     }
 }

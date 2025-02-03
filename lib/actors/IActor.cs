@@ -43,3 +43,10 @@ public interface IActor
     void Draw(SpriteBatch spriteBatch);
     void TakeDamage(float amount);
 }
+
+public interface IMonster
+{
+    public int XP { get; }
+}
+
+public interface IMonsterActor: IActor, IMonster;
