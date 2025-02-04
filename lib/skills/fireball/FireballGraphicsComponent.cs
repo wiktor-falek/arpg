@@ -8,11 +8,22 @@ public class FireballGraphicsComponent
     private Asset _asset = Assets.Spells.Fireball;
     private int _currentFrame = 0;
 
-    public void Draw(FireballEntity fireball, SpriteBatch spriteBatch)
+    public void Update(GameTime gameTime)
     {
+        // TODO: interval
         _currentFrame++;
         if (_currentFrame >= _asset.Frames.Count)
             _currentFrame = 0;
+    }
+
+    public void Draw(FireballEntity fireball, SpriteBatch spriteBatch)
+    {
+        if (GameState.IsRunning)
+        {
+            _currentFrame++;
+            if (_currentFrame >= _asset.Frames.Count)
+                _currentFrame = 0;
+        }
 
         spriteBatch.Draw(
             _asset.Texture,

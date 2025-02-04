@@ -34,6 +34,7 @@ public class FireballEntity : IEntity
 
     public void Update(GameTime gameTime)
     {
+        _fireballGraphicsComponent.Update(gameTime);
         _fireballBehaviorComponent.Update(this, gameTime);
     }
 

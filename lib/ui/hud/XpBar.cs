@@ -24,11 +24,7 @@ public class XpBar : IHudElement
 
     public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
     {
-        // var globeTexture = new Texture2D(graphicsDevice, 1, 1);
-        // globeTexture.SetData([new Color(150, 10, 10)]);
-        // spriteBatch.Draw(globeTexture, Rectangle, Color.White);
-
-        string xpBarText = $"Lv:{Level} {CurrentXP}/{RequiredXP}";
+        string xpBarText = $"Lv{Level} {CurrentXP}/{RequiredXP}";
         int xpBarTextWidth = (int)Assets.Fonts.MonogramExtened.MeasureString(xpBarText).X;
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,

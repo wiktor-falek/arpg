@@ -1,43 +1,43 @@
+using System;
 using arpg;
 using Microsoft.Xna.Framework.Input;
 
 public class KeyboardInputManager(Game1 game)
 {
+    public event Action EscapePressed;
+    public event Action F1Pressed;
+    public event Action F10Pressed;
+    public event Action F11Pressed;
+    public event Action LeftAltEnterPressed;
+    
     private Game1 _game = game;
+    private KeyboardState _keyboardState;
     private KeyboardState _previousKeyboardState;
 
     public void Update()
     {
-        var keyboardState = Keyboard.GetState();
+        _keyboardState = Keyboard.GetState();
 
-        if (keyboardState.IsKeyDown(Keys.Escape))
-            _game.Exit();
+        if (IsNewKeyPress(Keys.Escape))
+            EscapePressed?.Invoke();
 
-        if (keyboardState.IsKeyDown(Keys.F1) && _previousKeyboardState.IsKeyUp(Keys.F1))
-        {
-            GameState.IsDebugMode = !GameState.IsDebugMode;
-        }
+        if (IsNewKeyPress(Keys.F1))
+            F1Pressed?.Invoke();
 
-        if (
-            (keyboardState.IsKeyDown(Keys.F11) && _previousKeyboardState.IsKeyUp(Keys.F11))
-            || (
-                keyboardState.IsKeyDown(Keys.LeftAlt)
-                && keyboardState.IsKeyDown(Keys.Enter)
-                && _previousKeyboardState.IsKeyUp(Keys.Enter)
-            )
-        )
-        {
-            Game1.Config.ToggleFullScreen();
-            Game1.Config.ApplyChanges();
-        }
+        if (IsNewKeyPress(Keys.F10))
+            F10Pressed?.Invoke();
 
-        if (keyboardState.IsKeyDown(Keys.F10) && _previousKeyboardState.IsKeyUp(Keys.F10))
-        {
-            int scale = (Game1.Config.Scale % 3) + 1;
-            Game1.Config.ChangeResolutionScale(scale);
-            Game1.Config.ApplyChanges();
-        }
+        if (IsNewKeyPress(Keys.F11))
+            F11Pressed?.Invoke();
 
-        _previousKeyboardState = keyboardState;
+        if (_keyboardState.IsKeyDown(Keys.LeftAlt) && IsNewKeyPress(Keys.Enter))
+            LeftAltEnterPressed?.Invoke();
+
+        _previousKeyboardState = _keyboardState;
+    }
+
+    private bool IsNewKeyPress(Keys key)
+    {
+        return _keyboardState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key);
     }
 }

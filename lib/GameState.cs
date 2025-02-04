@@ -3,7 +3,8 @@ using Microsoft.Xna.Framework;
 
 public static class GameState
 {
-    public static bool IsDebugMode = false;
+    public static bool IsRunning { get; set; } = true;
+    public static bool IsDebugMode { get; set; } = false;
     public static readonly Player Player = new() { Position = new(0, 0) };
     public static readonly List<IEntity> Entities = [];
     public static readonly List<IActor> Actors =

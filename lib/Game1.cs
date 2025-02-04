@@ -5,6 +5,7 @@ namespace arpg;
 
 public class Game1 : Game
 {
+    public bool IsRunning = true;
     public static Config Config { get; private set; }
     public struct NativeResolution {
         public const int Width = 640;
@@ -14,9 +15,12 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
-    private KeyboardInputManager _keyboardInputManager;
-    private Hud _hud;
     private Background _background;
+    private KeyboardInputManager _keyboardInputManager;
+    private PauseMenu _pauseMenu;
+    private Hud _hud;
+    private UI _ui;
+    private GameInputController _gameInputController;
 
     public Game1()
     {
@@ -30,10 +34,13 @@ public class Game1 : Game
     protected override void Initialize()
     {
         GraphicsDevice = base.GraphicsDevice;
-        _renderTarget = new(GraphicsDevice, NativeResolution.Width, NativeResolution.Height);
-        Config = new(_graphics, GraphicsDevice, _renderTarget);
-        _hud = new Hud();
+        _renderTarget = new RenderTarget2D(GraphicsDevice, NativeResolution.Width, NativeResolution.Height);
+        Config = new Config(_graphics, GraphicsDevice, _renderTarget);
         _background = new Background();
+        _hud = new Hud();
+        _ui = new UI();
+        _pauseMenu = new PauseMenu();
+        _gameInputController = new GameInputController(_keyboardInputManager, _ui, _pauseMenu);
 
         base.Initialize();
     }
@@ -47,10 +54,12 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         _keyboardInputManager.Update();
-        
-        GameState.Update(gameTime);
 
-        _hud.Update(gameTime);
+        if (GameState.IsRunning)
+        {
+            GameState.Update(gameTime);
+            _hud.Update(gameTime);
+        }
 
         base.Update(gameTime);
     }
@@ -85,6 +94,9 @@ public class Game1 : Game
         _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
 
         _hud.Draw(_spriteBatch, GraphicsDevice);
+
+        _pauseMenu.Draw(_spriteBatch);
+
         _spriteBatch.End();
 
         GraphicsDevice.SetRenderTarget(null);
