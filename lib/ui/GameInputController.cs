@@ -20,7 +20,7 @@ public class GameInputController
         //     RemappableGameAction.CastBarOne,
         //     () => player.Skills.Fireball.Cast(_angle)
         // );
-        Game1.InputMapper.Subscribe(FixedGameAction.Close, OnClose);
+        Game1.InputMapper.OnPress(FixedGameAction.Close, OnClose);
         // inputMapper.F1Pressed += ToggleDebugMode;
         // inputMapper.F10Pressed += CycleResolution;
         // inputMapper.F11Pressed += ToggleFullscreen;

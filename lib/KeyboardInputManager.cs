@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 public class KeyboardInputManager(Game1 game)
 {
     public event Action<Keys> KeyPressed;
+    public event Action<Keys> KeyReleased;
 
     private Game1 _game = game;
     private KeyboardState _keyboardState;
@@ -18,6 +19,9 @@ public class KeyboardInputManager(Game1 game)
         {
             if (IsNewKeyPress(key))
                 KeyPressed?.Invoke(key);
+
+            if (IsKeyReleased(key))
+                KeyReleased?.Invoke(key);
         }
 
         // if (IsNewKeyPress(Keys.Escape))
@@ -44,5 +48,10 @@ public class KeyboardInputManager(Game1 game)
     private bool IsNewKeyPress(Keys key)
     {
         return _keyboardState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key);
+    }
+
+    private bool IsKeyReleased(Keys key)
+    {
+        return _keyboardState.IsKeyUp(key) && _previousKeyboardState.IsKeyDown(key);
     }
 }
