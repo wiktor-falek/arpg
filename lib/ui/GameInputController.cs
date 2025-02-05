@@ -13,15 +13,14 @@ interface IOnCloseHandler
 public class GameInputController
 {
     private readonly List<IOnCloseHandler> _escapeHandlers = [];
-    
-    public GameInputController(
-        InputMapper inputMapper,
-        UI ui,
-        PauseMenu pauseMenu
-    )
+
+    public GameInputController(UI ui, PauseMenu pauseMenu)
     {
-        // TODO: input mapper
-        inputMapper.Subscribe(FixedGameAction.Close, OnClose);
+        // Game1.InputMapper.Subscribe(
+        //     RemappableGameAction.CastBarOne,
+        //     () => player.Skills.Fireball.Cast(_angle)
+        // );
+        Game1.InputMapper.Subscribe(FixedGameAction.Close, OnClose);
         // inputMapper.F1Pressed += ToggleDebugMode;
         // inputMapper.F10Pressed += CycleResolution;
         // inputMapper.F11Pressed += ToggleFullscreen;
@@ -36,7 +35,8 @@ public class GameInputController
         foreach (IOnCloseHandler handler in _escapeHandlers)
         {
             bool propagationStopped = handler.OnClose();
-            if (propagationStopped) break;
+            if (propagationStopped)
+                break;
         }
     }
 

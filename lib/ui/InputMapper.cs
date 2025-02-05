@@ -2,34 +2,23 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
-/*
-    player presses escape, KeyboardInputManager emits KeyPressed(Keys key = Escape)
-    escape is not remappable, triggers FixedGameAction.Close event
-    controller that subscribes to Close event triggers - things happen
-
-    player presses Q, KeyboardInputManager emits KeyPressed(Keys key = Q)
-    Q is bound to CastbarOne, triggers RemappableGameAction.CastbarOne
-    some controller responsible for using spells on the cast bar maps from CastbarOne to some spell
-    spell is casted 
-
-*/
-
 public enum FixedGameAction
 {
-    Close
+    Close,
 }
 
 public enum RemappableGameAction
 {
-    CastBarOne
+    CastBarOne,
 }
 
 public class InputMapper
 {
-
     private KeyboardInputManager _keyboardInputManager;
-    private Dictionary<FixedGameAction, Action> _fixedActionHandlers = [];
+    private Dictionary<Keys, RemappableGameAction> _keybinds = [];
     private Dictionary<RemappableGameAction, Action> _remappableActionHandlers = [];
+    private Dictionary<Keys, FixedGameAction> _fixedKeybinds = [];
+    private Dictionary<FixedGameAction, Action> _fixedActionHandlers = [];
 
     public InputMapper(KeyboardInputManager keyboardInputManager)
     {
@@ -41,7 +30,18 @@ public class InputMapper
             _fixedActionHandlers[action] = null;
         }
 
-        _keyboardInputManager.KeyPressed += (Keys key) => TriggerAction(FixedGameAction.Close);
+        foreach (RemappableGameAction action in Enum.GetValues(typeof(RemappableGameAction)))
+        {
+            _remappableActionHandlers[action] = null;
+        }
+
+        _keyboardInputManager.KeyPressed += TriggerAction;
+
+        // hardcoded keybinds
+        BindKey(Keys.Escape, FixedGameAction.Close);
+
+        // TODO: define elsewhere? load from config file?
+        BindKey(Keys.Space, RemappableGameAction.CastBarOne);
     }
 
     public void Subscribe(FixedGameAction gameAction, Action handler)
@@ -56,24 +56,48 @@ public class InputMapper
 
     // TODO: unsubscribing
 
-    private void TriggerAction(FixedGameAction gameAction)
-    {
-        if (_fixedActionHandlers.TryGetValue(gameAction, out var handler))
-            handler?.Invoke();
-    }
-
-
     public void BindKey(Keys key, RemappableGameAction gameAction)
     {
-
-        // if (_inputMappings.ContainsKey(key))
-        //     _inputMappings.Remove(key);
-        // _inputMappings.Add(key, action);
+        if (_keybinds.TryGetValue(key, out var _))
+            _keybinds.Remove(key);
+        _keybinds.Add(key, gameAction);
     }
-    /*
-    keys like escape, ctrl, alt, shift can't be remapped
-    
-    SpacePressed triggered -> trigger mapped Action 
-    */
 
+    private void BindKey(Keys key, FixedGameAction gameAction)
+    {
+        if (_fixedKeybinds.TryGetValue(key, out var _))
+            _fixedKeybinds.Remove(key);
+        _fixedKeybinds.Add(key, gameAction);
+    }
+
+    private FixedGameAction? GetFixedKeybindAction(Keys key)
+    {
+        if (!_fixedKeybinds.TryGetValue(key, out var fixedGameAction))
+            return null;
+        return fixedGameAction;
+    }
+
+    private RemappableGameAction? GetRemappableKeybindAction(Keys key)
+    {
+        if (!_keybinds.TryGetValue(key, out var remappableGameAction))
+            return null;
+        return remappableGameAction;
+    }
+
+    private void TriggerAction(Keys key)
+    {
+        FixedGameAction? fixedGameAction = GetFixedKeybindAction(key);
+        if (fixedGameAction is not null)
+        {
+            _fixedActionHandlers[fixedGameAction.Value]?.Invoke();
+            return;
+        }
+
+        RemappableGameAction? remappableGameAction = GetRemappableKeybindAction(key);
+        if (remappableGameAction is not null)
+        {
+            _remappableActionHandlers[remappableGameAction.Value]?.Invoke();
+            return;
+        }
+    }
 }

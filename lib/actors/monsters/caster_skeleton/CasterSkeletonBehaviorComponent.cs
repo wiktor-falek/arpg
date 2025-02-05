@@ -8,6 +8,7 @@ public class CasterSkeletonBehaviorComponent
     private float _timeSinceDeath = 0f;
     private const double _CAST_DURATION = 1d;
     private double _castTimer = 0d;
+
     // private double _afterCastIdleTime = 0.5d;
 
     public void Update(CasterSkeleton monster, GameTime time)

@@ -7,10 +7,13 @@ public class Game1 : Game
 {
     public bool IsRunning = true;
     public static Config Config { get; private set; }
-    public struct NativeResolution {
+
+    public struct NativeResolution
+    {
         public const int Width = 640;
         public const int Height = 360;
     }
+
     public static new GraphicsDevice GraphicsDevice;
     public static KeyboardInputManager KeyboardInputManager;
     public static InputMapper InputMapper;
@@ -36,13 +39,17 @@ public class Game1 : Game
     protected override void Initialize()
     {
         GraphicsDevice = base.GraphicsDevice;
-        _renderTarget = new RenderTarget2D(GraphicsDevice, NativeResolution.Width, NativeResolution.Height);
+        _renderTarget = new RenderTarget2D(
+            GraphicsDevice,
+            NativeResolution.Width,
+            NativeResolution.Height
+        );
         Config = new Config(_graphics, GraphicsDevice, _renderTarget);
         _background = new Background();
         _hud = new Hud();
         _ui = new UI();
         _pauseMenu = new PauseMenu();
-        _gameInputController = new GameInputController(InputMapper, _ui, _pauseMenu);
+        _gameInputController = new GameInputController(_ui, _pauseMenu);
 
         base.Initialize();
     }

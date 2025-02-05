@@ -12,7 +12,7 @@ public static class GameState
         Player,
         new CasterSkeleton() { Position = new(100, 100) },
         new CasterSkeleton() { Position = new(300, 100) },
-        new CasterSkeleton() { Position = new(500, 100) }
+        new CasterSkeleton() { Position = new(500, 100) },
     ];
 
     private static MonsterSpawner _monsterSpawner = new(Player, 3d, offscreenDistance: 100);

@@ -6,14 +6,12 @@ public class PauseMenu : IOnCloseHandler
 {
     public bool IsDisplayed => !GameState.IsRunning;
 
-    public void Update(GameTime gameTime)
-    {
-
-    }
+    public void Update(GameTime gameTime) { }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (!IsDisplayed) return;
+        if (!IsDisplayed)
+            return;
 
         string text = "Game Paused";
         int textWidth = (int)Assets.Fonts.MonogramExtened.MeasureString(text).X;

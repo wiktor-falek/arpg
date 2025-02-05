@@ -27,7 +27,15 @@ public class Player : IActor
     {
         _inputComponent = new(this);
         Skills = new(this);
-        Stats = new PlayerStats(this, speed: 100, health: 100, mana: 100, healthRegen: 0, manaRegen: 2, healthOnKill: 1);
+        Stats = new PlayerStats(
+            this,
+            speed: 100,
+            health: 100,
+            mana: 100,
+            healthRegen: 0,
+            manaRegen: 2,
+            healthOnKill: 1
+        );
     }
 
     public void Update(GameTime gameTime)

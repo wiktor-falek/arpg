@@ -5,13 +5,7 @@ using Microsoft.Xna.Framework.Input;
 public class KeyboardInputManager(Game1 game)
 {
     public event Action<Keys> KeyPressed;
-    // public event Action EscapePressed;
-    // public event Action SpacePressed;
-    // public event Action F1Pressed;
-    // public event Action F10Pressed;
-    // public event Action F11Pressed;
-    // public event Action LeftAltEnterPressed;
-    
+
     private Game1 _game = game;
     private KeyboardState _keyboardState;
     private KeyboardState _previousKeyboardState;

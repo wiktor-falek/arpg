@@ -47,8 +47,9 @@ public class CasterSkeleton : IMonsterActor
 
     public void TakeDamage(double amount)
     {
-        if (Stats.Health <= 0) return;
-        
+        if (Stats.Health <= 0)
+            return;
+
         Stats.OffsetHealth(-amount);
         if (Stats.Health <= 0)
         {

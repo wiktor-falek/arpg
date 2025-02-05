@@ -9,9 +9,10 @@ public class PlayerInputComponent
 
     public PlayerInputComponent(Player player)
     {
-        // Game1. += () => {
-            // player.Skills.Fireball.Cast(_angle);
-        // };
+        Game1.InputMapper.Subscribe(
+            RemappableGameAction.CastBarOne,
+            () => player.Skills.Fireball.Cast(_angle)
+        );
     }
 
     public void Update(Player player, GameTime gameTime)
