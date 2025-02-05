@@ -12,11 +12,12 @@ public class Game1 : Game
         public const int Height = 360;
     }
     public static new GraphicsDevice GraphicsDevice;
+    public static KeyboardInputManager KeyboardInputManager;
+    public static InputMapper InputMapper;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
     private Background _background;
-    private KeyboardInputManager _keyboardInputManager;
     private PauseMenu _pauseMenu;
     private Hud _hud;
     private UI _ui;
@@ -25,7 +26,8 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _keyboardInputManager = new KeyboardInputManager(this);
+        KeyboardInputManager = new KeyboardInputManager(this);
+        InputMapper = new InputMapper(KeyboardInputManager);
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
@@ -40,7 +42,7 @@ public class Game1 : Game
         _hud = new Hud();
         _ui = new UI();
         _pauseMenu = new PauseMenu();
-        _gameInputController = new GameInputController(_keyboardInputManager, _ui, _pauseMenu);
+        _gameInputController = new GameInputController(InputMapper, _ui, _pauseMenu);
 
         base.Initialize();
     }
@@ -53,7 +55,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        _keyboardInputManager.Update();
+        KeyboardInputManager.Update();
 
         if (GameState.IsRunning)
         {

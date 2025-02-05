@@ -4,11 +4,13 @@ using Microsoft.Xna.Framework.Input;
 
 public class KeyboardInputManager(Game1 game)
 {
-    public event Action EscapePressed;
-    public event Action F1Pressed;
-    public event Action F10Pressed;
-    public event Action F11Pressed;
-    public event Action LeftAltEnterPressed;
+    public event Action<Keys> KeyPressed;
+    // public event Action EscapePressed;
+    // public event Action SpacePressed;
+    // public event Action F1Pressed;
+    // public event Action F10Pressed;
+    // public event Action F11Pressed;
+    // public event Action LeftAltEnterPressed;
     
     private Game1 _game = game;
     private KeyboardState _keyboardState;
@@ -18,20 +20,29 @@ public class KeyboardInputManager(Game1 game)
     {
         _keyboardState = Keyboard.GetState();
 
-        if (IsNewKeyPress(Keys.Escape))
-            EscapePressed?.Invoke();
+        foreach (Keys key in Enum.GetValues(typeof(Keys)))
+        {
+            if (IsNewKeyPress(key))
+                KeyPressed?.Invoke(key);
+        }
 
-        if (IsNewKeyPress(Keys.F1))
-            F1Pressed?.Invoke();
+        // if (IsNewKeyPress(Keys.Escape))
+        //     EscapePressed?.Invoke();
 
-        if (IsNewKeyPress(Keys.F10))
-            F10Pressed?.Invoke();
+        // if (IsNewKeyPress(Keys.Space))
+        //     SpacePressed?.Invoke();
 
-        if (IsNewKeyPress(Keys.F11))
-            F11Pressed?.Invoke();
+        // if (IsNewKeyPress(Keys.F1))
+        //     F1Pressed?.Invoke();
 
-        if (_keyboardState.IsKeyDown(Keys.LeftAlt) && IsNewKeyPress(Keys.Enter))
-            LeftAltEnterPressed?.Invoke();
+        // if (IsNewKeyPress(Keys.F10))
+        //     F10Pressed?.Invoke();
+
+        // if (IsNewKeyPress(Keys.F11))
+        //     F11Pressed?.Invoke();
+
+        // if (_keyboardState.IsKeyDown(Keys.LeftAlt) && IsNewKeyPress(Keys.Enter))
+        //     LeftAltEnterPressed?.Invoke();
 
         _previousKeyboardState = _keyboardState;
     }

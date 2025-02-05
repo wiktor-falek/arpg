@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class UI : IEscapeHandler
+public class UI : IOnCloseHandler
 {
     public void Update(GameTime gameTime)
     {
@@ -13,7 +13,7 @@ public class UI : IEscapeHandler
         
     }
 
-    public bool OnEscape()
+    public bool OnClose()
     {
         return false;
     }

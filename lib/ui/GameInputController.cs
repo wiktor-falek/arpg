@@ -1,41 +1,41 @@
 using System.Collections.Generic;
 using arpg;
 
-interface IEscapeHandler
+interface IOnCloseHandler
 {
     /// <summary>
     /// Handler method that will be called if previous handlers in the hierarchy didn't break the propagation.
     /// </summary>
     /// <returns>Whether to stop event propagation or not.</returns>
-    bool OnEscape();
+    bool OnClose();
 }
 
 public class GameInputController
 {
-    private readonly List<IEscapeHandler> _escapeHandlers = [];
+    private readonly List<IOnCloseHandler> _escapeHandlers = [];
     
     public GameInputController(
-        KeyboardInputManager keyboardInputManager,
+        InputMapper inputMapper,
         UI ui,
         PauseMenu pauseMenu
     )
     {
         // TODO: input mapper
-        keyboardInputManager.EscapePressed += OnEscape;
-        keyboardInputManager.F1Pressed += ToggleDebugMode;
-        keyboardInputManager.F10Pressed += CycleResolution;
-        keyboardInputManager.F11Pressed += ToggleFullscreen;
-        keyboardInputManager.LeftAltEnterPressed += ToggleFullscreen;
+        inputMapper.Subscribe(FixedGameAction.Close, OnClose);
+        // inputMapper.F1Pressed += ToggleDebugMode;
+        // inputMapper.F10Pressed += CycleResolution;
+        // inputMapper.F11Pressed += ToggleFullscreen;
+        // inputMapper.LeftAltEnterPressed += ToggleFullscreen;
 
         _escapeHandlers.Add(ui);
         _escapeHandlers.Add(pauseMenu);
     }
 
-    private void OnEscape()
+    private void OnClose()
     {
-        foreach (IEscapeHandler handler in _escapeHandlers)
+        foreach (IOnCloseHandler handler in _escapeHandlers)
         {
-            bool propagationStopped = handler.OnEscape();
+            bool propagationStopped = handler.OnClose();
             if (propagationStopped) break;
         }
     }

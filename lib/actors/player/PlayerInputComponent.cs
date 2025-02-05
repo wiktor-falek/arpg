@@ -1,10 +1,18 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 public class PlayerInputComponent
 {
-    private KeyboardState _previousKeyboardState;
+    private double _angle = 0d;
+
+    public PlayerInputComponent(Player player)
+    {
+        // Game1. += () => {
+            // player.Skills.Fireball.Cast(_angle);
+        // };
+    }
 
     public void Update(Player player, GameTime gameTime)
     {
@@ -18,21 +26,22 @@ public class PlayerInputComponent
         float deltaX = x2 - x1;
         float deltaY = y2 - y1;
         double angle = Math.Atan2(deltaY, deltaX);
+        _angle = angle;
 
-        if (keyboardState.IsKeyDown(Keys.Space))
-        {
-            player.Skills.Fireball.Cast(angle);
-        }
+        // if (keyboardState.IsKeyDown(Keys.Space))
+        // {
+        //     player.Skills.Fireball.Cast(angle);
+        // }
 
-        if (keyboardState.IsKeyDown(Keys.Q))
-        {
-            player.Skills.FrozenOrb.Cast(angle);
-        }
+        // if (keyboardState.IsKeyDown(Keys.Q))
+        // {
+        //     player.Skills.FrozenOrb.Cast(angle);
+        // }
 
-        if (keyboardState.IsKeyDown(Keys.R) && _previousKeyboardState.IsKeyUp(Keys.R))
-        {
-            player.Skills.HolyFire.Cast();
-        }
+        // if (keyboardState.IsKeyDown(Keys.R) && _previousKeyboardState.IsKeyUp(Keys.R))
+        // {
+        //     player.Skills.HolyFire.Cast();
+        // }
 
         Vector2 movementDirection = Vector2.Zero;
         if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
@@ -76,6 +85,6 @@ public class PlayerInputComponent
         float updatedSpeed = (float)(player.Stats.Speed * gameTime.ElapsedGameTime.TotalSeconds);
         player.Position += movementDirection * updatedSpeed;
 
-        _previousKeyboardState = keyboardState;
+        // _previousKeyboardState = keyboardState;
     }
 }
