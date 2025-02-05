@@ -20,11 +20,12 @@ public class Player : IActor
 
     public SkillCollection Skills;
 
-    private PlayerInputComponent _inputComponent = new();
+    private PlayerInputComponent _inputComponent;
     private PlayerGraphicsComponent _graphicsComponent = new();
 
     public Player()
     {
+        _inputComponent = new(this);
         Skills = new(this);
         Stats = new PlayerStats(
             this,
