@@ -18,6 +18,7 @@ public enum RemappableGameAction
     CastBarOne,
     CastBarTwo,
     CastBarThree,
+    DebugMenu,
 }
 
 public class InputMapper
@@ -60,6 +61,7 @@ public class InputMapper
         BindKey(Keys.Q, RemappableGameAction.CastBarOne);
         BindKey(Keys.E, RemappableGameAction.CastBarTwo);
         BindKey(Keys.R, RemappableGameAction.CastBarThree);
+        BindKey(Keys.F1, RemappableGameAction.DebugMenu);
     }
 
     public void OnPress(FixedGameAction gameAction, Action handler)

@@ -17,8 +17,8 @@ public class DebugScreen : IHudElement
         string playerPositionXText = $"X:{GameState.Player.Position.X:F2}";
         string playerPositionYText = $"Y:{GameState.Player.Position.Y:F2}";
         string resolutionText =
-            $"Resolution:{Game1.NativeResolution.Width * Game1.Config.Scale}" +
-            $"x{Game1.NativeResolution.Height * Game1.Config.Scale}";
+            $"Resolution:{Game1.NativeResolution.Width * Game1.Config.Scale}"
+            + $"x{Game1.NativeResolution.Height * Game1.Config.Scale}";
         // string framerateText = $"FPS:{(int)FramerateCounter.Framerate}";
 
         spriteBatch.DrawString(
