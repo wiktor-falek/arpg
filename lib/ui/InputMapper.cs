@@ -18,7 +18,10 @@ public enum RemappableGameAction
     CastBarOne,
     CastBarTwo,
     CastBarThree,
+    OpenInventory,
     DebugMenu,
+    CycleResolution,
+    ToggleFullscreen,
 }
 
 public class InputMapper
@@ -62,6 +65,10 @@ public class InputMapper
         BindKey(Keys.E, RemappableGameAction.CastBarTwo);
         BindKey(Keys.R, RemappableGameAction.CastBarThree);
         BindKey(Keys.F1, RemappableGameAction.DebugMenu);
+        BindKey(Keys.OemTilde, RemappableGameAction.OpenInventory);
+        BindKey(Keys.F10, RemappableGameAction.CycleResolution);
+        BindKey(Keys.F11, RemappableGameAction.ToggleFullscreen);
+        // BindKey([Keys.LeftAlt, Keys.Enter], RemappableGameAction.ToggleFullscreen);
     }
 
     public void OnPress(FixedGameAction gameAction, Action handler)

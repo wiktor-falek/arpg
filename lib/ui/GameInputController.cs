@@ -16,15 +16,10 @@ public class GameInputController
 
     public GameInputController(UI ui, PauseMenu pauseMenu)
     {
-        // Game1.InputMapper.Subscribe(
-        //     RemappableGameAction.CastBarOne,
-        //     () => player.Skills.Fireball.Cast(_angle)
-        // );
         Game1.InputMapper.OnPress(FixedGameAction.Close, OnClose);
         Game1.InputMapper.OnPress(RemappableGameAction.DebugMenu, ToggleDebugMode);
-        // inputMapper.F10Pressed += CycleResolution;
-        // inputMapper.F11Pressed += ToggleFullscreen;
-        // inputMapper.LeftAltEnterPressed += ToggleFullscreen;
+        Game1.InputMapper.OnPress(RemappableGameAction.CycleResolution, CycleResolution);
+        Game1.InputMapper.OnPress(RemappableGameAction.ToggleFullscreen, ToggleFullscreen);
 
         _escapeHandlers.Add(ui);
         _escapeHandlers.Add(pauseMenu);
@@ -40,7 +35,7 @@ public class GameInputController
         }
     }
 
-    // TODO: move out?
+    // TODO: move these somewhere else?
     private void ToggleDebugMode()
     {
         GameState.IsDebugMode = !GameState.IsDebugMode;
