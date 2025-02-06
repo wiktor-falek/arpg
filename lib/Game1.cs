@@ -15,8 +15,7 @@ public class Game1 : Game
     }
 
     public static new GraphicsDevice GraphicsDevice;
-    public static KeyboardInputManager KeyboardInputManager;
-    public static InputMapper InputMapper;
+    public static InputManager InputManager;
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
@@ -29,8 +28,7 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        KeyboardInputManager = new KeyboardInputManager(this);
-        InputMapper = new InputMapper(KeyboardInputManager);
+        InputManager = new InputManager();
         Content.RootDirectory = "Content";
         Window.Title = "Path of Exile 4";
         IsMouseVisible = true;
@@ -62,7 +60,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        KeyboardInputManager.Update();
+        InputManager.Update();
 
         if (GameState.IsRunning)
         {

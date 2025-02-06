@@ -16,10 +16,10 @@ public class GameInputController
 
     public GameInputController(UI ui, PauseMenu pauseMenu)
     {
-        Game1.InputMapper.OnPress(FixedGameAction.Close, OnClose);
-        Game1.InputMapper.OnPress(RemappableGameAction.DebugMenu, ToggleDebugMode);
-        Game1.InputMapper.OnPress(RemappableGameAction.CycleResolution, CycleResolution);
-        Game1.InputMapper.OnPress(RemappableGameAction.ToggleFullscreen, ToggleFullscreen);
+        Game1.InputManager.OnPress(FixedGameAction.Close, OnClose);
+        Game1.InputManager.OnPress(RemappableGameAction.DebugMenu, ToggleDebugMode);
+        Game1.InputManager.OnPress(RemappableGameAction.CycleResolution, CycleResolution);
+        Game1.InputManager.OnPress(RemappableGameAction.ToggleFullscreen, ToggleFullscreen);
 
         _escapeHandlers.Add(ui);
         _escapeHandlers.Add(pauseMenu);

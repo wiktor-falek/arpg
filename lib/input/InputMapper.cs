@@ -4,17 +4,13 @@ using Microsoft.Xna.Framework.Input;
 
 public enum FixedGameAction
 {
+    // LeftClick,
+    // RightClick,
     Close,
 }
 
 public enum RemappableGameAction
 {
-    // LeftClick,
-    // RightClick,
-    MoveUp,
-    MoveDown,
-    MoveLeft,
-    MoveRight,
     CastBarOne,
     CastBarTwo,
     CastBarThree,
@@ -52,23 +48,7 @@ public class InputMapper
         }
 
         _keyboardInputManager.KeyPressed += TriggerAction;
-
-        // hardcoded keybinds
-        BindKey(Keys.Escape, FixedGameAction.Close);
-
-        // remappable keybinds
-        BindKey(Keys.W, RemappableGameAction.MoveUp);
-        BindKey(Keys.S, RemappableGameAction.MoveDown);
-        BindKey(Keys.A, RemappableGameAction.MoveLeft);
-        BindKey(Keys.D, RemappableGameAction.MoveRight);
-        BindKey(Keys.Q, RemappableGameAction.CastBarOne);
-        BindKey(Keys.E, RemappableGameAction.CastBarTwo);
-        BindKey(Keys.R, RemappableGameAction.CastBarThree);
-        BindKey(Keys.F1, RemappableGameAction.DebugMenu);
-        BindKey(Keys.OemTilde, RemappableGameAction.OpenInventory);
-        BindKey(Keys.F10, RemappableGameAction.CycleResolution);
-        BindKey(Keys.F11, RemappableGameAction.ToggleFullscreen);
-        // BindKey([Keys.LeftAlt, Keys.Enter], RemappableGameAction.ToggleFullscreen);
+        // TODO: KeyReleased
     }
 
     public void OnPress(FixedGameAction gameAction, Action handler)
@@ -95,16 +75,18 @@ public class InputMapper
 
     public void BindKey(Keys key, RemappableGameAction gameAction)
     {
-        if (_keybinds.TryGetValue(key, out var _))
-            _keybinds.Remove(key);
         _keybinds.Add(key, gameAction);
     }
 
-    private void BindKey(Keys key, FixedGameAction gameAction)
+    public void BindKey(Keys key, FixedGameAction gameAction)
     {
-        if (_fixedKeybinds.TryGetValue(key, out var _))
-            _fixedKeybinds.Remove(key);
         _fixedKeybinds.Add(key, gameAction);
+    }
+
+    public void UnbindKey(Keys key)
+    {
+        if (_keybinds.TryGetValue(key, out var _))
+            _keybinds.Remove(key);
     }
 
     private FixedGameAction? GetFixedKeybindAction(Keys key)

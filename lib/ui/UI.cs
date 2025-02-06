@@ -8,7 +8,7 @@ public class UI : IOnCloseHandler
 
     public UI()
     {
-        Game1.InputMapper.OnPress(RemappableGameAction.OpenInventory, Toggle);
+        Game1.InputManager.OnPress(RemappableGameAction.OpenInventory, Toggle);
     }
 
     public void Update(GameTime gameTime) { }
