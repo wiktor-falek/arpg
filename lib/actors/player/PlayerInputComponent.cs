@@ -14,10 +14,12 @@ public class PlayerInputComponent
     public PlayerInputComponent(Player player)
     {
         // TODO: repeat cast, only one key at a time
+
         Game1.InputManager.OnPress(
             RemappableGameAction.CastBarOne,
             () => player.Skills.Fireball.Cast(_mouseAngle)
         );
+
         Game1.InputManager.OnPress(
             RemappableGameAction.CastBarTwo,
             () => player.Skills.FrozenOrb.Cast(_mouseAngle)

@@ -44,6 +44,16 @@ public class InputManager
         _inputMapper.OnPress(gameAction, handler);
     }
 
+    public void OnRelease(FixedGameAction gameAction, Action handler)
+    {
+        _inputMapper.OnRelease(gameAction, handler);
+    }
+
+    public void OnRelease(RemappableGameAction gameAction, Action handler)
+    {
+        _inputMapper.OnRelease(gameAction, handler);
+    }
+
     public void BindKey(Keys key, RemappableGameAction gameAction) 
     {
         _boundKeys.Add(key);

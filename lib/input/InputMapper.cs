@@ -25,10 +25,10 @@ public class InputMapper
     // MouseInputManager?
     private KeyboardInputManager _keyboardInputManager;
     private Dictionary<Keys, FixedGameAction> _fixedKeybinds = [];
-    private Dictionary<FixedGameAction, Action> _fixedActionHandlers = [];
+    private Dictionary<FixedGameAction, Action> _fixedPressActionHandlers = [];
     private Dictionary<FixedGameAction, Action> _fixedReleaseActionHandlers = [];
     private Dictionary<Keys, RemappableGameAction> _keybinds = [];
-    private Dictionary<RemappableGameAction, Action> _remappableActionHandlers = [];
+    private Dictionary<RemappableGameAction, Action> _remappablePressActionHandlers = [];
     private Dictionary<RemappableGameAction, Action> _remappableReleaseActionHandlers = [];
 
     public InputMapper(KeyboardInputManager keyboardInputManager)
@@ -37,28 +37,28 @@ public class InputMapper
 
         foreach (FixedGameAction action in Enum.GetValues(typeof(FixedGameAction)))
         {
-            _fixedActionHandlers[action] = null;
+            _fixedPressActionHandlers[action] = null;
             _fixedReleaseActionHandlers[action] = null;
         }
 
         foreach (RemappableGameAction action in Enum.GetValues(typeof(RemappableGameAction)))
         {
-            _remappableActionHandlers[action] = null;
+            _remappablePressActionHandlers[action] = null;
             _remappableReleaseActionHandlers[action] = null;
         }
 
-        _keyboardInputManager.KeyPressed += TriggerAction;
-        // TODO: KeyReleased
+        _keyboardInputManager.KeyPressed += TriggerKeyPressedAction;
+        _keyboardInputManager.KeyReleased += TriggerKeyReleasedAction;
     }
 
     public void OnPress(FixedGameAction gameAction, Action handler)
     {
-        _fixedActionHandlers[gameAction] += handler;
+        _fixedPressActionHandlers[gameAction] += handler;
     }
 
     public void OnPress(RemappableGameAction gameAction, Action handler)
     {
-        _remappableActionHandlers[gameAction] += handler;
+        _remappablePressActionHandlers[gameAction] += handler;
     }
 
     public void OnRelease(FixedGameAction gameAction, Action handler)
@@ -103,19 +103,36 @@ public class InputMapper
         return remappableGameAction;
     }
 
-    private void TriggerAction(Keys key)
+    private void TriggerKeyPressedAction(Keys key)
     {
         FixedGameAction? fixedGameAction = GetFixedKeybindAction(key);
         if (fixedGameAction is not null)
         {
-            _fixedActionHandlers[fixedGameAction.Value]?.Invoke();
+            _fixedPressActionHandlers[fixedGameAction.Value]?.Invoke();
             return;
         }
 
         RemappableGameAction? remappableGameAction = GetRemappableKeybindAction(key);
         if (remappableGameAction is not null)
         {
-            _remappableActionHandlers[remappableGameAction.Value]?.Invoke();
+            _remappablePressActionHandlers[remappableGameAction.Value]?.Invoke();
+            return;
+        }
+    }
+
+    private void TriggerKeyReleasedAction(Keys key)
+    {
+        FixedGameAction? fixedGameAction = GetFixedKeybindAction(key);
+        if (fixedGameAction is not null)
+        {
+            _fixedReleaseActionHandlers[fixedGameAction.Value]?.Invoke();
+            return;
+        }
+
+        RemappableGameAction? remappableGameAction = GetRemappableKeybindAction(key);
+        if (remappableGameAction is not null)
+        {
+            _remappableReleaseActionHandlers[remappableGameAction.Value]?.Invoke();
             return;
         }
     }
