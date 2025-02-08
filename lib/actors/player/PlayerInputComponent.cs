@@ -1,7 +1,6 @@
 using System;
 using arpg;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 public class PlayerInputComponent
 {
@@ -14,7 +13,7 @@ public class PlayerInputComponent
 
     public PlayerInputComponent(Player player)
     {
-    _player = player;
+        _player = player;
         // TODO: don't cast if game paused
         // TODO: repeat cast, only one key at a time
 
@@ -36,21 +35,7 @@ public class PlayerInputComponent
 
     public void Update(GameTime gameTime)
     {
-        // _mousePosition = MouseManager.GetMousePosition();
-        // _mouseAngle = CalculateAngle(_player.Position, _mousePosition);
-        // MouseState mouseState = Mouse.GetState();
-        // bool mousePressed = mouseState.LeftButton == ButtonState.Pressed;
-        // if (mousePressed)
-        // {
-        //     _destination = _mousePosition;
-        //     _destinationAngle = _mouseAngle;
-        //     double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
-        //     bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;
-        //     player.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
-        //     isMoving = true;
-        //     player.TransitionState(ActorState.Walking);
-        // }
-
+        // TODO: update destination while click is held, stop on release
         if (!isMoving)
             return;
 
@@ -76,6 +61,8 @@ public class PlayerInputComponent
 
     public bool OnLeftClick()
     {
+        if (!GameState.IsRunning)
+            return false;
         _mousePosition = MouseManager.GetMousePosition();
         _mouseAngle = CalculateAngle(_player.Position, _mousePosition);
         _destination = _mousePosition;
@@ -86,6 +73,11 @@ public class PlayerInputComponent
         isMoving = true;
         _player.TransitionState(ActorState.Walking);
         return true;
+    }
+
+    public void OnLeftClickRelease()
+    {
+        //
     }
 
     private double CalculateAngle(Vector2 a, Vector2 b)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 public enum FixedGameAction
@@ -22,9 +23,13 @@ public enum RemappableGameAction
 
 public class InputMapper
 {
+    public Vector2 MousePosition
+    {
+        get => _mouseInputManager.MousePosition;
+    }
     private KeyboardInputManager _keyboardInputManager;
     private MouseInputManager _mouseInputManager;
-    
+
     private Dictionary<MouseButtons, FixedGameAction> _fixedMouseKeybinds = [];
     private Dictionary<Keys, FixedGameAction> _fixedKeyboardKeybinds = [];
     private Dictionary<FixedGameAction, Action> _fixedPressActionHandlers = [];
@@ -34,7 +39,10 @@ public class InputMapper
     private Dictionary<RemappableGameAction, Action> _remappablePressActionHandlers = [];
     private Dictionary<RemappableGameAction, Action> _remappableReleaseActionHandlers = [];
 
-    public InputMapper(KeyboardInputManager keyboardInputManager, MouseInputManager mouseInputManager)
+    public InputMapper(
+        KeyboardInputManager keyboardInputManager,
+        MouseInputManager mouseInputManager
+    )
     {
         _keyboardInputManager = keyboardInputManager;
         _mouseInputManager = mouseInputManager;

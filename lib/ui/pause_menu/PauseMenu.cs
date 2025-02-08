@@ -32,6 +32,7 @@ public class PauseMenu
 
     public bool OnLeftClick()
     {
-        return true;
+        // TODO: handle left click
+        return false;
     }
 }

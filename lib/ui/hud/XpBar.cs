@@ -11,7 +11,10 @@ public class XpBar : IHudElement
 
     public XpBar()
     {
-        Position = new Vector2(Game1.NativeResolution.Width / 2, Game1.NativeResolution.Height - 12);
+        Position = new Vector2(
+            Game1.NativeResolution.Width / 2,
+            Game1.NativeResolution.Height - 12
+        );
     }
 
     public void Update(GameTime gameTime)

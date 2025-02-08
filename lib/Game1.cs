@@ -22,7 +22,7 @@ public class Game1 : Game
     private Background _background;
     private PauseMenu _pauseMenu;
     private Hud _hud;
-    private UI _ui;
+    private GameUI _gameUI;
     private GameInputController _gameInputController;
 
     public Game1()
@@ -46,15 +46,15 @@ public class Game1 : Game
         Config = new Config(_graphics, GraphicsDevice, _renderTarget);
         _background = new Background();
         _hud = new Hud();
-        _ui = new UI();
+        _gameUI = new GameUI();
         _pauseMenu = new PauseMenu();
 
         _gameInputController = new GameInputController();
-        _gameInputController.RegisterOnClose(_ui.OnClose);
+        _gameInputController.RegisterOnClose(_gameUI.OnClose);
         _gameInputController.RegisterOnClose(_pauseMenu.OnClose);
 
         _gameInputController.RegisterOnLeftClick(_pauseMenu.OnLeftClick);
-        _gameInputController.RegisterOnLeftClick(_ui.OnLeftClick);
+        _gameInputController.RegisterOnLeftClick(_gameUI.OnLeftClick);
         _gameInputController.RegisterOnLeftClick(GameState.Player.InputComponent.OnLeftClick);
 
         base.Initialize();
@@ -108,7 +108,7 @@ public class Game1 : Game
         _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
 
         _hud.Draw(_spriteBatch, GraphicsDevice);
-        _ui.Draw(_spriteBatch);
+        _gameUI.Draw(_spriteBatch);
         _pauseMenu.Draw(_spriteBatch);
 
         _spriteBatch.End();

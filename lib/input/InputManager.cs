@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 public class InputManager
@@ -7,6 +8,10 @@ public class InputManager
     private MouseInputManager _mouseInputManager = new();
     private KeyboardInputManager _keyboardInputManager = new();
     private InputMapper _inputMapper;
+    public Vector2 MousePosition
+    {
+        get => _inputMapper.MousePosition;
+    }
 
     private HashSet<Keys> _hardBoundKeys = [];
     private HashSet<Keys> _boundKeys = [];
@@ -56,31 +61,31 @@ public class InputManager
         _inputMapper.OnRelease(gameAction, handler);
     }
 
-    private void BindKey(Keys key, FixedGameAction gameAction) 
+    private void BindKey(Keys key, FixedGameAction gameAction)
     {
         _hardBoundKeys.Add(key);
         _inputMapper.BindKey(key, gameAction);
     }
 
-    public void BindKey(Keys key, RemappableGameAction gameAction) 
+    public void BindKey(Keys key, RemappableGameAction gameAction)
     {
         _boundKeys.Add(key);
         _inputMapper.BindKey(key, gameAction);
     }
 
-    public void BindKey(MouseButtons button, FixedGameAction gameAction) 
+    public void BindKey(MouseButtons button, FixedGameAction gameAction)
     {
         _inputMapper.BindKey(button, gameAction);
     }
 
-    public void BindKey(MouseButtons button, RemappableGameAction gameAction) 
+    public void BindKey(MouseButtons button, RemappableGameAction gameAction)
     {
         _inputMapper.BindKey(button, gameAction);
     }
 
-    public void UnbindKey(Keys key) 
+    public void UnbindKey(Keys key)
     {
-        if (_hardBoundKeys.Contains(key)) 
+        if (_hardBoundKeys.Contains(key))
             throw new InvalidOperationException("Cannot unbind a fixed keybind.");
         _boundKeys.Remove(key);
         _inputMapper.UnbindKey(key);

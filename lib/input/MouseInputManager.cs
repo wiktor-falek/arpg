@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 public enum MouseButtons
@@ -14,6 +15,7 @@ public class MouseInputManager
 {
     public event Action<MouseButtons> KeyPressed;
     public event Action<MouseButtons> KeyReleased;
+    public Vector2 MousePosition { get; private set; }
 
     private MouseState _mouseState;
     private MouseState _previousMouseState;
@@ -21,6 +23,7 @@ public class MouseInputManager
     public void Update()
     {
         _mouseState = Mouse.GetState();
+        MousePosition = MouseManager.GetMousePosition();
 
         foreach (MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
         {
@@ -34,8 +37,10 @@ public class MouseInputManager
     {
         ButtonState buttonState = GetButtonState(button, _mouseState);
         ButtonState previousButtonState = GetButtonState(button, _previousMouseState);
-        bool isNewButtonPress = buttonState == ButtonState.Pressed && previousButtonState == ButtonState.Released;
-        bool isButtonReleased = buttonState == ButtonState.Released && previousButtonState == ButtonState.Pressed;
+        bool isNewButtonPress =
+            buttonState == ButtonState.Pressed && previousButtonState == ButtonState.Released;
+        bool isButtonReleased =
+            buttonState == ButtonState.Released && previousButtonState == ButtonState.Pressed;
 
         if (isNewButtonPress)
         {
@@ -56,7 +61,7 @@ public class MouseInputManager
             MouseButtons.RightButton => mouseState.RightButton,
             MouseButtons.X1Button => mouseState.XButton1,
             MouseButtons.X2Button => mouseState.XButton2,
-            _ => throw new SystemException("Non-exhaustive handling of ButtonState enum")
+            _ => throw new SystemException("Non-exhaustive handling of ButtonState enum"),
         };
     }
 }
