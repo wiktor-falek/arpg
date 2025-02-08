@@ -4,6 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class DebugScreen : IHudElement
 {
+    private string whatever = "whatever";
+
+    public DebugScreen()
+    {
+        Game1.InputManager.OnPress(FixedGameAction.LeftClick, () => whatever = "balls");
+    }    
+    
     public void Update(GameTime gameTime)
     {
         // FramerateCounter.Update(gameTime.ElapsedGameTime.TotalSeconds);
@@ -49,6 +56,18 @@ public class DebugScreen : IHudElement
             Assets.Fonts.MonogramExtened,
             resolutionText,
             new Vector2(0, 20),
+            Color.White,
+            0f,
+            Vector2.Zero,
+            1f,
+            SpriteEffects.None,
+            Layer.Text
+        );
+
+        spriteBatch.DrawString(
+            Assets.Fonts.MonogramExtened,
+            whatever,
+            new Vector2(0, 30),
             Color.White,
             0f,
             Vector2.Zero,

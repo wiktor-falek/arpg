@@ -1,37 +1,47 @@
+using System;
 using System.Collections.Generic;
 using arpg;
 
-interface IOnCloseHandler
-{
-    /// <summary>
-    /// Handler method that will be called if previous handlers in the hierarchy didn't break the propagation.
-    /// </summary>
-    /// <returns>Whether to stop event propagation or not.</returns>
-    bool OnClose();
-}
-
 public class GameInputController
 {
-    private readonly List<IOnCloseHandler> _escapeHandlers = [];
+    private readonly List<Func<bool>> _escapeHandlers = [];
+    private readonly List<Func<bool>> _leftClickHandlers = [];
 
-    public GameInputController(UI ui, PauseMenu pauseMenu)
+    public GameInputController()
     {
         Game1.InputManager.OnPress(FixedGameAction.Close, OnClose);
+        Game1.InputManager.OnPress(FixedGameAction.LeftClick, OnLeftClick);
         Game1.InputManager.OnPress(RemappableGameAction.DebugMenu, ToggleDebugMode);
         Game1.InputManager.OnPress(RemappableGameAction.CycleResolution, CycleResolution);
         Game1.InputManager.OnPress(RemappableGameAction.ToggleFullscreen, ToggleFullscreen);
+    }
 
-        _escapeHandlers.Add(ui);
-        _escapeHandlers.Add(pauseMenu);
+    public void RegisterOnClose(Func<bool> handler)
+    {
+        _escapeHandlers.Add(handler);
+    }
+
+    public void RegisterOnLeftClick(Func<bool> handler)
+    {
+        _leftClickHandlers.Add(handler);
     }
 
     private void OnClose()
     {
-        foreach (IOnCloseHandler handler in _escapeHandlers)
+        HandleEventPropagation(_escapeHandlers);
+    }
+
+    private void OnLeftClick()
+    {
+        HandleEventPropagation(_leftClickHandlers);
+    }
+
+    private void HandleEventPropagation(List<Func<bool>> handlers)
+    {
+        foreach (Func<bool> handler in handlers)
         {
-            bool propagationStopped = handler.OnClose();
-            if (propagationStopped)
-                break;
+            bool propagationStopped = handler();
+            if (propagationStopped) break;
         }
     }
 

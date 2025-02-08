@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 public class PlayerInputComponent
 {
+    private Player _player;
     private bool isMoving = false;
     private Vector2 _mousePosition;
     private double _mouseAngle = 0d;
@@ -13,6 +14,8 @@ public class PlayerInputComponent
 
     public PlayerInputComponent(Player player)
     {
+    _player = player;
+        // TODO: don't cast if game paused
         // TODO: repeat cast, only one key at a time
 
         Game1.InputManager.OnPress(
@@ -24,62 +27,71 @@ public class PlayerInputComponent
             RemappableGameAction.CastBarTwo,
             () => player.Skills.FrozenOrb.Cast(_mouseAngle)
         );
+
         Game1.InputManager.OnPress(
             RemappableGameAction.CastBarThree,
             () => player.Skills.HolyFire.Cast()
         );
     }
 
-    public void Update(Player player, GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
-        _mousePosition = MouseManager.GetMousePosition();
-        _mouseAngle = CalculateAngle(player.Position, _mousePosition);
-
-        MouseState mouseState = Mouse.GetState();
-        bool mousePressed = mouseState.LeftButton == ButtonState.Pressed;
-        if (mousePressed)
-        {
-            _destination = _mousePosition;
-            _destinationAngle = _mouseAngle;
-            double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
-            bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;
-            player.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
-            isMoving = true;
-            player.TransitionState(ActorState.Walking);
-        }
+        // _mousePosition = MouseManager.GetMousePosition();
+        // _mouseAngle = CalculateAngle(_player.Position, _mousePosition);
+        // MouseState mouseState = Mouse.GetState();
+        // bool mousePressed = mouseState.LeftButton == ButtonState.Pressed;
+        // if (mousePressed)
+        // {
+        //     _destination = _mousePosition;
+        //     _destinationAngle = _mouseAngle;
+        //     double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
+        //     bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;
+        //     player.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
+        //     isMoving = true;
+        //     player.TransitionState(ActorState.Walking);
+        // }
 
         if (!isMoving)
             return;
 
-        float distanceToDestination = Vector2.Distance(player.Position, _destination);
+        float distanceToDestination = Vector2.Distance(_player.Position, _destination);
         if (distanceToDestination > 1f)
         {
             double elapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
             float x =
-                player.Position.X
-                + (float)(player.Stats.Speed * elapsedTime * Math.Cos(_destinationAngle));
+                _player.Position.X
+                + (float)(_player.Stats.Speed * elapsedTime * Math.Cos(_destinationAngle));
             float y =
-                player.Position.Y
-                + (float)(player.Stats.Speed * elapsedTime * Math.Sin(_destinationAngle));
-            player.Position = new(x, y);
+                _player.Position.Y
+                + (float)(_player.Stats.Speed * elapsedTime * Math.Sin(_destinationAngle));
+            _player.Position = new(x, y);
         }
         else
         {
-            player.Position = _destination;
+            _player.Position = _destination;
             isMoving = false;
-            player.TransitionState(ActorState.Idling);
+            _player.TransitionState(ActorState.Idling);
         }
     }
 
-    private double CalculateAngle(Vector2 first, Vector2 second)
+    public bool OnLeftClick()
     {
-        float x1 = first.X;
-        float y1 = first.Y;
-        float x2 = second.X;
-        float y2 = second.Y;
-        float deltaX = x2 - x1;
-        float deltaY = y2 - y1;
-        double angle = Math.Atan2(deltaY, deltaX);
-        return angle;
+        _mousePosition = MouseManager.GetMousePosition();
+        _mouseAngle = CalculateAngle(_player.Position, _mousePosition);
+        _destination = _mousePosition;
+        _destinationAngle = _mouseAngle;
+        double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
+        bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;
+        _player.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
+        isMoving = true;
+        _player.TransitionState(ActorState.Walking);
+        return true;
+    }
+
+    private double CalculateAngle(Vector2 a, Vector2 b)
+    {
+        float deltaX = b.X - a.X;
+        float deltaY = b.Y - a.Y;
+        return Math.Atan2(deltaY, deltaX);
     }
 }

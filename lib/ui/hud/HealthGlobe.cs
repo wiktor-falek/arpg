@@ -28,7 +28,16 @@ public class HealthGlobe : IHudElement
     {
         var globeTexture = new Texture2D(graphicsDevice, 1, 1);
         globeTexture.SetData([new Color(150, 10, 10)]);
-        spriteBatch.Draw(globeTexture, Rectangle, Color.White);
+        spriteBatch.Draw(
+            globeTexture,
+            Rectangle,
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            SpriteEffects.None,
+            Layer.HUD
+        );
 
         string healthGlobeValuesText = $"{Health}/{MaxHealth}";
         spriteBatch.DrawString(

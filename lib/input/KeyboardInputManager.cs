@@ -37,11 +37,11 @@ public class KeyboardInputManager
         bool isNewKeyPress = isKeyDown && !isPreviousKeyDown;
         bool IsKeyReleased = !isKeyDown && isPreviousKeyDown;
 
-        if (isKeyDown && !isPreviousKeyDown)
+        if (isNewKeyPress)
         {
             KeyPressed?.Invoke(key);
         }
-        else if (!isKeyDown && isPreviousKeyDown)
+        else if (IsKeyReleased)
         {
             KeyReleased?.Invoke(key);
         }

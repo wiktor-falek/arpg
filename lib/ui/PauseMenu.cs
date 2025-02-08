@@ -2,7 +2,7 @@ using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class PauseMenu : IOnCloseHandler
+public class PauseMenu
 {
     public bool IsDisplayed => !GameState.IsRunning;
 
@@ -27,6 +27,11 @@ public class PauseMenu : IOnCloseHandler
     public bool OnClose()
     {
         GameState.IsRunning = !GameState.IsRunning;
+        return true;
+    }
+
+    public bool OnLeftClick()
+    {
         return true;
     }
 }

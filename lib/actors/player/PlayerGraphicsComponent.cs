@@ -5,13 +5,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class PlayerGraphicsComponent
 {
+    private Player _player;
     private Asset _idleAsset = Assets.Player.Idle;
     private Asset _walkAsset = Assets.Player.Walk;
     private int _currentFrame = 0;
     private float _frameTime = 0.1f;
     private float _elapsedTime = 0f;
 
-    public void Update(Player player, GameTime gameTime)
+    public PlayerGraphicsComponent(Player player)
+    {
+        _player = player;
+    }
+
+    public void Update(GameTime gameTime)
     {
         _elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -19,7 +25,7 @@ public class PlayerGraphicsComponent
         {
             _elapsedTime = 0f;
 
-            var asset = player.State switch
+            var asset = _player.State switch
             {
                 ActorState.Idling => _idleAsset,
                 ActorState.Walking => _walkAsset,
@@ -30,21 +36,21 @@ public class PlayerGraphicsComponent
         }
     }
 
-    public void Draw(Player player, SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        var texture = player.State == ActorState.Idling ? _idleAsset.Texture : _walkAsset.Texture;
+        var texture = _player.State == ActorState.Idling ? _idleAsset.Texture : _walkAsset.Texture;
         var frame =
-            player.State == ActorState.Idling
+            _player.State == ActorState.Idling
                 ? _idleAsset.Frames[_currentFrame]
                 : _walkAsset.Frames[_currentFrame];
         var effect =
-            player.Facing == ActorFacing.Right
+            _player.Facing == ActorFacing.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
 
         if (GameState.IsDebugMode)
         {
-            if (player.Hitbox is RectangleHitbox rectangleHitbox)
+            if (_player.Hitbox is RectangleHitbox rectangleHitbox)
             {
                 spriteBatch.Draw(
                     Assets.RectangleTexture,
@@ -65,7 +71,7 @@ public class PlayerGraphicsComponent
 
         spriteBatch.Draw(
             texture,
-            new((int)player.Position.X, (int)player.Position.Y),
+            new((int)_player.Position.X, (int)_player.Position.Y),
             frame,
             Color.White,
             0f,

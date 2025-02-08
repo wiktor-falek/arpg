@@ -13,7 +13,7 @@ public class ActorBaseStats {
     public double ManaDegen { get; set; }
 
     private IActor _actor;
-    private const double TICK_TIME = 0.25d;
+    private const double TICK_TIME = 0.1d;
     private double _regenTimer = 0f;
 
     public ActorBaseStats(IActor actor, double speed, double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)

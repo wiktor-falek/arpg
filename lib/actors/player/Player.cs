@@ -20,19 +20,20 @@ public class Player : IActor
 
     public SkillCollection Skills;
 
-    private PlayerInputComponent _inputComponent;
-    private PlayerGraphicsComponent _graphicsComponent = new();
+    public PlayerInputComponent InputComponent;
+    private PlayerGraphicsComponent _graphicsComponent;
 
     public Player()
     {
-        _inputComponent = new(this);
+        _graphicsComponent = new(this);
+        InputComponent = new(this);
         Skills = new(this);
         Stats = new PlayerStats(
             this,
             speed: 100,
             health: 100,
             mana: 100,
-            healthRegen: 0,
+            healthRegen: 1,
             manaRegen: 2,
             healthOnKill: 1
         );
@@ -41,13 +42,13 @@ public class Player : IActor
     public void Update(GameTime gameTime)
     {
         Stats.Update(gameTime);
-        _inputComponent.Update(this, gameTime);
-        _graphicsComponent.Update(this, gameTime);
+        InputComponent.Update(gameTime);
+        _graphicsComponent.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        _graphicsComponent.Draw(this, spriteBatch);
+        _graphicsComponent.Draw(spriteBatch);
     }
 
     public void TransitionState(ActorState newState)

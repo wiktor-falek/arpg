@@ -42,12 +42,20 @@ public class Game1 : Game
             NativeResolution.Width,
             NativeResolution.Height
         );
+        Assets.Load(Content, GraphicsDevice);
         Config = new Config(_graphics, GraphicsDevice, _renderTarget);
         _background = new Background();
         _hud = new Hud();
         _ui = new UI();
         _pauseMenu = new PauseMenu();
-        _gameInputController = new GameInputController(_ui, _pauseMenu);
+
+        _gameInputController = new GameInputController();
+        _gameInputController.RegisterOnClose(_ui.OnClose);
+        _gameInputController.RegisterOnClose(_pauseMenu.OnClose);
+
+        _gameInputController.RegisterOnLeftClick(_pauseMenu.OnLeftClick);
+        _gameInputController.RegisterOnLeftClick(_ui.OnLeftClick);
+        _gameInputController.RegisterOnLeftClick(GameState.Player.InputComponent.OnLeftClick);
 
         base.Initialize();
     }
@@ -55,7 +63,6 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        Assets.Load(Content, GraphicsDevice);
     }
 
     protected override void Update(GameTime gameTime)
@@ -101,7 +108,7 @@ public class Game1 : Game
         _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
 
         _hud.Draw(_spriteBatch, GraphicsDevice);
-
+        _ui.Draw(_spriteBatch);
         _pauseMenu.Draw(_spriteBatch);
 
         _spriteBatch.End();

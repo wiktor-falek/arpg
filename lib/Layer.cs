@@ -1,5 +1,7 @@
 public static class Layer
 {
+    public const float UI = 0.0001f;
+    public const float HUD = 0.001f;
     public const float Text = 0.01f;
     public const float Monster = 0.02f;
     public const float Player = 0.03f;
