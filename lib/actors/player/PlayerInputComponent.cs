@@ -35,6 +35,9 @@ public class PlayerInputComponent
 
     public void Update(GameTime gameTime)
     {
+        // this is not mouse position, but an offset from player position that can be used to calculate destination
+        _mousePosition = MouseManager.GetInGameMousePositionRelativeToPlayer();
+
         // TODO: update destination while click is held, stop on release
         if (!isMoving)
             return;
@@ -63,9 +66,11 @@ public class PlayerInputComponent
     {
         if (!GameState.IsRunning)
             return false;
-        _mousePosition = MouseManager.GetMousePosition();
+
+        var offset = MouseManager.GetInGameMousePositionRelativeToPlayer();
+        _destination = _player.Position + offset;
         _mouseAngle = CalculateAngle(_player.Position, _mousePosition);
-        _destination = _mousePosition;
+
         _destinationAngle = _mouseAngle;
         double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
         bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;

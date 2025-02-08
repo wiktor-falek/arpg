@@ -23,7 +23,7 @@ public class MouseInputManager
     public void Update()
     {
         _mouseState = Mouse.GetState();
-        MousePosition = MouseManager.GetMousePosition();
+        MousePosition = MouseManager.GetInGameMousePosition();
 
         foreach (MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
         {

@@ -39,13 +39,13 @@ public class InventoryUI
         if (!IsOpen)
             return false;
 
-        bool cursorWithinInventoryBounds =
+        bool cursorWithinBounds =
             mousePosition.X > Bounds.Left
             && mousePosition.X < Bounds.Right
             && mousePosition.Y > Bounds.Top
             && mousePosition.Y < Bounds.Bottom;
 
-        if (!cursorWithinInventoryBounds)
+        if (!cursorWithinBounds)
             return false;
 
         // handle click

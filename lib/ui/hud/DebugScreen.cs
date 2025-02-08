@@ -21,8 +21,8 @@ public class DebugScreen : IHudElement
         string resolutionText =
             $"Resolution:{Game1.NativeResolution.Width * Game1.Config.Scale}"
             + $"x{Game1.NativeResolution.Height * Game1.Config.Scale}";
-        // string mousePositionText =
-        // $"Cursor=({Game1.InputManager.MousePosition.X}, {Game1.InputManager.MousePosition.Y})";
+        string mousePositionText =
+            $"Cursor=({Game1.InputManager.MousePosition.X}, {Game1.InputManager.MousePosition.Y})";
         // string framerateText = $"FPS:{(int)FramerateCounter.Framerate}";
 
         spriteBatch.DrawString(
@@ -61,16 +61,16 @@ public class DebugScreen : IHudElement
             Layer.Text
         );
 
-        // spriteBatch.DrawString(
-        //     Assets.Fonts.MonogramExtened,
-        //     mousePositionText,
-        //     new Vector2(0, 30),
-        //     Color.White,
-        //     0f,
-        //     Vector2.Zero,
-        //     1f,
-        //     SpriteEffects.None,
-        //     Layer.Text
-        // );
+        spriteBatch.DrawString(
+            Assets.Fonts.MonogramExtened,
+            mousePositionText,
+            new Vector2(0, 30),
+            Color.White,
+            0f,
+            Vector2.Zero,
+            1f,
+            SpriteEffects.None,
+            Layer.Text
+        );
     }
 }

@@ -33,7 +33,7 @@ public class CasterSkeletonBehaviorComponent
         float y1 = monster.Position.Y;
         float x2 = GameState.Player.Position.X;
         float y2 = GameState.Player.Position.Y;
-        double angle = Math.Atan2(x2 - x1, y2 - y1);
+        double angle = Math.Atan2(y2 - y1, x2 - x1);
 
         // TODO: reuse???
         if (x1 < x2)

@@ -41,6 +41,7 @@ public class GameUI
     {
         Vector2 mousePosition = Game1.InputManager.MousePosition;
 
+        // wat
         if (_inventoryUI.OnClick(mousePosition))
             return true;
 
