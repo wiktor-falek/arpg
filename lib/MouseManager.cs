@@ -19,14 +19,4 @@ public static class MouseManager
         );
         return mousePositionInGame;
     }
-
-    public static Vector2 GetInGameMousePositionRelativeToPlayer()
-    {
-        Vector2 inGameMousePosition = GetInGameMousePosition();
-        Vector2 inGameMousePositionRelativeToPlayer = Vector2.Transform(
-            inGameMousePosition,
-            Matrix.Invert(Camera.Transform)
-        );
-        return inGameMousePositionRelativeToPlayer;
-    }
 }

@@ -22,7 +22,12 @@ public class DebugScreen : IHudElement
             $"Resolution:{Game1.NativeResolution.Width * Game1.Config.Scale}"
             + $"x{Game1.NativeResolution.Height * Game1.Config.Scale}";
         string mousePositionText =
-            $"Cursor=({Game1.InputManager.MousePosition.X}, {Game1.InputManager.MousePosition.Y})";
+            $"Cursor=({MouseManager.GetInGameMousePosition().X}, {MouseManager.GetInGameMousePosition().Y})";
+
+        Vector2 inGameMousePosition = MouseManager.GetInGameMousePosition();
+        Vector2 cursorCoordinate = Camera.CameraOrigin + inGameMousePosition;
+        string cursorCoordinateText =
+            $"CursorCoordinate=({cursorCoordinate.X}, {cursorCoordinate.Y})";
         // string framerateText = $"FPS:{(int)FramerateCounter.Framerate}";
 
         spriteBatch.DrawString(
@@ -65,6 +70,18 @@ public class DebugScreen : IHudElement
             Assets.Fonts.MonogramExtened,
             mousePositionText,
             new Vector2(0, 30),
+            Color.White,
+            0f,
+            Vector2.Zero,
+            1f,
+            SpriteEffects.None,
+            Layer.Text
+        );
+
+        spriteBatch.DrawString(
+            Assets.Fonts.MonogramExtened,
+            cursorCoordinateText,
+            new Vector2(0, 40),
             Color.White,
             0f,
             Vector2.Zero,

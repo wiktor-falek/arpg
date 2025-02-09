@@ -15,15 +15,12 @@ public class MouseInputManager
 {
     public event Action<MouseButtons> KeyPressed;
     public event Action<MouseButtons> KeyReleased;
-    public Vector2 MousePosition { get; private set; }
-
     private MouseState _mouseState;
     private MouseState _previousMouseState;
 
     public void Update()
     {
         _mouseState = Mouse.GetState();
-        MousePosition = MouseManager.GetInGameMousePosition();
 
         foreach (MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
         {

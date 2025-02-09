@@ -8,10 +8,6 @@ public class InputManager
     private MouseInputManager _mouseInputManager = new();
     private KeyboardInputManager _keyboardInputManager = new();
     private InputMapper _inputMapper;
-    public Vector2 MousePosition
-    {
-        get => _inputMapper.MousePosition;
-    }
 
     private HashSet<Keys> _hardBoundKeys = [];
     private HashSet<Keys> _boundKeys = [];

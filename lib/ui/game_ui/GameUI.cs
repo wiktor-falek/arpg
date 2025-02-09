@@ -39,9 +39,8 @@ public class GameUI
 
     public bool OnLeftClick()
     {
-        Vector2 mousePosition = Game1.InputManager.MousePosition;
+        Vector2 mousePosition = MouseManager.GetInGameMousePosition();
 
-        // wat
         if (_inventoryUI.OnClick(mousePosition))
             return true;
 

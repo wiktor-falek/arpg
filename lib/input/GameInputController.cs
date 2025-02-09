@@ -6,11 +6,13 @@ public class GameInputController
 {
     private readonly List<Func<bool>> _escapeHandlers = [];
     private readonly List<Func<bool>> _leftClickHandlers = [];
+    private readonly List<Func<bool>> _leftClickReleaseHandlers = [];
 
     public GameInputController()
     {
         Game1.InputManager.OnPress(FixedGameAction.Close, OnClose);
         Game1.InputManager.OnPress(FixedGameAction.LeftClick, OnLeftClick);
+        Game1.InputManager.OnRelease(FixedGameAction.LeftClick, OnLeftClickRelease);
         Game1.InputManager.OnPress(RemappableGameAction.DebugMenu, ToggleDebugMode);
         Game1.InputManager.OnPress(RemappableGameAction.CycleResolution, CycleResolution);
         Game1.InputManager.OnPress(RemappableGameAction.ToggleFullscreen, ToggleFullscreen);
@@ -26,6 +28,11 @@ public class GameInputController
         _leftClickHandlers.Add(handler);
     }
 
+    public void RegisterOnLeftClickRelease(Func<bool> handler)
+    {
+        _leftClickReleaseHandlers.Add(handler);
+    }
+
     private void OnClose()
     {
         HandleEventPropagation(_escapeHandlers);
@@ -36,12 +43,18 @@ public class GameInputController
         HandleEventPropagation(_leftClickHandlers);
     }
 
+    private void OnLeftClickRelease()
+    {
+        HandleEventPropagation(_leftClickReleaseHandlers);
+    }
+
     private void HandleEventPropagation(List<Func<bool>> handlers)
     {
         foreach (Func<bool> handler in handlers)
         {
             bool propagationStopped = handler();
-            if (propagationStopped) break;
+            if (propagationStopped)
+                break;
         }
     }
 

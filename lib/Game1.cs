@@ -56,6 +56,9 @@ public class Game1 : Game
         _gameInputController.RegisterOnLeftClick(_pauseMenu.OnLeftClick);
         _gameInputController.RegisterOnLeftClick(_gameUI.OnLeftClick);
         _gameInputController.RegisterOnLeftClick(GameState.Player.InputComponent.OnLeftClick);
+        _gameInputController.RegisterOnLeftClickRelease(
+            GameState.Player.InputComponent.OnLeftClickRelease
+        );
 
         base.Initialize();
     }

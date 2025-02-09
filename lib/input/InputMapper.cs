@@ -23,10 +23,6 @@ public enum RemappableGameAction
 
 public class InputMapper
 {
-    public Vector2 MousePosition
-    {
-        get => _mouseInputManager.MousePosition;
-    }
     private KeyboardInputManager _keyboardInputManager;
     private MouseInputManager _mouseInputManager;
 
