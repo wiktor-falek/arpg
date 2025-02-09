@@ -15,7 +15,7 @@ public static class GameState
         new CasterSkeleton() { Position = new(500, 100) },
     ];
 
-    private static MonsterSpawner _monsterSpawner = new(Player, 3d, offscreenDistance: 100);
+    private static MonsterSpawner _monsterSpawner = new(Player, 1d, offscreenDistance: 100);
 
     public static void Update(GameTime gameTime)
     {
@@ -32,8 +32,6 @@ public static class GameState
             IEntity entity = Entities[i];
             entity.Update(gameTime);
         }
-
-        Camera.Follow(Player);
     }
 
     public static void RemoveEntity(IEntity entity)

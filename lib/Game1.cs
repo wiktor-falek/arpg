@@ -78,6 +78,8 @@ public class Game1 : Game
             _hud.Update(gameTime);
         }
 
+        Camera.Follow(GameState.Player);
+
         base.Update(gameTime);
     }
 

@@ -10,11 +10,11 @@ public class Background
         {
             for (int j = 0; j < 9; j++)
             {
-                float tileX = ((int)GameState.Player.Position.X / 64 + i) * 64 - 64 * 2;
-                float tileY = ((int)GameState.Player.Position.Y / 64 + j) * 64 - 64 * 2;
+                float tileX = ((int)Camera.CameraOrigin.X / 64 + i) * 64 - 64 * 2;
+                float tileY = ((int)Camera.CameraOrigin.Y / 64 + j) * 64 - 64 * 2;
                 spriteBatch.Draw(
                     Assets.Environment.Cobblestone.Texture,
-                    new(tileX - GameState.Player.Position.X, tileY - GameState.Player.Position.Y),
+                    new(tileX - Camera.CameraOrigin.X, tileY - Camera.CameraOrigin.Y),
                     Assets.Environment.Cobblestone.Frames[0],
                     new Color(90, 90, 90),
                     0f,
