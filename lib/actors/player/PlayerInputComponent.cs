@@ -37,6 +37,10 @@ public class PlayerInputComponent
 
     public void Update(GameTime gameTime)
     {
+        if (!GameState.IsRunning)
+            return;
+
+        // TODO: prevent clicks outside of window
         _playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
         _playerAimAngle = CalculateAngle(_player.Position, _playerAimCoordinate);
 
@@ -86,9 +90,6 @@ public class PlayerInputComponent
 
     public bool OnLeftClickRelease()
     {
-        if (!GameState.IsRunning)
-            return false;
-
         _isHoldingLeftClick = false;
         return true;
     }

@@ -7,9 +7,12 @@ public class InventoryUI
     public bool IsOpen = false;
     public Rectangle Bounds;
 
-    public InventoryUI()
+    private Player _player;
+
+    public InventoryUI(Player player)
     {
-        int windowWidth = 260;
+        _player = player;
+        int windowWidth = 220;
         int screenWidth = Game1.NativeResolution.Width;
         int screenHeight = Game1.NativeResolution.Height;
         Bounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);
@@ -30,8 +33,33 @@ public class InventoryUI
             0f,
             Vector2.Zero,
             SpriteEffects.None,
-            Layer.UI
+            Layer.UIWindow
         );
+
+        const int SQUARE_SIZE = 16;
+        const int BORDER_SIZE = 1;
+        int inventoryHeight = _player.Inventory.Height * (SQUARE_SIZE + BORDER_SIZE) - 1;
+        int inventoryWidth = _player.Inventory.Width * (SQUARE_SIZE + BORDER_SIZE) - 1;
+
+        for (int i = 0; i < _player.Inventory.Width; i++)
+        {
+            for (int j = 0; j < _player.Inventory.Height; j++)
+            {
+                int x = Bounds.Left + i * (SQUARE_SIZE + BORDER_SIZE);
+                int y = Bounds.Bottom - inventoryHeight + j * (SQUARE_SIZE + BORDER_SIZE);
+
+                spriteBatch.Draw(
+                    Assets.RectangleTexture,
+                    new(x, y, SQUARE_SIZE, SQUARE_SIZE),
+                    null,
+                    Color.Gray,
+                    0f,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    Layer.UIWindowElement
+                );
+            }
+        }
     }
 
     public bool OnClick(Vector2 mousePosition)

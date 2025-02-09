@@ -4,10 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class GameUI
 {
-    private InventoryUI _inventoryUI = new();
+    private InventoryUI _inventoryUI;
 
-    public GameUI()
+    public GameUI(Player player)
     {
+        _inventoryUI = new InventoryUI(player);
         Game1.InputManager.OnPress(RemappableGameAction.OpenInventory, ToggleInventory);
     }
 

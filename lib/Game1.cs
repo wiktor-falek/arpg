@@ -46,7 +46,7 @@ public class Game1 : Game
         Config = new Config(_graphics, GraphicsDevice, _renderTarget);
         _background = new Background();
         _hud = new Hud();
-        _gameUI = new GameUI();
+        _gameUI = new GameUI(GameState.Player);
         _pauseMenu = new PauseMenu();
 
         _gameInputController = new GameInputController();
@@ -59,6 +59,8 @@ public class Game1 : Game
         _gameInputController.RegisterOnLeftClickRelease(
             GameState.Player.InputComponent.OnLeftClickRelease
         );
+
+        GameState.Player.Inventory.AddItem(new Item("Item"), 0, 0);
 
         base.Initialize();
     }

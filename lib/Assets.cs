@@ -69,7 +69,7 @@ public static class Assets
     public static void Load(ContentManager contentManager, GraphicsDevice graphicsDevice)
     {
         RectangleTexture = new Texture2D(graphicsDevice, 1, 1);
-        RectangleTexture.SetData([Color.Yellow]);
+        RectangleTexture.SetData([Color.White]);
 
         AddFont(contentManager, "fonts/monogram_extended");
 

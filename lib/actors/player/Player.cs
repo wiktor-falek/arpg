@@ -10,7 +10,6 @@ public class Player : IActor
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public ActorBaseStats Stats { get; }
     public bool IsAlive => Stats.Health > 0;
     public IHitbox Hitbox
     {
@@ -19,6 +18,8 @@ public class Player : IActor
     public Vector2 Size => new(140, 140);
 
     public SkillCollection Skills;
+    public ActorBaseStats Stats { get; }
+    public Inventory Inventory;
 
     public PlayerInputComponent InputComponent;
     private PlayerGraphicsComponent _graphicsComponent;
@@ -37,6 +38,7 @@ public class Player : IActor
             manaRegen: 2,
             healthOnKill: 1
         );
+        Inventory = new(this);
     }
 
     public void Update(GameTime gameTime)
