@@ -1,26 +1,35 @@
-public class Item(string name)
-{
-    public string Name = name;
-    public int Width = 2;
-    public int Height = 3;
+using System;
 
-    public override string ToString()
-    {
-        return Name;
-    }
-}
-
-public class Inventory(Player player)
+public class Inventory
 {
     public readonly int Width = 12;
     public readonly int Height = 6;
+    public Grid<Item> Grid;
 
-    private Player _player = player;
-    private Grid<Item> _grid;
+    private Player _player;
+
+    public Inventory(Player player)
+    {
+        _player = player;
+        Grid = new(Width, Height);
+    }
+
+    public bool AddItem(Item item)
+    {
+        // TODO: find the first available space
+        // Grid.AddItem(item, x, y, item.Width, item.Height);
+        return false;
+    }
 
     public void AddItem(Item item, int x, int y)
     {
-        _grid = new Grid<Item>(Width, Height);
-        _grid.AddItem(item, x, y, item.Width, item.Height);
+        Grid.AddItem(item, x, y, item.Width, item.Height);
     }
+
+    #nullable enable
+    public Item? GetItem(int x, int y)
+    {
+        return Grid.GetItem(x, y);
+    }
+    #nullable disable
 }

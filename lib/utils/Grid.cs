@@ -13,18 +13,27 @@ class GridItem<T>(T value, int originX, int originY)
     }
 }
 
-public class Grid<T>
+#nullable enable
+public class Grid<T> where T : class
 {
     public int Width;
     public int Height;
 
-    private GridItem<T>[,] Squares;
+    private GridItem<T?>[,] Squares;
 
     public Grid(int width, int height)
     {
         Width = width;
         Height = height;
-        Squares = new GridItem<T>[Height, Width];
+        Squares = new GridItem<T?>[Height, Width];
+
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                Squares[y, x] = new(null, default, default);
+            }
+        }
     }
 
     public bool AddItem(T item, int originX, int originY, int width, int height)
@@ -36,7 +45,8 @@ public class Grid<T>
         {
             for (int y = originY; y < originY + height; y++)
             {
-                Squares[y, x] = new GridItem<T>(item, originX, originY);
+                // update existing instead of new instance?
+                Squares[y, x] = new GridItem<T?>(item, originX, originY);
             }
         }
 
@@ -45,9 +55,15 @@ public class Grid<T>
         return true;
     }
 
-    public T GetItem(int x, int y)
+    public T? GetItem(int x, int y)
     {
-        throw new NotImplementedException();
+        GridItem<T?> gridItem = Squares[y, x];
+        return gridItem.Value;
+    }
+
+    public bool SquareIsOriginSquare(int x, int y)
+    {
+        return Squares[y, x].IsOriginSquare;
     }
 
     public bool SquareExists(int x, int y)
@@ -57,23 +73,24 @@ public class Grid<T>
 
     public bool SquareIsTaken(int x, int y)
     {
-        return Squares[y, x] != null;
+        return Squares[y, x].Value != null;
     }
 
     public bool ItemFits(int x, int y, int width, int height)
     {
-        for (int i = x; i < width + 1; i++)
-        {
-            if (!SquareExists(x, y) || SquareIsTaken(x, y))
-                return false;
-        }
+        // for (int i = x; i < width + 1; i++)
+        // {
+        //     if (!SquareExists(x, y) || SquareIsTaken(x, y))
+        //         return false;
+        // }
 
-        for (int i = y; i < height + 1; i++)
-        {
-            if (!SquareExists(x, y) || SquareIsTaken(x, y))
-                return false;
-        }
+        // for (int i = y; i < height + 1; i++)
+        // {
+        //     if (!SquareExists(x, y) || SquareIsTaken(x, y))
+        //         return false;
+        // }
 
         return true;
     }
 }
+#nullable disable

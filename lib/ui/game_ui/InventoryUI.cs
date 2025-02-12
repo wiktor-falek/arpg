@@ -58,6 +58,15 @@ public class InventoryUI
                     SpriteEffects.None,
                     Layer.UIWindowElement
                 );
+
+                #nullable enable
+                Item? item = _player.Inventory.GetItem(i, j);
+                #nullable disable
+                if (item is not null && _player.Inventory.Grid.SquareIsOriginSquare(i, j))
+                {
+                    // TODO: check if is on origin square
+                    item.Draw(spriteBatch, x, y);
+                }
             }
         }
     }

@@ -60,8 +60,6 @@ public class Game1 : Game
             GameState.Player.InputComponent.OnLeftClickRelease
         );
 
-        GameState.Player.Inventory.AddItem(new Item("Item"), 0, 0);
-
         base.Initialize();
     }
 

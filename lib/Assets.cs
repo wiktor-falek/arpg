@@ -63,6 +63,14 @@ public static class Assets
         }
     }
 
+    public static class Items
+    {
+        public static Asset None_1x1 => GetTexture("items/item_none_1x1");
+        public static Asset None_2x1 => GetTexture("items/item_none_2x1");
+        public static Asset None_2x2 => GetTexture("items/item_none_2x2");
+        public static Asset None_2x3 => GetTexture("items/item_none_2x3");
+    }
+
     private static Dictionary<string, SpriteFont> _fonts = [];
     private static Dictionary<string, Asset> _textures = [];
 
@@ -89,6 +97,11 @@ public static class Assets
         AddTexture(contentManager, "monsters/skeleton_dead_near", 5);
         AddTexture(contentManager, "monsters/skeleton_corpse_1", 1);
         AddTexture(contentManager, "monsters/skeleton_corpse_2", 1);
+        
+        AddTexture(contentManager, "items/item_none_1x1", 1);
+        AddTexture(contentManager, "items/item_none_2x1", 1);
+        AddTexture(contentManager, "items/item_none_2x2", 1);
+        AddTexture(contentManager, "items/item_none_2x3", 1);
     }
 
     public static Texture2D CreateCircleTexture(int radius)

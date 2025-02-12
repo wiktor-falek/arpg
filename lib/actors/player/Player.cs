@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +21,7 @@ public class Player : IActor
     public SkillCollection Skills;
     public ActorBaseStats Stats { get; }
     public Inventory Inventory;
+    public Equipment Equipment;
 
     public PlayerInputComponent InputComponent;
     private PlayerGraphicsComponent _graphicsComponent;
@@ -39,6 +41,13 @@ public class Player : IActor
             healthOnKill: 1
         );
         Inventory = new(this);
+        Equipment = new(this);
+
+        Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 3, Assets.Items.None_2x3), 0, 0);
+        Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 2, Assets.Items.None_2x2), 0, 3);
+        Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 1, Assets.Items.None_2x1), 0, 5);
+        Inventory.AddItem(new Item("Item", Rarity.Normal, 1, 1, Assets.Items.None_1x1), 2, 0);
+        Equipment.Equip(new Sandals());
     }
 
     public void Update(GameTime gameTime)
