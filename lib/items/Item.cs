@@ -28,11 +28,11 @@ public class Item
         Asset = asset;
     }
 
-    public void Draw(SpriteBatch spriteBatch, int originX, int originY)
+    public void Draw(SpriteBatch spriteBatch, int x, int y)
     {
         spriteBatch.Draw(
             Asset.Texture,
-            new(originX, originY, Width * 16, Height * 16),
+            new(x, y, Width * 16, Height * 16),
             null,
             Color.White,
             0f,

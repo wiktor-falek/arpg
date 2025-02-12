@@ -1,4 +1,3 @@
-using System;
 
 class GridItem<T>(T value, int originX, int originY)
 {
@@ -6,11 +5,6 @@ class GridItem<T>(T value, int originX, int originY)
     public bool IsOriginSquare = false;
     public int OriginX = originX;
     public int OriginY = originY;
-
-    public override string ToString()
-    {
-        return $"{Value?.ToString() ?? "null"}";
-    }
 }
 
 #nullable enable
@@ -45,12 +39,15 @@ public class Grid<T> where T : class
         {
             for (int y = originY; y < originY + height; y++)
             {
-                // update existing instead of new instance?
-                Squares[y, x] = new GridItem<T?>(item, originX, originY);
+                GridItem<T?> square = Squares[y, x];
+                square.Value = item;
+                square.OriginX = originX;
+                square.OriginY = originY;
             }
         }
 
-        Squares[originY, originX].IsOriginSquare = true;
+        GridItem<T?> originSquare = Squares[originY, originX];
+        originSquare.IsOriginSquare = true;
 
         return true;
     }
@@ -68,7 +65,7 @@ public class Grid<T> where T : class
 
     public bool SquareExists(int x, int y)
     {
-        return (x < 0 || x > Width || y < 0 || y > Height);
+        return (x >= 0 && x < Width && y >= 0 && y < Height);
     }
 
     public bool SquareIsTaken(int x, int y)
@@ -76,21 +73,35 @@ public class Grid<T> where T : class
         return Squares[y, x].Value != null;
     }
 
-    public bool ItemFits(int x, int y, int width, int height)
+    public bool ItemFits(int originX, int originY, int width, int height)
     {
-        // for (int i = x; i < width + 1; i++)
-        // {
-        //     if (!SquareExists(x, y) || SquareIsTaken(x, y))
-        //         return false;
-        // }
-
-        // for (int i = y; i < height + 1; i++)
-        // {
-        //     if (!SquareExists(x, y) || SquareIsTaken(x, y))
-        //         return false;
-        // }
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                int x = originX + i;
+                int y = originY + j;
+                if (!SquareExists(x, y) || SquareIsTaken(x, y))
+                    return false;
+            }
+        }
 
         return true;
+    }
+
+    public bool ItemFitsWithinGrid(int width, int height)
+    {
+        // TODO: optimize
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                bool itemFits = ItemFits(x, y, width, height);
+                if (itemFits) return true;
+            }
+        }
+
+        return false;
     }
 }
 #nullable disable
