@@ -7,10 +7,7 @@ public class FrozenOrbSecondaryGraphicsComponent
 {
     private Asset _asset = Assets.Spells.FrozenOrbSecondary;
 
-    public void Draw(
-        FrozenOrbSecondaryEntity frozenOrbSecondary,
-        SpriteBatch spriteBatch
-    )
+    public void Draw(FrozenOrbSecondaryEntity frozenOrbSecondary, SpriteBatch spriteBatch)
     {
         if (GameState.IsDebugMode)
         {

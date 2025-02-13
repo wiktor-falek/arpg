@@ -1,6 +1,7 @@
 using System;
 
-public class PlayerLevel {
+public class PlayerLevel
+{
     public int Current { get; private set; }
     public int CurrentXP { get; private set; }
     public int RequiredXP { get; private set; }
@@ -18,7 +19,8 @@ public class PlayerLevel {
 
     public void GrantXP(int amount)
     {
-        if (Current >= LEVEL_CAP) return;
+        if (Current >= LEVEL_CAP)
+            return;
 
         CurrentXP += amount;
         while (CurrentXP > RequiredXP)

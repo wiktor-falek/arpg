@@ -29,7 +29,8 @@ public class FrozenOrbBehaviorComponent
             frozenOrb.Position.Y + (frozenOrb.Speed * elapsedTime * Math.Sin(frozenOrb.Angle));
         frozenOrb.Position = new((float)x, (float)y);
 
-        float rotationIncreasePerSecond = _rotationIncreasePerProjectile / _secondaryProjectileInterval;
+        float rotationIncreasePerSecond =
+            _rotationIncreasePerProjectile / _secondaryProjectileInterval;
         _secondaryProjectileAngle += (rotationIncreasePerSecond * elapsedTime) % 360;
 
         if (_frameTime >= _secondaryProjectileInterval)

@@ -6,7 +6,8 @@ public class HolyFireGraphicsComponent
 {
     private Texture2D _texture;
 
-    public HolyFireGraphicsComponent(HolyFireEntity holyFire) {
+    public HolyFireGraphicsComponent(HolyFireEntity holyFire)
+    {
         Update(holyFire);
     }
 

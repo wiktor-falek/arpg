@@ -97,7 +97,7 @@ public static class Assets
         AddTexture(contentManager, "monsters/skeleton_dead_near", 5);
         AddTexture(contentManager, "monsters/skeleton_corpse_1", 1);
         AddTexture(contentManager, "monsters/skeleton_corpse_2", 1);
-        
+
         AddTexture(contentManager, "items/item_none_1x1", 1);
         AddTexture(contentManager, "items/item_none_2x1", 1);
         AddTexture(contentManager, "items/item_none_2x2", 1);

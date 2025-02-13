@@ -16,7 +16,7 @@ public enum EquipmentSlot
 
 public class Equipment(Player player)
 {
-    #nullable enable
+#nullable enable
     public EquippableItem? MainHand { get; private set; }
     public EquippableItem? OffHand { get; private set; }
     public EquippableItem? Chest { get; private set; }
@@ -27,7 +27,8 @@ public class Equipment(Player player)
     public EquippableItem? Amulet { get; private set; }
     public EquippableItem? LeftRing { get; private set; }
     public EquippableItem? RightRing { get; private set; }
-    #nullable disable
+
+#nullable disable
 
     private Player _player = player;
 
@@ -35,19 +36,38 @@ public class Equipment(Player player)
     {
         // TODO: if other item is equipped, unequip it
         // TODO: handle rings
-        
+
         switch (item.Slot)
         {
-            case EquippableSlot.MainHand: MainHand = item; break;
-            case EquippableSlot.OffHand: OffHand = item; break;
-            case EquippableSlot.Chest: Chest = item; break;
-            case EquippableSlot.Head: Head = item; break;
-            case EquippableSlot.Gloves: Gloves = item; break;
-            case EquippableSlot.Boots: Boots = item; break;
-            case EquippableSlot.Belt: Belt = item; break;
-            case EquippableSlot.Amulet: Amulet = item; break;
-            case EquippableSlot.Ring: LeftRing = item; break;
-            default: throw new NotImplementedException("Unhandled EquippableSlot");
+            case EquippableSlot.MainHand:
+                MainHand = item;
+                break;
+            case EquippableSlot.OffHand:
+                OffHand = item;
+                break;
+            case EquippableSlot.Chest:
+                Chest = item;
+                break;
+            case EquippableSlot.Head:
+                Head = item;
+                break;
+            case EquippableSlot.Gloves:
+                Gloves = item;
+                break;
+            case EquippableSlot.Boots:
+                Boots = item;
+                break;
+            case EquippableSlot.Belt:
+                Belt = item;
+                break;
+            case EquippableSlot.Amulet:
+                Amulet = item;
+                break;
+            case EquippableSlot.Ring:
+                LeftRing = item;
+                break;
+            default:
+                throw new NotImplementedException("Unhandled EquippableSlot");
         }
 
         item.Equip(_player);
@@ -55,24 +75,45 @@ public class Equipment(Player player)
 
     public void Unequip(EquippableItem item)
     {
-        if (!ItemIsEquipped(item)) return;
+        if (!ItemIsEquipped(item))
+            return;
 
         bool movedToInventory = _player.Inventory.AddItem(item);
 
-        if (!movedToInventory) return;
+        if (!movedToInventory)
+            return;
 
         switch (item.Slot)
         {
-            case EquippableSlot.MainHand: MainHand = null; break;
-            case EquippableSlot.OffHand: OffHand = null; break;
-            case EquippableSlot.Chest: Chest = null; break;
-            case EquippableSlot.Head: Head = null; break;
-            case EquippableSlot.Gloves: Gloves = null; break;
-            case EquippableSlot.Boots: Boots = null; break;
-            case EquippableSlot.Belt: Belt = null; break;
-            case EquippableSlot.Amulet: Amulet = null; break;
-            case EquippableSlot.Ring: LeftRing = null; break;
-            default: throw new NotImplementedException("Unhandled EquippableSlot");
+            case EquippableSlot.MainHand:
+                MainHand = null;
+                break;
+            case EquippableSlot.OffHand:
+                OffHand = null;
+                break;
+            case EquippableSlot.Chest:
+                Chest = null;
+                break;
+            case EquippableSlot.Head:
+                Head = null;
+                break;
+            case EquippableSlot.Gloves:
+                Gloves = null;
+                break;
+            case EquippableSlot.Boots:
+                Boots = null;
+                break;
+            case EquippableSlot.Belt:
+                Belt = null;
+                break;
+            case EquippableSlot.Amulet:
+                Amulet = null;
+                break;
+            case EquippableSlot.Ring:
+                LeftRing = null;
+                break;
+            default:
+                throw new NotImplementedException("Unhandled EquippableSlot");
         }
 
         item.Unequip(_player);
@@ -91,7 +132,7 @@ public class Equipment(Player player)
             EquippableSlot.Belt => Belt == item,
             EquippableSlot.Amulet => Amulet == item,
             EquippableSlot.Ring => LeftRing == item || RightRing == item,
-            _ => throw new NotImplementedException("Unhandled EquippableSlot")
+            _ => throw new NotImplementedException("Unhandled EquippableSlot"),
         };
     }
 }
