@@ -28,6 +28,7 @@ public class DroppedItem
 
     public void Update(GameTime gameTime)
     {
+        // TODO: avoid calculating if not needed
         Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
         bool cursorWithinBounds =
             playerAimCoordinate.X > _bounds.Left
