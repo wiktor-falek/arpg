@@ -25,7 +25,6 @@ public class HolyFire(IActor owner) : ISkill
         else
         {
             _entity.Destroy();
-            GameState.Entities.Remove(_entity);
             isActive = false;
         }
 
