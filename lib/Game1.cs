@@ -52,7 +52,7 @@ public class Game1 : Game
         _background = new Background();
         _lootUI = new LootUI();
         _hud = new Hud();
-        _gameUI = new GameUI(World.Player);
+        _gameUI = new GameUI(player);
         _pauseMenu = new PauseMenu();
 
         _gameInputController = new GameInputController();

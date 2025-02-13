@@ -55,46 +55,57 @@ public class InventoryUI
 
         // main hand
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
+        _player.Equipment.MainHand?.Draw(spriteBatch, currentX, currentY);
+
         currentY += SQUARE_SIZE * 4 + spacing;
 
         // gloves
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        _player.Equipment.Gloves?.Draw(spriteBatch, currentX, currentY);
         currentY += SQUARE_SIZE;
         currentX += SQUARE_SIZE * 2 + spacing;
 
         // left ring
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        _player.Equipment.LeftRing?.Draw(spriteBatch, currentX, currentY);
         currentX += SQUARE_SIZE + spacing;
 
         // belt
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 1));
+        _player.Equipment.Belt?.Draw(spriteBatch, currentX, currentY);
         currentY -= SQUARE_SIZE * 3 + spacing;
 
         // chest
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 3));
+        _player.Equipment.Chest?.Draw(spriteBatch, currentX, currentY);
         currentY -= SQUARE_SIZE * 2 + spacing;
 
         // helmet
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        _player.Equipment.Head?.Draw(spriteBatch, currentX, currentY);
         currentY += SQUARE_SIZE * 5 + spacing * 2;
         currentX += SQUARE_SIZE * 2 + spacing;
 
         // right ring
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        _player.Equipment.RightRing?.Draw(spriteBatch, currentX, currentY);
         currentY -= (int)(SQUARE_SIZE * 3.5) + spacing * 2;
 
         // amulet
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        _player.Equipment.Amulet?.Draw(spriteBatch, currentX, currentY);
         currentY += (int)(SQUARE_SIZE * 3.5) + spacing * 2;
         currentX += SQUARE_SIZE + spacing;
         currentY -= SQUARE_SIZE;
 
         // boots
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        _player.Equipment.Boots?.Draw(spriteBatch, currentX, currentY);
         currentY -= SQUARE_SIZE * 4 + spacing;
 
         // offhand
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
+        _player.Equipment.OffHand?.Draw(spriteBatch, currentX, currentY);
     }
 
     private void DrawInventory(SpriteBatch spriteBatch)

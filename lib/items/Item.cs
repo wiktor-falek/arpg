@@ -18,7 +18,7 @@ public class Item
     public int Width { get; private set; }
     public int Height { get; private set; }
     public Asset Asset;
-    
+
     public Item(string name, Rarity rarity, int width, int height, Asset asset)
     {
         Name = name;
