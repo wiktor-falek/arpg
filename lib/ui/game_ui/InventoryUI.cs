@@ -24,7 +24,8 @@ public class InventoryUI
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (!IsOpen) return;
+        if (!IsOpen)
+            return;
         DrawWindow(spriteBatch);
         DrawEquipment(spriteBatch);
         DrawInventory(spriteBatch);
@@ -81,7 +82,7 @@ public class InventoryUI
         // right ring
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
         currentY -= (int)(SQUARE_SIZE * 3.5) + spacing * 2;
-        
+
         // amulet
         DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
         currentY += (int)(SQUARE_SIZE * 3.5) + spacing * 2;
@@ -110,9 +111,9 @@ public class InventoryUI
 
                 DrawSquare(spriteBatch, new(x, y, SQUARE_SIZE, SQUARE_SIZE));
 
-                #nullable enable
+#nullable enable
                 Item? item = _player.Inventory.GetItem(i, j);
-                #nullable disable
+#nullable disable
                 if (item is not null && _player.Inventory.Grid.SquareIsOriginSquare(i, j))
                 {
                     item.Draw(spriteBatch, x, y);

@@ -16,8 +16,8 @@ public class DebugScreen : IHudElement
         if (!GameState.IsDebugMode)
             return;
 
-        string playerPositionXText = $"X:{GameState.Player.Position.X:F2}";
-        string playerPositionYText = $"Y:{GameState.Player.Position.Y:F2}";
+        string playerPositionXText = $"X:{Game1.World.Player.Position.X:F2}";
+        string playerPositionYText = $"Y:{Game1.World.Player.Position.Y:F2}";
         string resolutionText =
             $"Resolution:{Game1.NativeResolution.Width * Game1.Config.Scale}"
             + $"x{Game1.NativeResolution.Height * Game1.Config.Scale}";

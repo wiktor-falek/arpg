@@ -5,7 +5,6 @@ namespace arpg;
 
 public class Game1 : Game
 {
-    public bool IsRunning = true;
     public static Config Config { get; private set; }
 
     public struct NativeResolution
@@ -14,8 +13,10 @@ public class Game1 : Game
         public const int Height = 360;
     }
 
+    public static World World;
     public static new GraphicsDevice GraphicsDevice;
     public static InputManager InputManager;
+
     private GraphicsDeviceManager _graphics;
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
@@ -45,10 +46,13 @@ public class Game1 : Game
         );
         Assets.Load(Content, GraphicsDevice);
         Config = new Config(_graphics, GraphicsDevice, _renderTarget);
+
+        Player player = new Player();
+        World = new World(player);
         _background = new Background();
         _lootUI = new LootUI();
         _hud = new Hud();
-        _gameUI = new GameUI(GameState.Player);
+        _gameUI = new GameUI(World.Player);
         _pauseMenu = new PauseMenu();
 
         _gameInputController = new GameInputController();
@@ -57,9 +61,9 @@ public class Game1 : Game
 
         _gameInputController.RegisterOnLeftClick(_pauseMenu.OnLeftClick);
         _gameInputController.RegisterOnLeftClick(_gameUI.OnLeftClick);
-        _gameInputController.RegisterOnLeftClick(GameState.Player.InputComponent.OnLeftClick);
+        _gameInputController.RegisterOnLeftClick(World.Player.InputComponent.OnLeftClick);
         _gameInputController.RegisterOnLeftClickRelease(
-            GameState.Player.InputComponent.OnLeftClickRelease
+            World.Player.InputComponent.OnLeftClickRelease
         );
 
         base.Initialize();
@@ -76,11 +80,11 @@ public class Game1 : Game
 
         if (GameState.IsRunning)
         {
-            GameState.Update(gameTime);
+            World.Update(gameTime);
             _hud.Update(gameTime);
         }
 
-        Camera.Follow(GameState.Player);
+        Camera.Follow(World.Player);
 
         base.Update(gameTime);
     }
@@ -108,12 +112,12 @@ public class Game1 : Game
             blendState: BlendState.AlphaBlend
         );
 
-        foreach (IActor actor in GameState.Actors)
+        foreach (IActor actor in World.Actors)
         {
             actor.Draw(_spriteBatch);
         }
 
-        foreach (IEntity entity in GameState.Entities)
+        foreach (IEntity entity in World.Entities)
         {
             entity.Draw(_spriteBatch);
         }

@@ -15,18 +15,21 @@ public class ManaGlobe : IHudElement
     public ManaGlobe()
     {
         Size = new Vector2(55, 55);
-        Position = new Vector2(Game1.NativeResolution.Width - Size.X, Game1.NativeResolution.Height - Size.Y);
+        Position = new Vector2(
+            Game1.NativeResolution.Width - Size.X,
+            Game1.NativeResolution.Height - Size.Y
+        );
     }
 
     public void Update(GameTime gameTime)
     {
-        Mana = Math.Floor(GameState.Player.Stats.Mana);
-        MaxMana = Math.Floor(GameState.Player.Stats.MaxMana);
+        Mana = Math.Floor(Game1.World.Player.Stats.Mana);
+        MaxMana = Math.Floor(Game1.World.Player.Stats.MaxMana);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-            spriteBatch.Draw(
+        spriteBatch.Draw(
             Assets.RectangleTexture,
             Rectangle,
             null,

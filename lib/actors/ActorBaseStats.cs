@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 
-public class ActorBaseStats {
-    public double Speed { get; set ; }
+public class ActorBaseStats
+{
+    public double Speed { get; set; }
     public double Health { get; set; }
     public double MaxHealth { get; set; }
     public double HealthRegen { get; set; }
@@ -16,7 +17,14 @@ public class ActorBaseStats {
     private const double TICK_TIME = 0.1d;
     private double _regenTimer = 0f;
 
-    public ActorBaseStats(IActor actor, double speed, double health, double mana = 0, double healthRegen = 0, double manaRegen = 0)
+    public ActorBaseStats(
+        IActor actor,
+        double speed,
+        double health,
+        double mana = 0,
+        double healthRegen = 0,
+        double manaRegen = 0
+    )
     {
         _actor = actor;
         Speed = speed;
@@ -27,7 +35,7 @@ public class ActorBaseStats {
         HealthDegen = 0;
         ManaDegen = 0;
     }
-    
+
     public void Update(GameTime gameTime)
     {
         _regenTimer += gameTime.ElapsedGameTime.TotalSeconds;

@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 
 public class CasterSkeletonBehaviorComponent
@@ -22,7 +23,7 @@ public class CasterSkeletonBehaviorComponent
 
             if (_timeSinceDeath >= _corpseDespawnTime)
             {
-                GameState.RemoveActor(monster);
+                Game1.World.RemoveActor(monster);
             }
 
             monster.ActionState = ActorActionState.None;
@@ -31,8 +32,8 @@ public class CasterSkeletonBehaviorComponent
 
         float x1 = monster.Position.X;
         float y1 = monster.Position.Y;
-        float x2 = GameState.Player.Position.X;
-        float y2 = GameState.Player.Position.Y;
+        float x2 = Game1.World.Player.Position.X;
+        float y2 = Game1.World.Player.Position.Y;
         double angle = Math.Atan2(y2 - y1, x2 - x1);
 
         // TODO: reuse???

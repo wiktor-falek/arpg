@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -24,7 +25,7 @@ public class FireballEntity : IEntity
     public FireballEntity(IActor owner)
     {
         Owner = owner;
-        GameState.Entities.Add(this);
+        Game1.World.Entities.Add(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -40,6 +41,6 @@ public class FireballEntity : IEntity
 
     public void Destroy()
     {
-        GameState.RemoveEntity(this);
+        Game1.World.RemoveEntity(this);
     }
 }

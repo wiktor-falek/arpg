@@ -1,3 +1,4 @@
+using arpg;
 using Microsoft.Xna.Framework.Graphics;
 
 public class LootUI
@@ -6,9 +7,10 @@ public class LootUI
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (!ShowLoot) return;
+        if (!ShowLoot)
+            return;
 
-        foreach (DroppedItem item in GameState.Items)
+        foreach (DroppedItem item in Game1.World.Items)
         {
             // TODO: stacking loot plates
             item.Draw(spriteBatch);

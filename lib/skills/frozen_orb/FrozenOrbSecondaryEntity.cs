@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,7 +21,7 @@ public class FrozenOrbSecondaryEntity : IEntity
 
     public FrozenOrbSecondaryEntity()
     {
-        GameState.Entities.Add(this);
+        Game1.World.Entities.Add(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -35,6 +36,6 @@ public class FrozenOrbSecondaryEntity : IEntity
 
     public void Destroy()
     {
-        GameState.RemoveEntity(this);
+        Game1.World.RemoveEntity(this);
     }
 }

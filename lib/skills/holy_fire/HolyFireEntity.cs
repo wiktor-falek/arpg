@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,7 +23,7 @@ public class HolyFireEntity : IEntity
 
     public HolyFireEntity(IActor owner)
     {
-        GameState.Entities.Add(this);
+        Game1.World.Entities.Add(this);
         Owner = owner;
         _holyFireGraphicsComponent = new(this);
         _holyFireBehaviorComponent = new(this);
@@ -40,7 +41,7 @@ public class HolyFireEntity : IEntity
 
     public void Destroy()
     {
-        GameState.RemoveEntity(this);
+        Game1.World.RemoveEntity(this);
         _holyFireBehaviorComponent.Destroy(this);
     }
 }

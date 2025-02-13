@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -47,12 +48,13 @@ public class Skeleton : IMonsterActor
 
     public void TakeDamage(double amount)
     {
-        if (Stats.Health <= 0) return;
-        
+        if (Stats.Health <= 0)
+            return;
+
         Stats.OffsetHealth(-amount);
         if (Stats.Health <= 0)
         {
-            GameState.Player.OnKill(this);
+            Game1.World.Player.OnKill(this);
         }
 
         IsLeashed = true;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using arpg;
 using Microsoft.Xna.Framework;
 
 public class FireballBehaviorComponent
@@ -23,7 +24,7 @@ public class FireballBehaviorComponent
         double y = fireball.Position.Y + (fireball.Speed * elapsedTime * Math.Sin(fireball.Angle));
         fireball.Position = new((float)x, (float)y);
 
-        foreach (var actor in GameState.Actors.Where(actor => actor.Kind != fireball.Owner.Kind))
+        foreach (var actor in Game1.World.Actors.Where(actor => actor.Kind != fireball.Owner.Kind))
         {
             if (!_hitActors.Contains(actor.Id) && fireball.Hitbox.Intersects(actor.Hitbox))
             {

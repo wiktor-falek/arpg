@@ -49,4 +49,4 @@ public interface IMonster
     public int XP { get; }
 }
 
-public interface IMonsterActor: IActor, IMonster;
+public interface IMonsterActor : IActor, IMonster;

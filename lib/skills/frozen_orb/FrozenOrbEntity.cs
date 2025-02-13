@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,7 +23,7 @@ public class FrozenOrbEntity : IEntity
     public FrozenOrbEntity(IActor owner)
     {
         _owner = owner;
-        GameState.Entities.Add(this);
+        Game1.World.Entities.Add(this);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -38,6 +39,6 @@ public class FrozenOrbEntity : IEntity
 
     public void Destroy()
     {
-        GameState.RemoveEntity(this);
+        Game1.World.RemoveEntity(this);
     }
 }

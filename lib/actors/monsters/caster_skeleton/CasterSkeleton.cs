@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -53,7 +54,7 @@ public class CasterSkeleton : IMonsterActor
         Stats.OffsetHealth(-amount);
         if (Stats.Health <= 0)
         {
-            GameState.Player.OnKill(this);
+            Game1.World.Player.OnKill(this);
         }
 
         IsLeashed = true;

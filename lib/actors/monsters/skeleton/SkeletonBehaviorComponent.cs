@@ -1,4 +1,5 @@
 using System;
+using arpg;
 using Microsoft.Xna.Framework;
 
 public class SkeletonBehaviorComponent
@@ -21,7 +22,7 @@ public class SkeletonBehaviorComponent
 
             if (_timeSinceDeath >= _corpseDespawnTime)
             {
-                GameState.RemoveActor(monster);
+                Game1.World.RemoveActor(monster);
             }
 
             monster.ActionState = ActorActionState.None;
@@ -30,8 +31,8 @@ public class SkeletonBehaviorComponent
 
         float x1 = monster.Position.X;
         float y1 = monster.Position.Y;
-        float x2 = GameState.Player.Position.X;
-        float y2 = GameState.Player.Position.Y;
+        float x2 = Game1.World.Player.Position.X;
+        float y2 = Game1.World.Player.Position.Y;
 
         if (x1 < x2)
         {
@@ -82,7 +83,7 @@ public class SkeletonBehaviorComponent
                 if (withinAttackHitDistance && !_playerWasHit)
                 {
                     // TODO: proper hitbox checking
-                    GameState.Player.TakeDamage(10);
+                    Game1.World.Player.TakeDamage(10);
                     _playerWasHit = true;
                 }
             }

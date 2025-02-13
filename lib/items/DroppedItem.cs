@@ -30,11 +30,7 @@ public class DroppedItem
 
         int borderThickness = 1;
 
-        spriteBatch.Draw(
-            Assets.RectangleTexture,
-            _bounds,
-            Color.Transparent
-        );
+        spriteBatch.Draw(Assets.RectangleTexture, _bounds, Color.Transparent);
 
         spriteBatch.Draw(
             Assets.RectangleTexture,
@@ -45,7 +41,12 @@ public class DroppedItem
         // Bottom border
         spriteBatch.Draw(
             Assets.RectangleTexture,
-            new Rectangle((int)Position.X, (int)Position.Y + _bounds.Height - borderThickness, _bounds.Width, borderThickness),
+            new Rectangle(
+                (int)Position.X,
+                (int)Position.Y + _bounds.Height - borderThickness,
+                _bounds.Width,
+                borderThickness
+            ),
             Color.White
         );
 
@@ -59,7 +60,12 @@ public class DroppedItem
         // Right border
         spriteBatch.Draw(
             Assets.RectangleTexture,
-            new Rectangle((int)Position.X + _bounds.Width - borderThickness, (int)Position.Y, borderThickness, _bounds.Height),
+            new Rectangle(
+                (int)Position.X + _bounds.Width - borderThickness,
+                (int)Position.Y,
+                borderThickness,
+                _bounds.Height
+            ),
             Color.White
         );
 

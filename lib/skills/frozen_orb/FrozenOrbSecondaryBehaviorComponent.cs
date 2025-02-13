@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using arpg;
 using Microsoft.Xna.Framework;
 
 public class FrozenOrbSecondaryBehaviorComponent
@@ -27,7 +28,7 @@ public class FrozenOrbSecondaryBehaviorComponent
             + (secondaryEntity.Speed * elapsedTime * Math.Sin(secondaryEntity.Angle));
         secondaryEntity.Position = new((float)x, (float)y);
 
-        foreach (IActor actor in GameState.Actors.Where(actor => actor.Kind == ActorKind.Monster))
+        foreach (IActor actor in Game1.World.Actors.Where(actor => actor.Kind == ActorKind.Monster))
         {
             if (!_hitActors.Contains(actor.Id) && secondaryEntity.Hitbox.Intersects(actor.Hitbox))
             {
