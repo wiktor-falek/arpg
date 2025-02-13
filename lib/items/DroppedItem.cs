@@ -15,13 +15,20 @@ public class DroppedItem
         Item = item;
         Position = position;
         _stringOrigin = Assets.Fonts.MonogramExtened.MeasureString(Item.Name);
-        _bounds = new Rectangle((int)Position.X, (int)Position.Y, (int)_stringOrigin.X + 16, 16);
+
+        const int HEIGHT = 16;
+        int WIDTH = (int)_stringOrigin.X + 16;
+        _bounds = new Rectangle(
+            (int)Position.X - WIDTH / 2,
+            (int)Position.Y - HEIGHT / 2,
+            WIDTH,
+            HEIGHT
+        );
     }
 
     public void Update(GameTime gameTime)
     {
         Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
-        // TODO: factor in border
         bool cursorWithinBounds =
             playerAimCoordinate.X > _bounds.Left
             && playerAimCoordinate.X < _bounds.Right
@@ -36,41 +43,62 @@ public class DroppedItem
 
         spriteBatch.Draw(Assets.RectangleTexture, _bounds, Color.Transparent);
 
+        // Top border
         spriteBatch.Draw(
             Assets.RectangleTexture,
-            new Rectangle((int)Position.X, (int)Position.Y, _bounds.Width, borderThickness),
-            Color.White
+            new Rectangle((int)_bounds.X, (int)_bounds.Y, _bounds.Width, borderThickness),
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            SpriteEffects.None,
+            Layer.DroppedItemBorder
         );
 
         // Bottom border
         spriteBatch.Draw(
             Assets.RectangleTexture,
             new Rectangle(
-                (int)Position.X,
-                (int)Position.Y + _bounds.Height - borderThickness,
+                (int)_bounds.X,
+                (int)_bounds.Y + _bounds.Height - borderThickness,
                 _bounds.Width,
                 borderThickness
             ),
-            Color.White
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            SpriteEffects.None,
+            Layer.DroppedItemBorder
         );
 
         // Left border
         spriteBatch.Draw(
             Assets.RectangleTexture,
-            new Rectangle((int)Position.X, (int)Position.Y, borderThickness, _bounds.Height),
-            Color.White
+            new Rectangle((int)_bounds.X, (int)_bounds.Y, borderThickness, _bounds.Height),
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            SpriteEffects.None,
+            Layer.DroppedItemBorder
         );
 
         // Right border
         spriteBatch.Draw(
             Assets.RectangleTexture,
             new Rectangle(
-                (int)Position.X + _bounds.Width - borderThickness,
-                (int)Position.Y,
+                (int)_bounds.X + _bounds.Width - borderThickness,
+                (int)_bounds.Y,
                 borderThickness,
                 _bounds.Height
             ),
-            Color.White
+            null,
+            Color.White,
+            0f,
+            Vector2.Zero,
+            SpriteEffects.None,
+            Layer.DroppedItemBorder
         );
 
         spriteBatch.Draw(
@@ -87,10 +115,10 @@ public class DroppedItem
         spriteBatch.DrawString(
             Assets.Fonts.MonogramExtened,
             Item.Name,
-            new((int)Position.X + (_bounds.Width - _stringOrigin.X) / 2, (int)Position.Y),
+            new((int)_bounds.X + (_bounds.Width - _stringOrigin.X) / 2, (int)_bounds.Y),
             IsHovered ? Color.Black : Color.White,
             0f,
-            new(0, 0),
+            Vector2.Zero,
             1f,
             SpriteEffects.None,
             Layer.DroppedItemText

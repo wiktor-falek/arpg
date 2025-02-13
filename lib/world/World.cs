@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Channels;
 using arpg;
@@ -63,16 +64,38 @@ public class World(Player player)
 
     public bool OnClick()
     {
+        const double itemPickupRadius = 40;
+
         foreach (DroppedItem item in Items)
         {
             if (item.IsHovered)
             {
-                bool addedToInventory = item.GetPickedUp(Player);
-                if (addedToInventory)
+                if (Vector2.Distance(Player.Position, item.Position) > itemPickupRadius)
                 {
-                    Items.Remove(item);
-                    return true;
+                    int j = (int)item.Position.X;
+                    int k = (int)item.Position.Y;
+                    double angle = Math.Atan2(
+                        player.Position.Y - item.Position.Y,
+                        player.Position.X - item.Position.X
+                    );
+                    double x = itemPickupRadius * Math.Cos(angle) + j;
+                    double y = itemPickupRadius * Math.Sin(angle) + k;
+                    Vector2 nearestPoint = new((float)x, (float)y);
+                    Player.InputComponent.StartMove(nearestPoint);
+                    // TODO: pick up the item once reached the radius (unless player moved elsewhere)
                 }
+                else
+                {
+                    // pick up item immediately
+                    bool addedToInventory = item.GetPickedUp(Player);
+                    if (addedToInventory)
+                    {
+                        Items.Remove(item);
+                        return true;
+                    }
+                }
+
+                return true;
             }
         }
         return false;

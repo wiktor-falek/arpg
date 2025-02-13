@@ -1,10 +1,11 @@
 public static class Layer
 {
-    public const float Item = 0.87f;
-    public const float UIWindowElement = 0.88f;
-    public const float UIWindow = 0.89f;
-    public const float HUD = 0.90f;
-    public const float DroppedItemText = 0.91f;
+    public const float Item = 0.86f;
+    public const float UIWindowElement = 0.87f;
+    public const float UIWindow = 0.88f;
+    public const float HUD = 0.89f;
+    public const float DroppedItemText = 0.90f;
+    public const float DroppedItemBorder = 0.91f;
     public const float DroppedItem = 0.92f;
     public const float Text = 0.93f;
     public const float Monster = 0.94f;

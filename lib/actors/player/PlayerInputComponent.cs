@@ -94,11 +94,16 @@ public class PlayerInputComponent
         return true;
     }
 
-    private void StartMove()
+    public void StartMove(Vector2? aimCoordinate = null)
     {
+        // TODO: refactor
+
         _isMoving = true;
-        _destination = _playerAimCoordinate;
-        _destinationAngle = _playerAimAngle;
+        _destination = aimCoordinate ?? _playerAimCoordinate;
+        _destinationAngle =
+            aimCoordinate != null
+                ? CalculateAngle(_player.Position, aimCoordinate.Value)
+                : _playerAimAngle;
 
         double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
         bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;
