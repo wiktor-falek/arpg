@@ -1,6 +1,6 @@
 public static class Layer
 {
-    public const float Item = 0.97f;
+    public const float Item = 0.87f;
     public const float UIWindowElement = 0.88f;
     public const float UIWindow = 0.89f;
     public const float HUD = 0.90f;

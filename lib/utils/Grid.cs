@@ -46,8 +46,7 @@ public class Grid<T> where T : class
             }
         }
 
-        GridItem<T?> originSquare = Squares[originY, originX];
-        originSquare.IsOriginSquare = true;
+        Squares[originY, originX].IsOriginSquare = true;
 
         return true;
     }

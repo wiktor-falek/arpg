@@ -20,7 +20,8 @@ public class Config
         _graphics = graphics;
         _device = device;
         _renderTarget = renderTarget;
-        ChangeResolutionScale(2);
+        ChangeResolutionScale(3);
+        SetFullScreen();
         ApplyChanges();
     }
 

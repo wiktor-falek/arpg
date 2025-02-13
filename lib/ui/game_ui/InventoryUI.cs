@@ -5,29 +5,36 @@ using Microsoft.Xna.Framework.Graphics;
 public class InventoryUI
 {
     public bool IsOpen = false;
-    public Rectangle Bounds;
+    public Rectangle _windowBounds;
 
     private Player _player;
+    const int SQUARE_SIZE = 24;
+    const int BORDER_SIZE = 1;
 
     public InventoryUI(Player player)
     {
         _player = player;
-        int windowWidth = 220;
+        int windowWidth = Game1.NativeResolution.Width / 2 - 20;
         int screenWidth = Game1.NativeResolution.Width;
         int screenHeight = Game1.NativeResolution.Height;
-        Bounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);
+        _windowBounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);
     }
 
     public void Update(GameTime gameTime) { }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (!IsOpen)
-            return;
+        if (!IsOpen) return;
+        DrawWindow(spriteBatch);
+        DrawEquipment(spriteBatch);
+        DrawInventory(spriteBatch);
+    }
 
+    private void DrawWindow(SpriteBatch spriteBatch)
+    {
         spriteBatch.Draw(
             Assets.RectangleTexture,
-            Bounds,
+            _windowBounds,
             null,
             Color.Black,
             0f,
@@ -35,9 +42,62 @@ public class InventoryUI
             SpriteEffects.None,
             Layer.UIWindow
         );
+    }
 
-        const int SQUARE_SIZE = 16;
-        const int BORDER_SIZE = 1;
+    private void DrawEquipment(SpriteBatch spriteBatch)
+    {
+        int spacing = 3;
+        int equipmentWidth = SQUARE_SIZE * 8 + spacing * 4;
+
+        int currentX = _windowBounds.Left + ((_windowBounds.Width - equipmentWidth) / 2);
+        int currentY = 10;
+
+        // main hand
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
+        currentY += SQUARE_SIZE * 4 + spacing;
+
+        // gloves
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        currentY += SQUARE_SIZE;
+        currentX += SQUARE_SIZE * 2 + spacing;
+
+        // left ring
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        currentX += SQUARE_SIZE + spacing;
+
+        // belt
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 1));
+        currentY -= SQUARE_SIZE * 3 + spacing;
+
+        // chest
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 3));
+        currentY -= SQUARE_SIZE * 2 + spacing;
+
+        // helmet
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        currentY += SQUARE_SIZE * 5 + spacing * 2;
+        currentX += SQUARE_SIZE * 2 + spacing;
+
+        // right ring
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        currentY -= (int)(SQUARE_SIZE * 3.5) + spacing * 2;
+        
+        // amulet
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        currentY += (int)(SQUARE_SIZE * 3.5) + spacing * 2;
+        currentX += SQUARE_SIZE + spacing;
+        currentY -= SQUARE_SIZE;
+
+        // boots
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        currentY -= SQUARE_SIZE * 4 + spacing;
+
+        // offhand
+        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
+    }
+
+    private void DrawInventory(SpriteBatch spriteBatch)
+    {
         int inventoryHeight = _player.Inventory.Height * (SQUARE_SIZE + BORDER_SIZE) - 1;
         int inventoryWidth = _player.Inventory.Width * (SQUARE_SIZE + BORDER_SIZE) - 1;
 
@@ -45,30 +105,34 @@ public class InventoryUI
         {
             for (int j = 0; j < _player.Inventory.Height; j++)
             {
-                int x = Bounds.Left + i * (SQUARE_SIZE + BORDER_SIZE);
-                int y = Bounds.Bottom - inventoryHeight + j * (SQUARE_SIZE + BORDER_SIZE);
+                int x = _windowBounds.Left + i * (SQUARE_SIZE + BORDER_SIZE);
+                int y = _windowBounds.Bottom - inventoryHeight + j * (SQUARE_SIZE + BORDER_SIZE);
 
-                spriteBatch.Draw(
-                    Assets.RectangleTexture,
-                    new(x, y, SQUARE_SIZE, SQUARE_SIZE),
-                    null,
-                    Color.Gray,
-                    0f,
-                    Vector2.Zero,
-                    SpriteEffects.None,
-                    Layer.UIWindowElement
-                );
+                DrawSquare(spriteBatch, new(x, y, SQUARE_SIZE, SQUARE_SIZE));
 
                 #nullable enable
                 Item? item = _player.Inventory.GetItem(i, j);
                 #nullable disable
                 if (item is not null && _player.Inventory.Grid.SquareIsOriginSquare(i, j))
                 {
-                    // TODO: check if is on origin square
                     item.Draw(spriteBatch, x, y);
                 }
             }
         }
+    }
+
+    private void DrawSquare(SpriteBatch spriteBatch, Rectangle rectangle)
+    {
+        spriteBatch.Draw(
+            Assets.RectangleTexture,
+            rectangle,
+            null,
+            Color.DarkSlateGray,
+            0f,
+            Vector2.Zero,
+            SpriteEffects.None,
+            Layer.UIWindowElement
+        );
     }
 
     public bool OnClick(Vector2 mousePosition)
@@ -76,13 +140,13 @@ public class InventoryUI
         if (!IsOpen)
             return false;
 
-        bool cursorWithinBounds =
-            mousePosition.X > Bounds.Left
-            && mousePosition.X < Bounds.Right
-            && mousePosition.Y > Bounds.Top
-            && mousePosition.Y < Bounds.Bottom;
+        bool cursorWithin_windowBounds =
+            mousePosition.X > _windowBounds.Left
+            && mousePosition.X < _windowBounds.Right
+            && mousePosition.Y > _windowBounds.Top
+            && mousePosition.Y < _windowBounds.Bottom;
 
-        if (!cursorWithinBounds)
+        if (!cursorWithin_windowBounds)
             return false;
 
         // handle click

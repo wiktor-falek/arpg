@@ -45,8 +45,8 @@ public class Player : IActor
 
         Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 3, Assets.Items.None_2x3), 0, 0);
         Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 2, Assets.Items.None_2x2), 0, 3);
-        Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 1, Assets.Items.None_2x1), 0, 5);
-        Inventory.AddItem(new Item("Item", Rarity.Normal, 1, 1, Assets.Items.None_1x1), 2, 0);
+        Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 1, Assets.Items.None_2x1), 2, 0);
+        Inventory.AddItem(new Item("Item", Rarity.Normal, 1, 1, Assets.Items.None_1x1), 2, 1);
         Equipment.Equip(new Sandals());
     }
 

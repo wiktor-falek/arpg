@@ -32,7 +32,7 @@ public class Item
     {
         spriteBatch.Draw(
             Asset.Texture,
-            new(x, y, Width * 16, Height * 16),
+            new(x, y, Width * 24, Height * 24),
             null,
             Color.White,
             0f,

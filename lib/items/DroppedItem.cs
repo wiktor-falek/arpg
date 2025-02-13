@@ -21,6 +21,7 @@ public class DroppedItem
     {
         Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
 
+        // TODO: factor in border
         bool cursorWithinBounds =
             playerAimCoordinate.X > _bounds.Left
             && playerAimCoordinate.X < _bounds.Right

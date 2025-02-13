@@ -13,7 +13,7 @@ public class HolyFireEntity : IEntity
         set => _hitbox = value;
     }
     public double Radius = 100d;
-    public double Damage = 5d;
+    public double Damage = 100d;
     public double SelfDamage = 2d;
 
     private IHitbox _hitbox;

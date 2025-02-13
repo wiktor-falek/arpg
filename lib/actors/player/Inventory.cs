@@ -3,7 +3,7 @@ using System;
 public class Inventory
 {
     public readonly int Width = 12;
-    public readonly int Height = 6;
+    public readonly int Height = 5;
     public Grid<Item> Grid;
 
     private Player _player;
