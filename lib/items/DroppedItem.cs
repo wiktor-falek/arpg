@@ -6,6 +6,7 @@ public class DroppedItem
 {
     public Item Item;
     public Vector2 Position;
+    public bool IsHovered = false;
     private Vector2 _stringOrigin;
     private Rectangle _bounds;
 
@@ -17,18 +18,21 @@ public class DroppedItem
         _bounds = new Rectangle((int)Position.X, (int)Position.Y, (int)_stringOrigin.X + 16, 16);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Update(GameTime gameTime)
     {
         Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
-
         // TODO: factor in border
         bool cursorWithinBounds =
             playerAimCoordinate.X > _bounds.Left
             && playerAimCoordinate.X < _bounds.Right
             && playerAimCoordinate.Y > _bounds.Top
             && playerAimCoordinate.Y < _bounds.Bottom;
+        IsHovered = cursorWithinBounds;
+    }
 
-        int borderThickness = 1;
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        const int borderThickness = 1;
 
         spriteBatch.Draw(Assets.RectangleTexture, _bounds, Color.Transparent);
 
@@ -73,7 +77,7 @@ public class DroppedItem
             Assets.RectangleTexture,
             _bounds,
             null,
-            cursorWithinBounds ? Color.White : new Color(0, 0, 0, 0.6f),
+            IsHovered ? Color.White : new Color(0, 0, 0, 0.6f),
             0f,
             Vector2.Zero,
             SpriteEffects.None,
@@ -84,12 +88,18 @@ public class DroppedItem
             Assets.Fonts.MonogramExtened,
             Item.Name,
             new((int)Position.X + (_bounds.Width - _stringOrigin.X) / 2, (int)Position.Y),
-            cursorWithinBounds ? Color.Black : Color.White,
+            IsHovered ? Color.Black : Color.White,
             0f,
             new(0, 0),
             1f,
             SpriteEffects.None,
             Layer.DroppedItemText
         );
+    }
+
+    public bool GetPickedUp(Player player)
+    {
+        bool added = player.Inventory.AddItem(this.Item);
+        return added;
     }
 }

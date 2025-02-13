@@ -12,6 +12,8 @@ public class ActorBaseStats
     public double MaxMana { get; set; }
     public double ManaRegen { get; set; }
     public double ManaDegen { get; set; }
+    public double Evasion { get; set; }
+    public double Armor { get; set; }
 
     private IActor _actor;
     private const double TICK_TIME = 0.1d;
@@ -23,7 +25,9 @@ public class ActorBaseStats
         double health,
         double mana = 0,
         double healthRegen = 0,
-        double manaRegen = 0
+        double manaRegen = 0,
+        double evasion = 0,
+        double armor = 0
     )
     {
         _actor = actor;
@@ -34,6 +38,8 @@ public class ActorBaseStats
         ManaRegen = manaRegen;
         HealthDegen = 0;
         ManaDegen = 0;
+        Evasion = evasion;
+        Armor = armor;
     }
 
     public void Update(GameTime gameTime)

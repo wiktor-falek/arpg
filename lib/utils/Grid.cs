@@ -1,4 +1,3 @@
-
 class GridItem<T>(T value, int originX, int originY)
 {
     public T Value = value;
@@ -8,7 +7,8 @@ class GridItem<T>(T value, int originX, int originY)
 }
 
 #nullable enable
-public class Grid<T> where T : class
+public class Grid<T>
+    where T : class
 {
     public int Width;
     public int Height;
@@ -28,6 +28,21 @@ public class Grid<T> where T : class
                 Squares[y, x] = new(null, default, default);
             }
         }
+    }
+
+    public bool AddItem(T item, int width, int height)
+    {
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                bool itemFits = ItemFits(x, y, width, height);
+                bool added = AddItem(item, x, y, width, height);
+                if (added)
+                    return true;
+            }
+        }
+        return false;
     }
 
     public bool AddItem(T item, int originX, int originY, int width, int height)
@@ -88,19 +103,20 @@ public class Grid<T> where T : class
         return true;
     }
 
-    public bool ItemFitsWithinGrid(int width, int height)
-    {
-        // TODO: optimize
-        for (int x = 0; x < Width; x++)
-        {
-            for (int y = 0; y < Height; y++)
-            {
-                bool itemFits = ItemFits(x, y, width, height);
-                if (itemFits) return true;
-            }
-        }
+    // public bool ItemFitsWithinGrid(int width, int height)
+    // {
+    //     // TODO: optimize
+    //     for (int x = 0; x < Width; x++)
+    //     {
+    //         for (int y = 0; y < Height; y++)
+    //         {
+    //             bool itemFits = ItemFits(x, y, width, height);
+    //             if (itemFits)
+    //                 return true;
+    //         }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 }
 #nullable disable

@@ -1,17 +1,18 @@
 using System.Collections.Generic;
+using System.Threading.Channels;
 using arpg;
 using Microsoft.Xna.Framework;
 
 public class World(Player player)
 {
-    // register World.OnClick -> iterate over dropped items that are hovered -> add item to player inventory
     public readonly Player Player = player;
     public readonly List<DroppedItem> Items =
     [
-        new DroppedItem(new Sandals(), Vector2.Zero),
+        new DroppedItem(new Hood(), new(100, 100)),
+        new DroppedItem(new Sandals(), new(100, 200)),
         new DroppedItem(
             new Item("Mirror of Kalandra", Rarity.Normal, 1, 1, Assets.Items.None_1x1),
-            new(100, 100)
+            new(0, 0)
         ),
     ];
     public readonly List<IEntity> Entities = [];
@@ -40,6 +41,12 @@ public class World(Player player)
             IEntity entity = Entities[i];
             entity.Update(gameTime);
         }
+
+        for (int i = 0; i < Items.Count; i++)
+        {
+            DroppedItem item = Items[i];
+            item.Update(gameTime);
+        }
     }
 
     public void RemoveEntity(IEntity entity)
@@ -52,5 +59,22 @@ public class World(Player player)
     {
         int index = Actors.FindIndex(e => e.Id == actor.Id);
         Actors.RemoveAt(index);
+    }
+
+    public bool OnClick()
+    {
+        foreach (DroppedItem item in Items)
+        {
+            if (item.IsHovered)
+            {
+                bool addedToInventory = item.GetPickedUp(Player);
+                if (addedToInventory)
+                {
+                    Items.Remove(item);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

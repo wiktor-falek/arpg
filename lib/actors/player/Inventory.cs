@@ -16,20 +16,20 @@ public class Inventory
 
     public bool AddItem(Item item)
     {
-        // TODO: find the first available space
-        // Grid.AddItem(item, x, y, item.Width, item.Height);
-        return false;
+        bool added = Grid.AddItem(item, item.Width, item.Height);
+        return added;
     }
 
-    public void AddItem(Item item, int x, int y)
+    public bool AddItem(Item item, int x, int y)
     {
-        Grid.AddItem(item, x, y, item.Width, item.Height);
+        bool added = Grid.AddItem(item, x, y, item.Width, item.Height);
+        return added;
     }
 
-    #nullable enable
+#nullable enable
     public Item? GetItem(int x, int y)
     {
         return Grid.GetItem(x, y);
     }
-    #nullable disable
+#nullable disable
 }
