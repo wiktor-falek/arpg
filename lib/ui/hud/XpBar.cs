@@ -25,7 +25,7 @@ public class XpBar : IHudElement
         RequiredXP = playerStats.Level.RequiredXP;
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    public void Draw(SpriteBatch spriteBatch)
     {
         string xpBarText = $"Lv{Level} {CurrentXP}/{RequiredXP}";
         int xpBarTextWidth = (int)Assets.Fonts.MonogramExtened.MeasureString(xpBarText).X;

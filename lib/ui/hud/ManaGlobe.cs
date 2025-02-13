@@ -24,15 +24,13 @@ public class ManaGlobe : IHudElement
         MaxMana = Math.Floor(GameState.Player.Stats.MaxMana);
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        var globeTexture = new Texture2D(graphicsDevice, 1, 1);
-        globeTexture.SetData([new Color(10, 10, 140)]);
             spriteBatch.Draw(
-            globeTexture,
+            Assets.RectangleTexture,
             Rectangle,
             null,
-            Color.White,
+            new Color(10, 10, 140),
             0f,
             Vector2.Zero,
             SpriteEffects.None,

@@ -20,6 +20,7 @@ public class Game1 : Game
     private RenderTarget2D _renderTarget;
     private SpriteBatch _spriteBatch;
     private Background _background;
+    private LootUI _lootUI;
     private PauseMenu _pauseMenu;
     private Hud _hud;
     private GameUI _gameUI;
@@ -45,6 +46,7 @@ public class Game1 : Game
         Assets.Load(Content, GraphicsDevice);
         Config = new Config(_graphics, GraphicsDevice, _renderTarget);
         _background = new Background();
+        _lootUI = new LootUI();
         _hud = new Hud();
         _gameUI = new GameUI(GameState.Player);
         _pauseMenu = new PauseMenu();
@@ -85,34 +87,49 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        // TODO: non-scaled render target
+
         GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(
+            SpriteSortMode.BackToFront,
+            samplerState: SamplerState.PointClamp,
+            blendState: BlendState.AlphaBlend
+        );
         _background.Draw(_spriteBatch);
         _spriteBatch.End();
 
+        // world space rendering
         _spriteBatch.Begin(
             SpriteSortMode.BackToFront,
             transformMatrix: Camera.Transform,
-            samplerState: SamplerState.PointClamp
+            samplerState: SamplerState.PointClamp,
+            blendState: BlendState.AlphaBlend
         );
 
-        foreach (var actor in GameState.Actors)
+        foreach (IActor actor in GameState.Actors)
         {
             actor.Draw(_spriteBatch);
         }
 
-        foreach (var entity in GameState.Entities)
+        foreach (IEntity entity in GameState.Entities)
         {
             entity.Draw(_spriteBatch);
         }
 
+        _lootUI.Draw(_spriteBatch);
+
         _spriteBatch.End();
 
-        _spriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
+        // screen space rendering
+        _spriteBatch.Begin(
+            SpriteSortMode.BackToFront,
+            samplerState: SamplerState.PointClamp,
+            blendState: BlendState.AlphaBlend
+        );
 
-        _hud.Draw(_spriteBatch, GraphicsDevice);
+        _hud.Draw(_spriteBatch);
         _gameUI.Draw(_spriteBatch);
         _pauseMenu.Draw(_spriteBatch);
 

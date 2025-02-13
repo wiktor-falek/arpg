@@ -22,12 +22,12 @@ public class Hud
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    public void Draw(SpriteBatch spriteBatch)
     {
         foreach (var element in _elements)
         {
             // TODO: texture creating in Assets, private members instead of creating on draw call
-            element.Draw(spriteBatch, graphicsDevice);
+            element.Draw(spriteBatch);
         }
     }
 }

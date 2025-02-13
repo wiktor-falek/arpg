@@ -11,7 +11,7 @@ public class DebugScreen : IHudElement
         // FramerateCounter.Update(gameTime.ElapsedGameTime.TotalSeconds);
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    public void Draw(SpriteBatch spriteBatch)
     {
         if (!GameState.IsDebugMode)
             return;

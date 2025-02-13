@@ -24,15 +24,13 @@ public class HealthGlobe : IHudElement
         MaxHealth = GameState.Player.Stats.MaxHealth;
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        var globeTexture = new Texture2D(graphicsDevice, 1, 1);
-        globeTexture.SetData([new Color(150, 10, 10)]);
         spriteBatch.Draw(
-            globeTexture,
+            Assets.RectangleTexture,
             Rectangle,
             null,
-            Color.White,
+            new Color(150, 10, 10),
             0f,
             Vector2.Zero,
             SpriteEffects.None,
