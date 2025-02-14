@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using Microsoft.Xna.Framework;
 
 public class Inventory
 {
@@ -26,10 +28,8 @@ public class Inventory
         return added;
     }
 
-#nullable enable
     public Item? GetItem(int x, int y)
     {
         return Grid.GetItem(x, y);
     }
-#nullable disable
 }

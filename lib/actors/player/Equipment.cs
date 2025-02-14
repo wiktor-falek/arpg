@@ -16,7 +16,6 @@ public enum EquipmentSlot
 
 public class Equipment(Player player)
 {
-#nullable enable
     public EquippableItem? MainHand { get; private set; }
     public EquippableItem? OffHand { get; private set; }
     public EquippableItem? Chest { get; private set; }
@@ -27,8 +26,6 @@ public class Equipment(Player player)
     public EquippableItem? Amulet { get; private set; }
     public EquippableItem? LeftRing { get; private set; }
     public EquippableItem? RightRing { get; private set; }
-
-#nullable disable
 
     private Player _player = player;
 

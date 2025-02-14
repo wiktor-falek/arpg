@@ -83,6 +83,7 @@ public class Game1 : Game
         if (GameState.IsRunning)
         {
             World.Update(gameTime);
+            _gameUI.Update(gameTime);
             _hud.Update(gameTime);
         }
 

@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+
 class GridItem<T>(T value, int originX, int originY)
 {
     public T Value = value;
@@ -6,7 +9,6 @@ class GridItem<T>(T value, int originX, int originY)
     public int OriginY = originY;
 }
 
-#nullable enable
 public class Grid<T>
     where T : class
 {
@@ -72,6 +74,19 @@ public class Grid<T>
         return gridItem.Value;
     }
 
+    public IEnumerable<T> Items()
+    {
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                GridItem<T?> item = Squares[y, x];
+                if (item.Value != null)
+                    yield return item.Value;
+            }
+        }
+    }
+
     public bool SquareIsOriginSquare(int x, int y)
     {
         return Squares[y, x].IsOriginSquare;
@@ -119,4 +134,3 @@ public class Grid<T>
     //     return false;
     // }
 }
-#nullable disable

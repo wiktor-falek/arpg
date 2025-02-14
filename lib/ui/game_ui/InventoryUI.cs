@@ -5,7 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 public class InventoryUI
 {
     public bool IsOpen = false;
-    public Rectangle _windowBounds;
+    public Rectangle WindowBounds;
+    public Item? HoveredItem;
 
     private Player _player;
     const int SQUARE_SIZE = 24;
@@ -17,10 +18,16 @@ public class InventoryUI
         int windowWidth = Game1.NativeResolution.Width / 2 - 20;
         int screenWidth = Game1.NativeResolution.Width;
         int screenHeight = Game1.NativeResolution.Height;
-        _windowBounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);
+        WindowBounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);
     }
 
-    public void Update(GameTime gameTime) { }
+    public void Update(GameTime gameTime)
+    {
+        HoveredItem = _player.Inventory.GetItem(0, 0);
+        Vector2 mousePosition = MouseManager.GetMousePosition();
+
+        // TODO: find hovered item
+    }
 
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -29,13 +36,32 @@ public class InventoryUI
         DrawWindow(spriteBatch);
         DrawEquipment(spriteBatch);
         DrawInventory(spriteBatch);
+        DrawTooltip(spriteBatch);
+    }
+
+    public bool OnClick(Vector2 mousePosition)
+    {
+        if (!IsOpen)
+            return false;
+
+        bool cursorWithin_windowBounds =
+            mousePosition.X > WindowBounds.Left
+            && mousePosition.X < WindowBounds.Right
+            && mousePosition.Y > WindowBounds.Top
+            && mousePosition.Y < WindowBounds.Bottom;
+
+        if (!cursorWithin_windowBounds)
+            return false;
+
+        // handle click
+        return true;
     }
 
     private void DrawWindow(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(
             Assets.RectangleTexture,
-            _windowBounds,
+            WindowBounds,
             null,
             Color.Black,
             0f,
@@ -50,7 +76,7 @@ public class InventoryUI
         int spacing = 3;
         int equipmentWidth = SQUARE_SIZE * 8 + spacing * 4;
 
-        int currentX = _windowBounds.Left + ((_windowBounds.Width - equipmentWidth) / 2);
+        int currentX = WindowBounds.Left + ((WindowBounds.Width - equipmentWidth) / 2);
         int currentY = 10;
 
         // main hand
@@ -117,14 +143,12 @@ public class InventoryUI
         {
             for (int j = 0; j < _player.Inventory.Height; j++)
             {
-                int x = _windowBounds.Left + i * (SQUARE_SIZE + BORDER_SIZE);
-                int y = _windowBounds.Bottom - inventoryHeight + j * (SQUARE_SIZE + BORDER_SIZE);
+                int x = WindowBounds.Left + i * (SQUARE_SIZE + BORDER_SIZE);
+                int y = WindowBounds.Bottom - inventoryHeight + j * (SQUARE_SIZE + BORDER_SIZE);
 
                 DrawSquare(spriteBatch, new(x, y, SQUARE_SIZE, SQUARE_SIZE));
 
-#nullable enable
                 Item? item = _player.Inventory.GetItem(i, j);
-#nullable disable
                 if (item is not null && _player.Inventory.Grid.SquareIsOriginSquare(i, j))
                 {
                     item.Draw(spriteBatch, x, y);
@@ -147,21 +171,11 @@ public class InventoryUI
         );
     }
 
-    public bool OnClick(Vector2 mousePosition)
+    private void DrawTooltip(SpriteBatch spriteBatch)
     {
-        if (!IsOpen)
-            return false;
+        if (HoveredItem is null)
+            return;
 
-        bool cursorWithin_windowBounds =
-            mousePosition.X > _windowBounds.Left
-            && mousePosition.X < _windowBounds.Right
-            && mousePosition.Y > _windowBounds.Top
-            && mousePosition.Y < _windowBounds.Bottom;
-
-        if (!cursorWithin_windowBounds)
-            return false;
-
-        // handle click
-        return true;
+        HoveredItem.DrawTooltip(spriteBatch);
     }
 }
