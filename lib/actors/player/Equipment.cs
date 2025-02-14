@@ -64,7 +64,14 @@ public class Equipment(Player player)
                 Amulet = item;
                 break;
             case EquippableSlot.Ring:
-                LeftRing = item;
+                if (LeftRing != null)
+                {
+                    LeftRing = item;
+                }
+                else
+                {
+                    RightRing = item;
+                }
                 break;
             default:
                 throw new NotImplementedException("Unhandled EquippableSlot");

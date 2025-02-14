@@ -16,7 +16,7 @@ public class World
     public World(Player player)
     {
         Player = player;
-        _monsterSpawner = new MonsterSpawner(Player, 1000000d, offscreenDistance: 100);
+        _monsterSpawner = new MonsterSpawner(Player, 0.5d, offscreenDistance: 100);
 
         Items.Add(new DroppedItem(new Hood(), new(100, 100)));
         Items.Add(new DroppedItem(new Sandals(), new(100, 200)));

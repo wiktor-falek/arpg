@@ -36,9 +36,8 @@ public class Player : IActor
             speed: 100,
             health: 100,
             mana: 100,
-            healthRegen: 1,
-            manaRegen: 2,
-            healthOnKill: 1
+            healthRegen: 0,
+            manaRegen: 0
         );
         Inventory = new(this);
         Equipment = new(this);
@@ -47,7 +46,9 @@ public class Player : IActor
         Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 2, Assets.Items.None_2x2), 0, 3);
         Inventory.AddItem(new Item("Item", Rarity.Normal, 2, 1, Assets.Items.None_2x1), 2, 0);
         Inventory.AddItem(new Item("Item", Rarity.Normal, 1, 1, Assets.Items.None_1x1), 2, 1);
-        Equipment.Equip(new Sandals());
+        Equipment.Equip(new Sandals().ToMagic());
+        Equipment.Equip(new RubyRing().ToMagic());
+        Equipment.Equip(new RubyRing().ToMagic());
     }
 
     public void Update(GameTime gameTime)

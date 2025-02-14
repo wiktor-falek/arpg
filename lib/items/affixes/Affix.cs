@@ -23,9 +23,10 @@ public abstract class Affix
         RollValue();
     }
 
-    public void RollValue()
+    public Affix RollValue()
     {
         RolledValue = _rng.Next(MinRange, MaxRange + 1);
+        return this;
     }
 
     public abstract void Apply(Player player, int value);

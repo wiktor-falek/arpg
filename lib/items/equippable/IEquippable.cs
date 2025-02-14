@@ -15,6 +15,7 @@ public enum EquippableSlot
 
 public interface IEquippable
 {
+    bool IsEquipped { get; }
     EquippableSlot Slot { get; }
     void Equip(Player player);
     void Unequip(Player player);
