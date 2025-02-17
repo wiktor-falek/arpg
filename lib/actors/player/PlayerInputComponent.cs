@@ -12,27 +12,53 @@ public class PlayerInputComponent
     private double _destinationAngle = 0d;
     private Vector2 _playerAimCoordinate;
     private double _playerAimAngle = 0d;
+    private ISkill? _heldSkill = null;
 
     public PlayerInputComponent(Player player)
     {
         _player = player;
-        // TODO: repeat cast, only one key at a time - a class that coordinates casting, global cooldown, slowing player down when casting etc
-        // TODO: don't cast if game paused
 
+        // TODO: refactor
         Game1.InputManager.OnPress(
             RemappableGameAction.CastBarOne,
-            () => player.Skills.Fireball.Cast(_playerAimAngle)
+            () => HoldSkill(player.Skills.Fireball)
+        );
+        Game1.InputManager.OnRelease(
+            RemappableGameAction.CastBarOne,
+            () => ReleaseSkill(player.Skills.Fireball)
         );
 
         Game1.InputManager.OnPress(
             RemappableGameAction.CastBarTwo,
-            () => player.Skills.FrozenOrb.Cast(_playerAimAngle)
+            () => HoldSkill(player.Skills.FrozenOrb)
+        );
+        Game1.InputManager.OnRelease(
+            RemappableGameAction.CastBarTwo,
+            () => ReleaseSkill(player.Skills.FrozenOrb)
         );
 
+        // TODO: figure out what the behavior for instant/toggle skills should be
         Game1.InputManager.OnPress(
             RemappableGameAction.CastBarThree,
-            () => player.Skills.HolyFire.Cast()
+            () =>
+            {
+                if (GameState.IsRunning)
+                {
+                    player.Skills.HolyFire.Cast(_playerAimAngle);
+                }
+            }
         );
+    }
+
+    private void HoldSkill(ISkill skill)
+    {
+        _heldSkill = skill;
+    }
+
+    private void ReleaseSkill(ISkill skill)
+    {
+        if (_heldSkill == skill)
+            _heldSkill = null;
     }
 
     public void Update(GameTime gameTime)
@@ -43,6 +69,8 @@ public class PlayerInputComponent
         // TODO: prevent clicks outside of window
         _playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
         _playerAimAngle = CalculateAngle(_player.Position, _playerAimCoordinate);
+
+        _heldSkill?.Cast(_playerAimAngle);
 
         if (_isHoldingLeftClick)
             StartMove();

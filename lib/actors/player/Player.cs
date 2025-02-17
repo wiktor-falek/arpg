@@ -28,8 +28,6 @@ public class Player : IActor
 
     public Player()
     {
-        _graphicsComponent = new(this);
-        InputComponent = new(this);
         Skills = new(this);
         Stats = new PlayerStats(
             this,
@@ -45,6 +43,9 @@ public class Player : IActor
         Equipment.Equip(new Sandals().ToMagic());
         Equipment.Equip(new RubyRing().ToMagic());
         Equipment.Equip(new RubyRing().ToMagic());
+
+        InputComponent = new(this);
+        _graphicsComponent = new(this);
     }
 
     public void Update(GameTime gameTime)

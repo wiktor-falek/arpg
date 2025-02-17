@@ -1,12 +1,12 @@
 public class HolyFire(IActor owner) : ISkill
 {
     public string Name { get; } = "Holy Fire";
-    public Cooldown Cooldown = new(1f);
+    public Cooldown Cooldown { get; } = new(1f);
     private IActor _owner = owner;
     private bool isActive = false;
     private HolyFireEntity _entity;
 
-    public void Cast()
+    public void Cast(double angle)
     {
         if (!Cooldown.CanCast())
             return;
