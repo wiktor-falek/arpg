@@ -20,6 +20,8 @@ public class Item
     public int Height { get; private set; }
     public Asset Asset;
 
+    private const int ITEM_1x1_SIZE = 20;
+
     public Item(string name, Rarity rarity, int width, int height, Asset asset)
     {
         Name = name;
@@ -33,7 +35,7 @@ public class Item
     {
         spriteBatch.Draw(
             Asset.Texture,
-            new(x, y, Width * 24, Height * 24),
+            new(x, y, Width * ITEM_1x1_SIZE, Height * ITEM_1x1_SIZE),
             null,
             Color.White,
             0f,
@@ -45,7 +47,6 @@ public class Item
 
     public void DrawTooltip(SpriteBatch spriteBatch)
     {
-        // Vector2 mousePosition = MouseManager.GetMousePosition();
         int tooltipWidth = 150;
         int tooltipHeight = 100;
 

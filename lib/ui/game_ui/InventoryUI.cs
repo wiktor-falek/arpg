@@ -11,7 +11,7 @@ public class InventoryUI
     public Item? HoveredItem;
 
     private Player _player;
-    private const int SQUARE_SIZE = 24;
+    private const int SQUARE_SIZE = 20;
     private const int INVENTORY_BORDER_SIZE = 1;
     private const int EQUIPMENT_BORDER_SIZE = 3;
     private List<Rectangle> _inventorySquaresBounds = [];
@@ -23,7 +23,7 @@ public class InventoryUI
     public InventoryUI(Player player)
     {
         _player = player;
-        int windowWidth = Game1.NativeResolution.Width / 2 - 20;
+        int windowWidth = Game1.NativeResolution.Width / 2 - 70;
         int screenWidth = Game1.NativeResolution.Width;
         int screenHeight = Game1.NativeResolution.Height;
         WindowBounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);

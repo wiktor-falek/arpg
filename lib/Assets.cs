@@ -69,6 +69,7 @@ public static class Assets
         public static Asset None_2x1 => GetTexture("items/item_none_2x1");
         public static Asset None_2x2 => GetTexture("items/item_none_2x2");
         public static Asset None_2x3 => GetTexture("items/item_none_2x3");
+        public static Asset None_2x4 => GetTexture("items/item_none_2x4");
     }
 
     private static Dictionary<string, SpriteFont> _fonts = [];
@@ -102,6 +103,7 @@ public static class Assets
         AddTexture(contentManager, "items/item_none_2x1", 1);
         AddTexture(contentManager, "items/item_none_2x2", 1);
         AddTexture(contentManager, "items/item_none_2x3", 1);
+        AddTexture(contentManager, "items/item_none_2x4", 1);
     }
 
     public static Texture2D CreateCircleTexture(int radius)
