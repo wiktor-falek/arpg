@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-class GridItem<T>(T value, int originX, int originY)
+public class GridItem<T>(T value, int originX, int originY)
 {
     public T Value = value;
     public bool IsOriginSquare = false;
@@ -66,6 +66,12 @@ public class Grid<T>
         Squares[originY, originX].IsOriginSquare = true;
 
         return true;
+    }
+
+    public GridItem<T?> GetGridItem(int x, int y)
+    {
+        GridItem<T?> gridItem = Squares[y, x];
+        return gridItem;
     }
 
     public T? GetItem(int x, int y)

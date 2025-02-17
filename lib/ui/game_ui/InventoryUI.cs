@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,8 +11,14 @@ public class InventoryUI
     public Item? HoveredItem;
 
     private Player _player;
-    const int SQUARE_SIZE = 24;
-    const int BORDER_SIZE = 1;
+    private const int SQUARE_SIZE = 24;
+    private const int INVENTORY_BORDER_SIZE = 1;
+    private const int EQUIPMENT_BORDER_SIZE = 3;
+    private List<Rectangle> _inventorySquaresBounds = [];
+    private List<Rectangle> _equipmentBounds = [];
+    private List<EquippableItem> _equipmentItems;
+
+    private Dictionary<Rectangle, (int i, int j)> _inventorySquaresToGridPositions = [];
 
     public InventoryUI(Player player)
     {
@@ -19,20 +27,76 @@ public class InventoryUI
         int screenWidth = Game1.NativeResolution.Width;
         int screenHeight = Game1.NativeResolution.Height;
         WindowBounds = new(screenWidth - windowWidth, 0, windowWidth, screenHeight);
+
+        _equipmentItems = new()
+        {
+            _player.Equipment.MainHand,
+            _player.Equipment.Gloves,
+            _player.Equipment.LeftRing,
+            _player.Equipment.Belt,
+            _player.Equipment.Chest,
+            _player.Equipment.Head,
+            _player.Equipment.RightRing,
+            _player.Equipment.Amulet,
+            _player.Equipment.Boots,
+            _player.Equipment.OffHand,
+        };
+
+        InitInventory();
+        InitEquipment();
     }
 
     public void Update(GameTime gameTime)
     {
-        HoveredItem = _player.Inventory.GetItem(0, 0);
-        Vector2 mousePosition = MouseManager.GetMousePosition();
+        Vector2 mousePosition = MouseManager.GetInGameMousePosition();
+        FindHoveredItem(mousePosition);
+    }
 
-        // TODO: find hovered item
+    private void FindHoveredItem(Vector2 mousePosition)
+    {
+        foreach (Rectangle bounds in _inventorySquaresBounds)
+        {
+            Rectangle boundsWidthBorder = new(
+                bounds.X,
+                bounds.Y,
+                bounds.Width + INVENTORY_BORDER_SIZE,
+                bounds.Height + INVENTORY_BORDER_SIZE
+            );
+
+            if (boundsWidthBorder.Contains(mousePosition))
+            {
+                var (i, j) = _inventorySquaresToGridPositions[bounds];
+                Item? item = _player.Inventory.GetItem(i, j);
+                if (item is not null)
+                {
+                    HoveredItem = item;
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < _equipmentBounds.Count; i++)
+        {
+            Rectangle bounds = _equipmentBounds[i];
+            if (bounds.Contains(mousePosition))
+            {
+                EquippableItem? item = _equipmentItems[i];
+                if (item is not null)
+                {
+                    HoveredItem = item;
+                    return;
+                }
+            }
+        }
+
+        HoveredItem = null;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         if (!IsOpen)
             return;
+
         DrawWindow(spriteBatch);
         DrawEquipment(spriteBatch);
         DrawInventory(spriteBatch);
@@ -71,88 +135,100 @@ public class InventoryUI
         );
     }
 
-    private void DrawEquipment(SpriteBatch spriteBatch)
+    private void InitEquipment()
     {
-        int spacing = 3;
-        int equipmentWidth = SQUARE_SIZE * 8 + spacing * 4;
+        int equipmentWidth = SQUARE_SIZE * 8 + EQUIPMENT_BORDER_SIZE * 4;
 
         int currentX = WindowBounds.Left + ((WindowBounds.Width - equipmentWidth) / 2);
         int currentY = 10;
 
         // main hand
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
-        _player.Equipment.MainHand?.Draw(spriteBatch, currentX, currentY);
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
 
-        currentY += SQUARE_SIZE * 4 + spacing;
+        currentY += SQUARE_SIZE * 4 + EQUIPMENT_BORDER_SIZE;
 
         // gloves
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
-        _player.Equipment.Gloves?.Draw(spriteBatch, currentX, currentY);
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
         currentY += SQUARE_SIZE;
-        currentX += SQUARE_SIZE * 2 + spacing;
+        currentX += SQUARE_SIZE * 2 + EQUIPMENT_BORDER_SIZE;
 
         // left ring
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
-        _player.Equipment.LeftRing?.Draw(spriteBatch, currentX, currentY);
-        currentX += SQUARE_SIZE + spacing;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        currentX += SQUARE_SIZE + EQUIPMENT_BORDER_SIZE;
 
         // belt
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 1));
-        _player.Equipment.Belt?.Draw(spriteBatch, currentX, currentY);
-        currentY -= SQUARE_SIZE * 3 + spacing;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 1));
+        currentY -= SQUARE_SIZE * 3 + EQUIPMENT_BORDER_SIZE;
 
         // chest
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 3));
-        _player.Equipment.Chest?.Draw(spriteBatch, currentX, currentY);
-        currentY -= SQUARE_SIZE * 2 + spacing;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 3));
+        currentY -= SQUARE_SIZE * 2 + EQUIPMENT_BORDER_SIZE;
 
         // helmet
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
-        _player.Equipment.Head?.Draw(spriteBatch, currentX, currentY);
-        currentY += SQUARE_SIZE * 5 + spacing * 2;
-        currentX += SQUARE_SIZE * 2 + spacing;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        currentY += SQUARE_SIZE * 5 + EQUIPMENT_BORDER_SIZE * 2;
+        currentX += SQUARE_SIZE * 2 + EQUIPMENT_BORDER_SIZE;
 
         // right ring
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
-        _player.Equipment.RightRing?.Draw(spriteBatch, currentX, currentY);
-        currentY -= (int)(SQUARE_SIZE * 3.5) + spacing * 2;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        currentY -= (int)(SQUARE_SIZE * 3.5) + EQUIPMENT_BORDER_SIZE * 2;
 
         // amulet
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
-        _player.Equipment.Amulet?.Draw(spriteBatch, currentX, currentY);
-        currentY += (int)(SQUARE_SIZE * 3.5) + spacing * 2;
-        currentX += SQUARE_SIZE + spacing;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 1, SQUARE_SIZE * 1));
+        currentY += (int)(SQUARE_SIZE * 3.5) + EQUIPMENT_BORDER_SIZE * 2;
+        currentX += SQUARE_SIZE + EQUIPMENT_BORDER_SIZE;
         currentY -= SQUARE_SIZE;
 
         // boots
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
-        _player.Equipment.Boots?.Draw(spriteBatch, currentX, currentY);
-        currentY -= SQUARE_SIZE * 4 + spacing;
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 2));
+        currentY -= SQUARE_SIZE * 4 + EQUIPMENT_BORDER_SIZE;
 
         // offhand
-        DrawSquare(spriteBatch, new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
-        _player.Equipment.OffHand?.Draw(spriteBatch, currentX, currentY);
+        _equipmentBounds.Add(new(currentX, currentY, SQUARE_SIZE * 2, SQUARE_SIZE * 4));
     }
 
-    private void DrawInventory(SpriteBatch spriteBatch)
+    private void DrawEquipment(SpriteBatch spriteBatch)
     {
-        int inventoryHeight = _player.Inventory.Height * (SQUARE_SIZE + BORDER_SIZE) - 1;
-        int inventoryWidth = _player.Inventory.Width * (SQUARE_SIZE + BORDER_SIZE) - 1;
+        for (int i = 0; i < _equipmentBounds.Count; i++)
+        {
+            Rectangle bounds = _equipmentBounds[i];
+            DrawSquare(spriteBatch, bounds);
+            _equipmentItems[i]?.Draw(spriteBatch, bounds.X, bounds.Y);
+        }
+    }
+
+    private void InitInventory()
+    {
+        int inventoryHeight = _player.Inventory.Height * (SQUARE_SIZE + INVENTORY_BORDER_SIZE) - 1;
+        int inventoryWidth = _player.Inventory.Width * (SQUARE_SIZE + INVENTORY_BORDER_SIZE) - 1;
 
         for (int i = 0; i < _player.Inventory.Width; i++)
         {
             for (int j = 0; j < _player.Inventory.Height; j++)
             {
-                int x = WindowBounds.Left + i * (SQUARE_SIZE + BORDER_SIZE);
-                int y = WindowBounds.Bottom - inventoryHeight + j * (SQUARE_SIZE + BORDER_SIZE);
+                int x = WindowBounds.Left + i * (SQUARE_SIZE + INVENTORY_BORDER_SIZE);
+                int y =
+                    WindowBounds.Bottom
+                    - inventoryHeight
+                    + j * (SQUARE_SIZE + INVENTORY_BORDER_SIZE);
 
-                DrawSquare(spriteBatch, new(x, y, SQUARE_SIZE, SQUARE_SIZE));
+                Rectangle bounds = new(x, y, SQUARE_SIZE, SQUARE_SIZE);
+                _inventorySquaresBounds.Add(bounds);
+                _inventorySquaresToGridPositions.Add(bounds, (i, j));
+            }
+        }
+    }
 
-                Item? item = _player.Inventory.GetItem(i, j);
-                if (item is not null && _player.Inventory.Grid.SquareIsOriginSquare(i, j))
-                {
-                    item.Draw(spriteBatch, x, y);
-                }
+    private void DrawInventory(SpriteBatch spriteBatch)
+    {
+        foreach (Rectangle bounds in _inventorySquaresBounds)
+        {
+            DrawSquare(spriteBatch, bounds);
+            var (i, j) = _inventorySquaresToGridPositions[bounds];
+            Item? item = _player.Inventory.GetItem(i, j);
+            if (item is not null && _player.Inventory.Grid.SquareIsOriginSquare(i, j))
+            {
+                item.Draw(spriteBatch, bounds.X, bounds.Y);
             }
         }
     }
@@ -173,9 +249,6 @@ public class InventoryUI
 
     private void DrawTooltip(SpriteBatch spriteBatch)
     {
-        if (HoveredItem is null)
-            return;
-
-        HoveredItem.DrawTooltip(spriteBatch);
+        HoveredItem?.DrawTooltip(spriteBatch);
     }
 }
