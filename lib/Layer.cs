@@ -1,6 +1,6 @@
 public static class Layer
 {
-    public const float ItemTooltipText = 0.84f;
+    public const float ItemTooltipContent = 0.84f;
     public const float ItemTooltipBackground = 0.85f;
     public const float Item = 0.86f;
     public const float UIWindowElement = 0.87f;

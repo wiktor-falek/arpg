@@ -4,12 +4,14 @@ public class Sandals : EquippableItem
 {
     public Sandals()
         : base(
-            "Sandals",
-            Rarity.Normal,
-            EquippableSlot.Boots,
+            name: "Sandals",
+            rarity: Rarity.Normal,
+            slot: EquippableSlot.Boots,
+            level: 1,
+            levelRequirement: 2,
             width: 2,
             height: 2,
-            Assets.Items.None_2x2
+            asset: Assets.Items.None_2x2
         )
     {
         BaseAffixes.Add(new MovementSpeedAffix(5));

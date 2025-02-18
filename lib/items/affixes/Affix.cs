@@ -30,4 +30,11 @@ public abstract class Affix
     }
 
     public abstract void Apply(Player player, int value);
+
+    public new abstract string ToString();
+
+    public virtual string ToStringBase()
+    {
+        return ToString();
+    }
 }

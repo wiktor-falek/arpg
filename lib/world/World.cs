@@ -78,8 +78,8 @@ public class World
                     Player.Position.X - item.Position.X
                 );
                 Vector2 pickupPoint = new(
-                    (float)((itemPickupRadius - 1) * Math.Cos(angle) + item.Position.X),
-                    (float)((itemPickupRadius - 1) * Math.Sin(angle) + item.Position.Y)
+                    (float)(itemPickupRadius - 1 * Math.Cos(angle) + item.Position.X),
+                    (float)(itemPickupRadius - 1 * Math.Sin(angle) + item.Position.Y)
                 );
                 Player.InputComponent.StartMove(pickupPoint);
                 // TODO: pick up the item once reached the radius (unless player moved elsewhere)

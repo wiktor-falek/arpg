@@ -41,8 +41,8 @@ public class Player : IActor
         Equipment = new(this);
 
         Equipment.Equip(new Sandals().ToMagic());
-        Equipment.Equip(new RubyRing().ToMagic());
-        Equipment.Equip(new RubyRing().ToMagic());
+        Equipment.Equip(new Hood().ToRare());
+        Equipment.Equip(new TheOneRubyRing());
 
         InputComponent = new(this);
         _graphicsComponent = new(this);

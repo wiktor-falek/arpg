@@ -4,12 +4,14 @@ public class RubyRing : EquippableItem
 {
     public RubyRing()
         : base(
-            "Ruby Ring",
-            Rarity.Normal,
-            EquippableSlot.Ring,
+            name: "Ruby Ring",
+            rarity: Rarity.Normal,
+            slot: EquippableSlot.Ring,
+            level: 1,
+            levelRequirement: 1,
             width: 1,
             height: 1,
-            Assets.Items.None_1x1
+            asset: Assets.Items.None_1x1
         )
     {
         BaseAffixes.Add(new LifeAffix(8, 10));
