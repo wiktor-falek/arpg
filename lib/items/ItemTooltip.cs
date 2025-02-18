@@ -16,6 +16,7 @@ public class ItemTooltip
     private static int _STRING_SPACING = 2;
 
     private List<TooltipElement> _elements = new();
+    private List<int> _stringWidths = [];
     private int _tooltipWidth;
     private int _tooltipHeight;
 
@@ -28,25 +29,25 @@ public class ItemTooltip
     private void BuildTooltip(Item item)
     {
         _elements.Clear();
-        List<int> stringWidths = [];
+        _stringWidths.Clear();
 
         string uniqueNameString = GetUniqueName(item);
         if (uniqueNameString.Count() != 0)
         {
-            AddText(uniqueNameString, item.Rarity.GetColor(), ref stringWidths);
+            AddText(uniqueNameString, item.Rarity.GetColor());
         }
 
         string nameString = GetRarityName(item);
-        AddText(nameString, item.Rarity.GetColor(), ref stringWidths);
+        AddText(nameString, item.Rarity.GetColor());
 
         if (item is MaterialItem material)
         {
             AddHorizontalRule();
             string stackSizeString =
                 $"Stack Size:{material.StackQuantity}/{material.MaxStackQuantity}";
-            AddText(stackSizeString, Color.Gray, ref stringWidths);
+            AddText(stackSizeString, Color.Gray);
             AddHorizontalRule();
-            AddText(material.Description, Color.White, ref stringWidths);
+            AddText(material.Description, Color.White);
         }
         else if (item is EquippableItem equippable)
         {
@@ -54,21 +55,17 @@ public class ItemTooltip
 
             if (equippable.LevelRequirement > 1)
             {
-                AddText(
-                    $"Requires Level {equippable.LevelRequirement}",
-                    Color.Gray,
-                    ref stringWidths
-                );
+                AddText($"Requires Level {equippable.LevelRequirement}", Color.Gray);
             }
 
-            AddText($"Item Level {equippable.Level}", Color.Gray, ref stringWidths);
+            AddText($"Item Level {equippable.Level}", Color.Gray);
 
             if (equippable.BaseAffixes.Count > 0)
             {
                 AddHorizontalRule();
                 foreach (Affix baseAffix in equippable.BaseAffixes)
                 {
-                    AddText(baseAffix.ToStringBase(), ItemColors.Normal, ref stringWidths);
+                    AddText(baseAffix.ToStringBase(), ItemColors.Normal);
                 }
             }
 
@@ -77,7 +74,7 @@ public class ItemTooltip
                 AddHorizontalRule();
                 foreach (Affix implicitAffix in equippable.ImplicitAffixes)
                 {
-                    AddText(implicitAffix.ToString(), ItemColors.Magic, ref stringWidths);
+                    AddText(implicitAffix.ToString(), ItemColors.Magic);
                 }
             }
 
@@ -87,12 +84,12 @@ public class ItemTooltip
 
                 foreach (Affix prefix in equippable.Prefixes)
                 {
-                    AddText(prefix.ToString(), ItemColors.Magic, ref stringWidths);
+                    AddText(prefix.ToString(), ItemColors.Magic);
                 }
 
                 foreach (Affix suffix in equippable.Suffixes)
                 {
-                    AddText(suffix.ToString(), ItemColors.Magic, ref stringWidths);
+                    AddText(suffix.ToString(), ItemColors.Magic);
                 }
             }
 
@@ -101,20 +98,20 @@ public class ItemTooltip
                 AddHorizontalRule();
                 foreach (Affix affix in unique.UniqueAffixes)
                 {
-                    AddText(affix.ToString(), ItemColors.Magic, ref stringWidths);
+                    AddText(affix.ToString(), ItemColors.Magic);
                 }
 
                 AddHorizontalRule();
-                AddText(unique.UniqueFlavorText, ItemColors.Unique, ref stringWidths);
+                AddText(unique.UniqueFlavorText, ItemColors.Unique);
             }
         }
 
-        CalculateTooltipSize(stringWidths);
+        CalculateTooltipSize(_stringWidths);
     }
 
-    private void CalculateTooltipSize(List<int> stringWidths)
+    private void CalculateTooltipSize(List<int> _stringWidths)
     {
-        _tooltipWidth = (stringWidths.Count > 0 ? stringWidths.Max() : 100) + _PADDING * 2;
+        _tooltipWidth = (_stringWidths.Count > 0 ? _stringWidths.Max() : 100) + _PADDING * 2;
         _tooltipHeight =
             _PADDING * 2 + _elements.Sum(e => e.Height + _ELEMENT_SPACING) - _ELEMENT_SPACING;
     }
@@ -140,11 +137,11 @@ public class ItemTooltip
         }
     }
 
-    private void AddText(string text, Color color, ref List<int> stringWidths)
+    private void AddText(string text, Color color)
     {
         Vector2 textSize = _font.MeasureString(text);
         _elements.Add(new TooltipElement(text, color, (int)textSize.Y));
-        stringWidths.Add((int)textSize.X);
+        _stringWidths.Add((int)textSize.X);
     }
 
     private void AddHorizontalRule()
