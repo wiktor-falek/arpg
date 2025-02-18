@@ -39,7 +39,16 @@ public class ItemTooltip
         string nameString = GetRarityName(item);
         AddText(nameString, item.Rarity.GetColor(), ref stringWidths);
 
-        if (item is EquippableItem equippable)
+        if (item is MaterialItem material)
+        {
+            AddHorizontalRule();
+            string stackSizeString =
+                $"Stack Size:{material.StackQuantity}/{material.MaxStackQuantity}";
+            AddText(stackSizeString, Color.Gray, ref stringWidths);
+            AddHorizontalRule();
+            AddText(material.Description, Color.White, ref stringWidths);
+        }
+        else if (item is EquippableItem equippable)
         {
             AddHorizontalRule();
 

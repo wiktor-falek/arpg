@@ -18,21 +18,16 @@ public class World
         Player = player;
         _monsterSpawner = new MonsterSpawner(Player, 0.5d, offscreenDistance: 100);
 
-        Items.Add(new DroppedItem(new Hood(), new(100, 100)));
-        Items.Add(new DroppedItem(new Sandals(), new(100, 200)));
-        Items.Add(
-            new DroppedItem(
-                new Item("Mirror of Kalandra", Rarity.Normal, 1, 1, Assets.Items.None_1x1),
-                new(0, 0)
-            )
-        );
+        Items.Add(new DroppedItem(new SapphireRing().ToRare(), new(100, 100)));
+        Items.Add(new DroppedItem(new RubyRing(), new(100, 200)));
+        Items.Add(new DroppedItem(new AugmentingCore(), new(0, 0)));
 
         Actors.Add(Player);
     }
 
     public void Update(GameTime gameTime)
     {
-        _monsterSpawner.Update(gameTime);
+        // _monsterSpawner.Update(gameTime);
 
         for (int i = Actors.Count - 1; i >= 0; i--)
         {
