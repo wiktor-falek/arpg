@@ -32,4 +32,9 @@ public class Inventory
     {
         return Grid.GetItem(x, y);
     }
+
+    public bool RemoveItem(Item item)
+    {
+        return Grid.RemoveItem(item);
+    }
 }

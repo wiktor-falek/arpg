@@ -61,12 +61,14 @@ public class Game1 : Game
 
         _gameInputController.RegisterOnLeftClick(_pauseMenu.OnLeftClick);
         _gameInputController.RegisterOnLeftClick(_gameUI.OnLeftClick);
-        _gameInputController.RegisterOnLeftClick(World.OnClick);
+        _gameInputController.RegisterOnLeftClick(World.OnLeftClick);
         _gameInputController.RegisterOnLeftClick(World.Player.InputComponent.OnLeftClick);
 
         _gameInputController.RegisterOnLeftClickRelease(
             World.Player.InputComponent.OnLeftClickRelease
         );
+
+        _gameInputController.RegisterOnRightClick(_gameUI.OnRightClick);
 
         base.Initialize();
     }

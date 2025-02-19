@@ -42,7 +42,15 @@ public class GameUI
     {
         Vector2 mousePosition = MouseManager.GetInGameMousePosition();
 
-        if (_inventoryUI.OnClick(mousePosition))
+        if (_inventoryUI.OnLeftClick(mousePosition))
+            return true;
+
+        return false;
+    }
+
+    public bool OnRightClick()
+    {
+        if (_inventoryUI.OnRightClick())
             return true;
 
         return false;

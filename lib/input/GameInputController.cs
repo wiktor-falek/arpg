@@ -2,17 +2,22 @@ using System;
 using System.Collections.Generic;
 using arpg;
 
+// TODO: fix this retarded way of adding new handlers
 public class GameInputController
 {
     private readonly List<Func<bool>> _escapeHandlers = [];
     private readonly List<Func<bool>> _leftClickHandlers = [];
     private readonly List<Func<bool>> _leftClickReleaseHandlers = [];
+    private readonly List<Func<bool>> _rightClickHandlers = [];
+    private readonly List<Func<bool>> _rightClickReleaseHandlers = [];
 
     public GameInputController()
     {
         Game1.InputManager.OnPress(FixedGameAction.Close, OnClose);
         Game1.InputManager.OnPress(FixedGameAction.LeftClick, OnLeftClick);
         Game1.InputManager.OnRelease(FixedGameAction.LeftClick, OnLeftClickRelease);
+        Game1.InputManager.OnPress(FixedGameAction.RightClick, OnRightClick);
+        Game1.InputManager.OnRelease(FixedGameAction.RightClick, OnRightClickRelease);
         Game1.InputManager.OnPress(RemappableGameAction.DebugMenu, ToggleDebugMode);
         Game1.InputManager.OnPress(RemappableGameAction.CycleResolution, CycleResolution);
         Game1.InputManager.OnPress(RemappableGameAction.ToggleFullscreen, ToggleFullscreen);
@@ -33,6 +38,16 @@ public class GameInputController
         _leftClickReleaseHandlers.Add(handler);
     }
 
+    public void RegisterOnRightClick(Func<bool> handler)
+    {
+        _rightClickHandlers.Add(handler);
+    }
+
+    public void RegisterOnRightClickRelease(Func<bool> handler)
+    {
+        _rightClickReleaseHandlers.Add(handler);
+    }
+
     private void OnClose()
     {
         HandleEventPropagation(_escapeHandlers);
@@ -46,6 +61,16 @@ public class GameInputController
     private void OnLeftClickRelease()
     {
         HandleEventPropagation(_leftClickReleaseHandlers);
+    }
+
+    private void OnRightClick()
+    {
+        HandleEventPropagation(_rightClickHandlers);
+    }
+
+    private void OnRightClickRelease()
+    {
+        HandleEventPropagation(_rightClickReleaseHandlers);
     }
 
     private void HandleEventPropagation(List<Func<bool>> handlers)

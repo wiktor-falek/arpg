@@ -103,7 +103,7 @@ public class InventoryUI
         DrawTooltip(spriteBatch);
     }
 
-    public bool OnClick(Vector2 mousePosition)
+    public bool OnLeftClick(Vector2 mousePosition)
     {
         if (!IsOpen)
             return false;
@@ -117,8 +117,25 @@ public class InventoryUI
         if (!cursorWithin_windowBounds)
             return false;
 
-        // handle click
         return true;
+    }
+
+    public bool OnRightClick()
+    {
+        if (!IsOpen)
+            return false;
+
+        if (HoveredItem is not null && HoveredItem is EquippableItem equippable)
+        {
+            // TODO: flowchart and implementation of all scenarios
+
+            // TODO: check whether HoveredItem is in inventory or in equipment
+            _player.Equipment.Equip(equippable);
+            _player.Inventory.RemoveItem(equippable);
+            return true;
+        }
+
+        return false;
     }
 
     private void DrawWindow(SpriteBatch spriteBatch)

@@ -18,9 +18,11 @@ public class World
         Player = player;
         _monsterSpawner = new MonsterSpawner(Player, 0.5d, offscreenDistance: 100);
 
-        Items.Add(new DroppedItem(new SapphireRing().ToRare(), new(100, 100)));
-        Items.Add(new DroppedItem(new RubyRing(), new(100, 200)));
         Items.Add(new DroppedItem(new AugmentingCore(), new(0, 0)));
+        Items.Add(new DroppedItem(new Hood(), new(50, 0)));
+        Items.Add(new DroppedItem(new Sandals(), new(0, 50)));
+        Items.Add(new DroppedItem(new SapphireRing().ToRare(), new(0, 100)));
+        Items.Add(new DroppedItem(new RubyRing(), new(0, 200)));
 
         Actors.Add(Player);
     }
@@ -60,7 +62,7 @@ public class World
         Actors.RemoveAt(index);
     }
 
-    public bool OnClick()
+    public bool OnLeftClick()
     {
         const double itemPickupRadius = 40;
 

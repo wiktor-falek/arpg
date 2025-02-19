@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class GridItem<T>(T value, int originX, int originY)
 {
@@ -91,6 +92,24 @@ public class Grid<T>
                     yield return item.Value;
             }
         }
+    }
+
+    public bool RemoveItem(T item)
+    {
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                GridItem<T?> gridItem = Squares[y, x];
+                if (gridItem.Value == item)
+                {
+                    gridItem.Value = null;
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public bool SquareIsOriginSquare(int x, int y)
