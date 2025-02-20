@@ -43,7 +43,7 @@ public class World
             entity.Update(gameTime);
         }
 
-        for (int i = 0; i < Items.Count; i++)
+        for (int i = Items.Count - 1; i >= 0; i--)
         {
             DroppedItem item = Items[i];
             item.Update(gameTime);
@@ -75,20 +75,15 @@ public class World
                     Player.Position.X - item.Position.X
                 );
                 Vector2 pickupPoint = new(
-                    (float)(itemPickupRadius - 1 * Math.Cos(angle) + item.Position.X),
-                    (float)(itemPickupRadius - 1 * Math.Sin(angle) + item.Position.Y)
+                    (float)((itemPickupRadius - 1) * Math.Cos(angle) + item.Position.X),
+                    (float)((itemPickupRadius - 1) * Math.Sin(angle) + item.Position.Y)
                 );
                 Player.InputComponent.StartMove(pickupPoint);
                 // TODO: pick up the item once reached the radius (unless player moved elsewhere)
             }
             else
             {
-                // pick up item immediately
-                bool addedToInventory = item.GetPickedUp(Player);
-                if (addedToInventory)
-                {
-                    Items.Remove(item);
-                }
+                item.GetPickedUp(Player); // TODO: player.PickUpItem(item)?
             }
 
             return true;

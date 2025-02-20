@@ -130,6 +130,9 @@ public class DroppedItem
     public bool GetPickedUp(Player player)
     {
         bool added = player.Inventory.AddItem(this.Item);
+        if (added)
+            Game1.World.Items.Remove(this);
+
         return added;
     }
 }
