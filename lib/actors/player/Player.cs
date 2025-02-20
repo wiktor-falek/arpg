@@ -10,6 +10,7 @@ public class Player : IActor
     public ActorState State { get; set; } = ActorState.Idling;
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
+    public IActorAction? Action { get; set; } = null;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public bool IsAlive => Stats.Health > 0;
     public IHitbox Hitbox
@@ -52,6 +53,7 @@ public class Player : IActor
     {
         Stats.Update(gameTime);
         InputComponent.Update(gameTime);
+        Action?.Update(gameTime);
         _graphicsComponent.Update(gameTime);
     }
 

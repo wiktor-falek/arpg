@@ -33,8 +33,9 @@ public interface IActor
     ActorKind Kind { get; }
     ActorState State { get; }
     ActorActionState ActionState { get; }
-    ActorFacing Facing { get; }
-    Vector2 Position { get; }
+    ActorFacing Facing { get; set; }
+    IActorAction? Action { get; set; }
+    Vector2 Position { get; set; }
     ActorBaseStats Stats { get; }
     bool IsAlive { get; }
     IHitbox Hitbox { get; }
@@ -42,6 +43,7 @@ public interface IActor
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch);
     void TakeDamage(double amount);
+    void TransitionState(ActorState newState);
 }
 
 public interface IMonster

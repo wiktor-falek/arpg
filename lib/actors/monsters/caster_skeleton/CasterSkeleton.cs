@@ -11,6 +11,7 @@ public class CasterSkeleton : IMonsterActor
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
+    public IActorAction? Action { get; set; } = null;
     public ActorBaseStats Stats { get; }
     public bool IsAlive => Stats.Health > 0;
     public bool IsLeashed = false;

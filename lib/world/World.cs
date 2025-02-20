@@ -29,6 +29,8 @@ public class World
 
     public void Update(GameTime gameTime)
     {
+        if (!GameState.IsRunning)
+            return;
         // _monsterSpawner.Update(gameTime);
 
         for (int i = Actors.Count - 1; i >= 0; i--)
@@ -64,30 +66,35 @@ public class World
 
     public bool OnLeftClick()
     {
-        const double itemPickupRadius = 40;
+        // TODO: ActorLootAction
 
-        foreach (DroppedItem item in Items.Where(item => item.IsHovered))
-        {
-            if (Vector2.Distance(Player.Position, item.Position) > itemPickupRadius)
-            {
-                double angle = Math.Atan2(
-                    Player.Position.Y - item.Position.Y,
-                    Player.Position.X - item.Position.X
-                );
-                Vector2 pickupPoint = new(
-                    (float)((itemPickupRadius - 1) * Math.Cos(angle) + item.Position.X),
-                    (float)((itemPickupRadius - 1) * Math.Sin(angle) + item.Position.Y)
-                );
-                Player.InputComponent.StartMove(pickupPoint);
-                // TODO: pick up the item once reached the radius (unless player moved elsewhere)
-            }
-            else
-            {
-                item.GetPickedUp(Player); // TODO: player.PickUpItem(item)?
-            }
+        // const double itemPickupRadius = 40;
 
-            return true;
-        }
+        // foreach (DroppedItem item in Items.Where(item => item.IsHovered))
+        // {
+        //     if (Vector2.Distance(Player.Position, item.Position) > itemPickupRadius)
+        //     {
+        //         double angle = Math.Atan2(
+        //             Player.Position.Y - item.Position.Y,
+        //             Player.Position.X - item.Position.X
+        //         );
+        //         Vector2 pickupPoint = new(
+        //             (float)((itemPickupRadius - 1) * Math.Cos(angle) + item.Position.X),
+        //             (float)((itemPickupRadius - 1) * Math.Sin(angle) + item.Position.Y)
+        //         );
+        //         Player.InputComponent.StartMove(pickupPoint);
+
+        //         // TODO: pick up the item once reached the radius (unless player moved elsewhere)
+        //     }
+        //     else
+        //     {
+        //         item.GetPickedUp(Player); // TODO: player.PickUpItem(item)?
+        //     }
+
+        //     return true;
+        // }
+
+        // return false;
 
         return false;
     }

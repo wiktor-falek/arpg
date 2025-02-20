@@ -11,6 +11,8 @@ public class Cooldown(float duration)
         _lastCastTime = DateTime.Now;
     }
 
+    // TODO: update because it breaks on paused GameState
+
     public bool CanCast()
     {
         return (DateTime.Now - _lastCastTime).TotalSeconds >= Duration;
