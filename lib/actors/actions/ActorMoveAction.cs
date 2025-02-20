@@ -38,7 +38,7 @@ public class ActorMoveAction : IActorAction
         float distanceToDestination = Vector2.Distance(_actor.Position, _destination);
         if (distanceToDestination > 1f)
         {
-            double angle = CalculateAngle(_actor.Position, _destination);
+            double angle = Utils.CalculateAngle(_actor.Position, _destination);
             float x =
                 _actor.Position.X + (float)(_actor.Stats.Speed * elapsedTime * Math.Cos(angle));
             float y =
@@ -55,27 +55,8 @@ public class ActorMoveAction : IActorAction
 
     private void SetFacingState()
     {
-        double angle = CalculateAngleInDegrees(_actor.Position, _destination);
+        double angle = Utils.CalculateAngleInDegrees(_actor.Position, _destination);
         bool isFacingRight = angle >= -90 && angle <= 90;
         _actor.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
-    }
-
-    // TODO: move to utils
-    private double CalculateAngle(Vector2 a, Vector2 b)
-    {
-        float deltaX = b.X - a.X;
-        float deltaY = b.Y - a.Y;
-        double angle = Math.Atan2(deltaY, deltaX);
-        return angle;
-    }
-
-    // TODO: move to utils
-    private double CalculateAngleInDegrees(Vector2 a, Vector2 b)
-    {
-        float deltaX = b.X - a.X;
-        float deltaY = b.Y - a.Y;
-        double angle = Math.Atan2(deltaY, deltaX);
-        double angleInDegrees = MathHelper.ToDegrees((float)angle);
-        return angleInDegrees;
     }
 }

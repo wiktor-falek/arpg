@@ -129,11 +129,4 @@ public class PlayerInputComponent
     //     _player.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
     //     _player.TransitionState(ActorState.Walking);
     // }
-
-    private double CalculateAngle(Vector2 a, Vector2 b)
-    {
-        float deltaX = b.X - a.X;
-        float deltaY = b.Y - a.Y;
-        return Math.Atan2(deltaY, deltaX);
-    }
 }
