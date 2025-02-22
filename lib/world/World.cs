@@ -25,6 +25,7 @@ public class World
         Items.Add(new DroppedItem(new RubyRing(), new(0, 200)));
 
         Actors.Add(Player);
+        Actors.Add(new Skeleton() { Position = new(300, 300) });
     }
 
     public void Update(GameTime gameTime)

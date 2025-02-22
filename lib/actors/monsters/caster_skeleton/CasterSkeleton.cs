@@ -7,7 +7,7 @@ public class CasterSkeleton : IMonsterActor
 {
     public string Id { get; } = Guid.NewGuid().ToString();
     public ActorKind Kind { get; } = ActorKind.Monster;
-    public ActorState State { get; set; } = ActorState.Idling;
+    public ActorState State { get; private set; } = ActorState.Idling;
     public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
