@@ -67,35 +67,12 @@ public class World
 
     public bool OnLeftClick()
     {
-        // TODO: ActorLootAction
-
-        // const double itemPickupRadius = 40;
-
-        // foreach (DroppedItem item in Items.Where(item => item.IsHovered))
-        // {
-        //     if (Vector2.Distance(Player.Position, item.Position) > itemPickupRadius)
-        //     {
-        //         double angle = Math.Atan2(
-        //             Player.Position.Y - item.Position.Y,
-        //             Player.Position.X - item.Position.X
-        //         );
-        //         Vector2 pickupPoint = new(
-        //             (float)((itemPickupRadius - 1) * Math.Cos(angle) + item.Position.X),
-        //             (float)((itemPickupRadius - 1) * Math.Sin(angle) + item.Position.Y)
-        //         );
-        //         Player.InputComponent.StartMove(pickupPoint);
-
-        //         // TODO: pick up the item once reached the radius (unless player moved elsewhere)
-        //     }
-        //     else
-        //     {
-        //         item.GetPickedUp(Player); // TODO: player.PickUpItem(item)?
-        //     }
-
-        //     return true;
-        // }
-
-        // return false;
+        DroppedItem? item = Items.Find(item => item.IsHovered);
+        if (item is not null)
+        {
+            Player.Action = new PlayerLootAction(Player, item);
+            return true;
+        }
 
         return false;
     }

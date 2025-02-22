@@ -11,8 +11,7 @@ public static class Utils
     {
         float deltaX = b.X - a.X;
         float deltaY = b.Y - a.Y;
-        double angle = Math.Atan2(deltaY, deltaX);
-        return angle;
+        return Math.Atan2(deltaY, deltaX);
     }
 
     public static double CalculateAngleInDegrees(
@@ -20,10 +19,22 @@ public static class Utils
         Microsoft.Xna.Framework.Vector2 b
     )
     {
-        float deltaX = b.X - a.X;
-        float deltaY = b.Y - a.Y;
-        double angle = Math.Atan2(deltaY, deltaX);
+        double angle = CalculateAngle(a, b);
         double angleInDegrees = MathHelper.ToDegrees((float)angle);
         return angleInDegrees;
+    }
+
+    public static Microsoft.Xna.Framework.Vector2 GetRadialIntersection(
+        Microsoft.Xna.Framework.Vector2 center,
+        Microsoft.Xna.Framework.Vector2 pointOutside,
+        int radius
+    )
+    {
+        double angle = CalculateAngle(pointOutside, center);
+        Microsoft.Xna.Framework.Vector2 intersectionPoint = new(
+            (float)((radius) * Math.Cos(angle) + center.X),
+            (float)((radius) * Math.Sin(angle) + center.Y)
+        );
+        return intersectionPoint;
     }
 }
