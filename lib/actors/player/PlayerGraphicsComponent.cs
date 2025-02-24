@@ -8,6 +8,7 @@ public class PlayerGraphicsComponent
     private Player _player;
     private Asset _idleAsset = Assets.Player.Idle;
     private Asset _walkAsset = Assets.Player.Walk;
+    private Asset _currentAsset = Assets.Player.Idle;
     private int _currentFrame = 0;
     private float _frameTime = 0.1f;
     private float _elapsedTime = 0f;
@@ -25,24 +26,22 @@ public class PlayerGraphicsComponent
         {
             _elapsedTime = 0f;
 
-            var asset = _player.State switch
+            _currentAsset = (_player.State, _player.ActionState) switch
             {
-                ActorState.Idling => _idleAsset,
-                ActorState.Walking => _walkAsset,
+                (_, ActorActionState.Casting) => _idleAsset,
+                (ActorState.Idling, _) => _idleAsset,
+                (ActorState.Walking, _) => _walkAsset,
                 _ => throw new SystemException("Unhandled ActorState"),
             };
 
-            _currentFrame = (_currentFrame + 1) % asset.Frames.Count;
+            _currentFrame = (_currentFrame + 1) % _currentAsset.Frames.Count;
         }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var texture = _player.State == ActorState.Idling ? _idleAsset.Texture : _walkAsset.Texture;
-        var frame =
-            _player.State == ActorState.Idling
-                ? _idleAsset.Frames[_currentFrame]
-                : _walkAsset.Frames[_currentFrame];
+        var texture = _currentAsset.Texture;
+        var frame = _currentAsset.Frames[_currentFrame];
         var effect =
             _player.Facing == ActorFacing.Right
                 ? SpriteEffects.None

@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 
 public interface IActorAction
 {
+    bool HasFinished { get; }
     void Update(GameTime gameTime);
+    bool Stop();
 }
 
 

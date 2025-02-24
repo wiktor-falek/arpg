@@ -1,36 +1,38 @@
 using System;
+using System.Diagnostics.Tracing;
 using arpg;
 using Microsoft.Xna.Framework;
 
+// TODO: prevent clicks outside of window
 public class PlayerInputComponent
 {
     private Player _player;
     private bool _isHoldingLeftClick = false;
+    private ISkill? _heldSkill; // TODO: consider a List
 
     public PlayerInputComponent(Player player)
     {
         _player = player;
 
-        // // TODO: refactor
-        // Game1.InputManager.OnPress(
-        //     RemappableGameAction.CastBarOne,
-        //     () => HoldSkill(player.Skills.Fireball)
-        // );
-        // Game1.InputManager.OnRelease(
-        //     RemappableGameAction.CastBarOne,
-        //     () => ReleaseSkill(player.Skills.Fireball)
-        // );
+        // TODO: refactor
+        Game1.InputManager.OnPress(
+            RemappableGameAction.CastBarOne,
+            () => HoldSkill(player.Skills.Fireball)
+        );
+        Game1.InputManager.OnRelease(
+            RemappableGameAction.CastBarOne,
+            () => ReleaseSkill(player.Skills.Fireball)
+        );
 
-        // Game1.InputManager.OnPress(
-        //     RemappableGameAction.CastBarTwo,
-        //     () => HoldSkill(player.Skills.FrozenOrb)
-        // );
-        // Game1.InputManager.OnRelease(
-        //     RemappableGameAction.CastBarTwo,
-        //     () => ReleaseSkill(player.Skills.FrozenOrb)
-        // );
+        Game1.InputManager.OnPress(
+            RemappableGameAction.CastBarTwo,
+            () => HoldSkill(player.Skills.FrozenOrb)
+        );
+        Game1.InputManager.OnRelease(
+            RemappableGameAction.CastBarTwo,
+            () => ReleaseSkill(player.Skills.FrozenOrb)
+        );
 
-        // TODO: figure out what the behavior for instant/toggle skills should be
         // Game1.InputManager.OnPress(
         //     RemappableGameAction.CastBarThree,
         //     () =>
@@ -43,90 +45,66 @@ public class PlayerInputComponent
         // );
     }
 
-    // private void HoldSkill(ISkill skill)
-    // {
-    //     _heldSkill = skill;
-    // }
+    private void HoldSkill(ISkill skill)
+    {
+        _heldSkill = skill;
+        StartCasting(_heldSkill);
+    }
 
-    // private void ReleaseSkill(ISkill skill)
-    // {
-    //     if (_heldSkill == skill)
-    //         _heldSkill = null;
-    // }
+    private void ReleaseSkill(ISkill skill)
+    {
+        if (_heldSkill == skill)
+            _heldSkill = null;
+    }
+
+    private void StartCasting(ISkill skill)
+    {
+        // TODO: check if can cast
+
+        Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
+        double angle = Utils.CalculateAngle(_player.Position, playerAimCoordinate);
+        ActorCastAction action = new(_player, _heldSkill, angle);
+        _player.StartAction(action, interruptPrevious: true);
+    }
 
     public void Update(GameTime gameTime)
     {
-        if (_isHoldingLeftClick && _player.Action is ActorMoveAction moveAction)
+        if (_heldSkill is not null)
         {
-            Vector2 destination = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
-            moveAction.SetDestination(destination);
+            StartCasting(_heldSkill);
+        }
+
+        if (_isHoldingLeftClick)
+        {
+            Move();
         }
     }
 
-    // // TODO: prevent clicks outside of window
-    // _playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
-    // _playerAimAngle = CalculateAngle(_player.Position, _playerAimCoordinate);
+    public void Move()
+    {
+        Vector2 destination = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
 
-    // _heldSkill?.Cast(_playerAimAngle);
-
-    // if (_isHoldingLeftClick)
-    //     StartMove();
-
-    // if (!_isMoving)
-    //     return;
-
-    // float distanceToDestination = Vector2.Distance(_player.Position, _destination);
-    // if (distanceToDestination > 1f)
-    // {
-    //     double elapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
-    //     float x =
-    //         _player.Position.X
-    //         + (float)(_player.Stats.Speed * elapsedTime * Math.Cos(_destinationAngle));
-    //     float y =
-    //         _player.Position.Y
-    //         + (float)(_player.Stats.Speed * elapsedTime * Math.Sin(_destinationAngle));
-    //     _player.Position = new(x, y);
-    // }
-    // else
-    // {
-    //     _player.Position = _destination;
-    //     _isMoving = false;
-    //     _player.TransitionState(ActorState.Idling);
-    // }
-    // }
+        if (_player.Action is ActorMoveAction moveAction)
+        {
+            moveAction.SetDestination(destination);
+        }
+        else
+        {
+            ActorMoveAction action = new(_player, destination);
+            _player.StartAction(action, interruptPrevious: true);
+        }
+    }
 
     public bool OnLeftClick()
     {
         _isHoldingLeftClick = true;
-
-        Vector2 destination = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
-        // TODO: look for existing ActorMoveAction
-        _player.Action = new ActorMoveAction(_player, destination);
-
+        Move();
         return true;
     }
 
     public bool OnLeftClickRelease()
     {
         _isHoldingLeftClick = false;
-
         return true;
     }
-
-    // public void StartMove(Vector2? aimCoordinate = null)
-    // {
-    //     // TODO: refactor
-
-    //     _isMoving = true;
-    //     _destination = aimCoordinate ?? _playerAimCoordinate;
-    //     _destinationAngle =
-    //         aimCoordinate != null
-    //             ? CalculateAngle(_player.Position, aimCoordinate.Value)
-    //             : _playerAimAngle;
-
-    //     double angleInDegrees = MathHelper.ToDegrees((float)_destinationAngle);
-    //     bool isFacingRight = angleInDegrees >= -90 && angleInDegrees <= 90;
-    //     _player.Facing = isFacingRight ? ActorFacing.Right : ActorFacing.Left;
-    //     _player.TransitionState(ActorState.Walking);
-    // }
 }

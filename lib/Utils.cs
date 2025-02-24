@@ -20,8 +20,7 @@ public static class Utils
     )
     {
         double angle = CalculateAngle(a, b);
-        double angleInDegrees = MathHelper.ToDegrees((float)angle);
-        return angleInDegrees;
+        return MathHelper.ToDegrees((float)angle);
     }
 
     public static Microsoft.Xna.Framework.Vector2 GetRadialIntersection(

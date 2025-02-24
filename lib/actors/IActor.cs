@@ -32,9 +32,9 @@ public interface IActor
     string Id { get; }
     ActorKind Kind { get; }
     ActorState State { get; }
-    ActorActionState ActionState { get; }
+    ActorActionState ActionState { get; set; }
     ActorFacing Facing { get; set; }
-    IActorAction? Action { get; set; }
+    IActorAction? Action { get; }
     Vector2 Position { get; set; }
     ActorBaseStats Stats { get; }
     bool IsAlive { get; }

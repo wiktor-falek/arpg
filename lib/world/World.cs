@@ -70,7 +70,9 @@ public class World
         DroppedItem? item = Items.Find(item => item.IsHovered);
         if (item is not null)
         {
-            Player.Action = new PlayerLootAction(Player, item);
+            // when this shit starts here the player is idling? why the fuck?
+            PlayerLootAction action = new(Player, item);
+            Player.StartAction(action, interruptPrevious: true);
             return true;
         }
 

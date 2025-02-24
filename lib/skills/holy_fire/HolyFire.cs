@@ -1,8 +1,9 @@
 public class HolyFire(IActor owner) : ISkill
 {
+    public IActor Owner { get; } = owner;
     public string Name { get; } = "Holy Fire";
-    public Cooldown Cooldown { get; } = new(1f);
-    private IActor _owner = owner;
+    public Cooldown Cooldown { get; } = new(1d);
+    public double BaseCastTime { get; } = 0d;
     private bool isActive = false;
     private HolyFireEntity _entity;
 
@@ -13,9 +14,9 @@ public class HolyFire(IActor owner) : ISkill
 
         if (!isActive)
         {
-            HolyFireEntity holyFireEntity = new(_owner)
+            HolyFireEntity holyFireEntity = new(Owner)
             {
-                Position = new(_owner.Position.X, _owner.Position.Y),
+                Position = new(Owner.Position.X, Owner.Position.Y),
                 Radius = 100f,
             };
 

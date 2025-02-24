@@ -1,26 +1,23 @@
 using System;
+using Microsoft.Xna.Framework;
 
-public class Cooldown(float duration)
+public class Cooldown(double duration)
 {
-    public float Duration = duration;
+    public double Duration = duration;
+    public double Remaining = 0;
 
-    private DateTime _lastCastTime = DateTime.MinValue;
+    public void Update(GameTime gameTime)
+    {
+        if (Remaining > 0)
+        {
+            Remaining -= Math.Max(gameTime.ElapsedGameTime.TotalSeconds, 0);
+        }
+    }
 
     public void StartCooldown()
     {
-        _lastCastTime = DateTime.Now;
+        Remaining = Duration;
     }
 
-    // TODO: update because it breaks on paused GameState
-
-    public bool CanCast()
-    {
-        return (DateTime.Now - _lastCastTime).TotalSeconds >= Duration;
-    }
-
-    public float GetRemainingDuration()
-    {
-        double elapsed = (DateTime.Now - _lastCastTime).TotalSeconds;
-        return (float)Math.Max(0, Duration - elapsed);
-    }
+    public bool CanCast() => Remaining <= 0;
 }
