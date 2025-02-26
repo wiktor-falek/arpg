@@ -14,6 +14,6 @@ public class SapphireRing : EquippableItem
             asset: Assets.Items.None_1x1
         )
     {
-        BaseAffixes.Add(new LifeAffix(8, 10));
+        BaseAffixes.Add(new ManaAffix(8, 10));
     }
 }

@@ -33,16 +33,16 @@ public class PlayerInputComponent
             () => ReleaseSkill(player.Skills.FrozenOrb)
         );
 
-        // Game1.InputManager.OnPress(
-        //     RemappableGameAction.CastBarThree,
-        //     () =>
-        //     {
-        //         if (GameState.IsRunning)
-        //         {
-        //             player.Skills.HolyFire.Cast(_playerAimAngle);
-        //         }
-        //     }
-        // );
+        Game1.InputManager.OnPress(
+            RemappableGameAction.CastBarThree,
+            () =>
+            {
+                if (GameState.IsRunning)
+                {
+                    StartCasting(player.Skills.HolyFire);
+                }
+            }
+        );
     }
 
     private void HoldSkill(ISkill skill)
@@ -60,10 +60,9 @@ public class PlayerInputComponent
     private void StartCasting(ISkill skill)
     {
         // TODO: check if can cast
-
         Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
         double angle = Utils.CalculateAngle(_player.Position, playerAimCoordinate);
-        ActorCastAction action = new(_player, _heldSkill, angle);
+        ActorCastAction action = new(_player, skill, angle);
         _player.StartAction(action, interruptPrevious: true);
     }
 

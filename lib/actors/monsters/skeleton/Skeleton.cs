@@ -3,34 +3,24 @@ using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Skeleton : IMonsterActor
+public class Skeleton : BaseActor, IMonster
 {
-    public string Id { get; } = Guid.NewGuid().ToString();
-    public ActorKind Kind { get; } = ActorKind.Monster;
-    public ActorState State { get; private set; } = ActorState.Idling;
-    public ActorActionState ActionState { get; set; } = ActorActionState.None;
-    public ActorFacing Facing { get; set; } = ActorFacing.Right;
-    public Vector2 Position { get; set; } = Vector2.Zero;
-    public IActorAction? Action { get; set; } = null;
-    public ActorBaseStats Stats { get; }
-    public bool IsAlive => Stats.Health > 0;
-    public bool IsLeashed = false;
-    public IHitbox Hitbox
-    {
-        get => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
-    }
-    int IMonster.XP { get; } = 10;
+    public int XP => 10;
+    public bool IsLeashed { get; private set; } = false;
+    public override ActorBaseStats Stats { get; }
 
     private SkeletonGraphicsComponent _graphicsComponent = new();
     private SkeletonBehaviorComponent _behaviorComponent = new();
 
     public Skeleton()
+        : base(ActorKind.Monster)
     {
         Stats = new(this, speed: 90, health: 40);
     }
 
-    public void Update(GameTime gameTime)
+    public new void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         Stats.Update(gameTime);
 
         if (!IsAlive)
@@ -43,41 +33,36 @@ public class Skeleton : IMonsterActor
         _graphicsComponent.Update(this, gameTime);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public override void Draw(SpriteBatch spriteBatch)
     {
         _graphicsComponent.Draw(this, spriteBatch);
     }
 
-    public void TakeDamage(double amount)
+    public new void TakeDamage(double amount)
     {
-        if (Stats.Health <= 0)
-            return;
+        IsLeashed = true;
+        base.TakeDamage(amount);
 
-        Stats.OffsetHealth(-amount);
         if (Stats.Health <= 0)
         {
             Game1.World.Player.OnKill(this);
         }
-
-        IsLeashed = true;
     }
 
-    public void TransitionState(ActorState newState)
+    public new void TransitionState(ActorState newState)
     {
-        bool stateChanged = State != newState;
+        bool stateChanged = base.TransitionState(newState);
         if (stateChanged)
         {
-            State = newState;
             _graphicsComponent.ResetFrames();
         }
     }
 
-    public void TransitionState(ActorActionState newState)
+    public new void TransitionState(ActorActionState newState)
     {
-        bool stateChanged = ActionState != newState;
+        bool stateChanged = base.TransitionState(newState);
         if (stateChanged)
         {
-            ActionState = newState;
             _graphicsComponent.ResetFrames();
         }
     }
