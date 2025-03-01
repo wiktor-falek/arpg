@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 public class CasterSkeleton : BaseActor, IMonster
 {
     public int XP => 10;
-    public bool IsLeashed { get; private set; } = false;
+    public bool IsLeashed { get; set; } = false;
     public override ActorBaseStats Stats { get; }
     private CasterSkeletonGraphicsComponent _graphicsComponent = new();
     private CasterSkeletonBehaviorComponent _behaviorComponent = new();
@@ -17,7 +17,7 @@ public class CasterSkeleton : BaseActor, IMonster
         Stats = new(this, speed: 90, health: 40, mana: 100);
     }
 
-    public new void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
         Stats.Update(gameTime);

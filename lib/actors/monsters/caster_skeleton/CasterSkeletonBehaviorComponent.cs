@@ -36,7 +36,7 @@ public class CasterSkeletonBehaviorComponent
         float y2 = Game1.World.Player.Position.Y;
         double angle = Math.Atan2(y2 - y1, x2 - x1);
 
-        // TODO: reuse???
+        // TODO: remove once using MoveAction
         if (x1 < x2)
         {
             monster.Facing = ActorFacing.Right;
@@ -46,7 +46,7 @@ public class CasterSkeletonBehaviorComponent
             monster.Facing = ActorFacing.Left;
         }
 
-        double distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+        double distance = Vector2.Distance(monster.Position, Game1.World.Player.Position);
 
         if (distance <= 200)
         {

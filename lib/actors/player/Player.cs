@@ -36,7 +36,7 @@ public class Player : BaseActor
         _graphicsComponent = new(this);
     }
 
-    public new void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
         Skills.Update(gameTime);

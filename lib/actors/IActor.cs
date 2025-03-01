@@ -34,9 +34,9 @@ public interface IActor
     string Id { get; }
     ActorKind Kind { get; }
     ActorState State { get; }
-    ActorActionState ActionState { get; }
-    ActorFacing Facing { get; }
-    IActorAction? Action { get; }
+    ActorActionState ActionState { get; set; }
+    ActorFacing Facing { get; set; }
+    IActorAction? Action { get; set; }
     Vector2 Position { get; set; }
     ActorBaseStats Stats { get; }
     bool IsAlive { get; }
@@ -61,7 +61,7 @@ public abstract class BaseActor : IActor
     public string Id { get; } = Guid.NewGuid().ToString();
     public ActorKind Kind { get; }
     public ActorState State { get; private set; } = ActorState.Idling;
-    public ActorActionState ActionState { get; private set; } = ActorActionState.None;
+    public ActorActionState ActionState { get; set; } = ActorActionState.None;
     public ActorFacing Facing { get; set; } = ActorFacing.Right;
     public Vector2 Position { get; set; } = Vector2.Zero;
     public IActorAction? Action { get; set; } = null;

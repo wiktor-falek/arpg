@@ -35,50 +35,29 @@ public class SkeletonBehaviorComponent
 
         Vector2 playerPosition = Game1.World.Player.Position;
 
-        // TODO: ActorLeashAction?
         double distance = Vector2.Distance(monster.Position, playerPosition);
-        if (distance <= 100)
-        {
-            monster.IsLeashed = true;
-        }
-        else
-        {
-            monster.IsLeashed = false;
-        }
+        monster.IsLeashed = distance <= 100;
 
         if (monster.IsLeashed)
         {
-            // TODO: update existing
-            monster.Action = new ActorMoveAction(monster, playerPosition);
+            const int ATTACK_TRIGGER_RANGE = 32;
+
+            ActorMoveAction action = new(
+                monster,
+                Utils.GetRadialIntersection(playerPosition, monster.Position, ATTACK_TRIGGER_RANGE)
+            );
+            monster.StartAction(action, interruptPrevious: true);
+        }
+        else if (distance <= ATTACK_TRIGGER_RANGE)
+        {
+            monster.Action = null; // TODO: attack action
+            monster.TransitionState(ActorActionState.Swinging);
         }
         else
         {
-            monster.TransitionState(ActorState.Idling);
             monster.Action = null;
+            monster.TransitionState(ActorState.Idling);
         }
-
-        // if (!monster.IsLeashed)
-        // {
-        //     monster.TransitionState(ActorState.Idling);
-        //     return;
-        // }
-
-        // float deltaX = x2 - x1;
-        // float deltaY = y2 - y1;
-        // double angle = Math.Atan2(deltaY, deltaX);
-
-        // double x = monster.Position.X + (monster.Stats.Speed * elapsedTime * Math.Cos(angle));
-        // double y = monster.Position.Y + (monster.Stats.Speed * elapsedTime * Math.Sin(angle));
-
-        // bool withinAttackHitDistance = distance <= 64;
-        // bool withinAttackTriggerDistance = distance <= 32;
-
-        // if (withinAttackTriggerDistance && !_isAttacking)
-        // {
-        //     monster.TransitionState(ActorState.Idling);
-        //     monster.TransitionState(ActorActionState.Swinging);
-        //     _isAttacking = true;
-        // }
 
         // if (_isAttacking)
         // {
