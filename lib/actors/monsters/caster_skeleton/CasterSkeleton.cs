@@ -3,16 +3,14 @@ using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class CasterSkeleton : BaseActor, IMonster
+public class CasterSkeleton : Monster
 {
-    public int XP => 10;
-    public bool IsLeashed { get; set; } = false;
     public override ActorBaseStats Stats { get; }
     private CasterSkeletonGraphicsComponent _graphicsComponent = new();
     private CasterSkeletonBehaviorComponent _behaviorComponent = new();
 
-    public CasterSkeleton()
-        : base(ActorKind.Monster)
+    public CasterSkeleton(int level)
+        : base(level, xp: 12 + (level - 1) * 3)
     {
         Stats = new(this, speed: 90, health: 40, mana: 100);
     }

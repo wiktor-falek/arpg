@@ -87,6 +87,12 @@ public class EquippableItem : Item, IEquippable
         IsEquipped = false;
     }
 
+    public EquippableItem ItemLevel(int level)
+    {
+        Level = level;
+        return this;
+    }
+
     public EquippableItem ToMagic()
     {
         if (Rarity != Rarity.Normal)

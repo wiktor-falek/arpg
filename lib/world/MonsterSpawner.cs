@@ -61,13 +61,13 @@ public class MonsterSpawner(Player player, double frequency, int offscreenDistan
             }
             else
             {
-                x = (int)start.X;
                 int rngMin = (int)Math.Min(start.Y, end.Y);
                 int rngMax = (int)Math.Max(start.Y, end.Y);
+                x = (int)start.X;
                 y = rng.Next(rngMin, rngMax);
             }
 
-            Skeleton skeleton = new() { Position = new(x, y) };
+            Skeleton skeleton = new(1) { Position = new(x, y), IsLeashed = true };
             Game1.World.Actors.Add(skeleton);
 
             _timer -= Frequency;

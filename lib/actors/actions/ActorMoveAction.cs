@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 public class ActorMoveAction : IActorAction
 {
-    public bool HasFinished { get; private set; } = false;
+    public ActionState State { get; private set; } = ActionState.Pending;
     private IActor _actor;
     private Vector2 _destination;
     private double _angle;
@@ -16,7 +16,7 @@ public class ActorMoveAction : IActorAction
 
     public void Update(GameTime gameTime)
     {
-        if (HasFinished)
+        if (State != ActionState.Ongoing)
             return;
 
         bool hasReachedDestination = WalkTowardsDestination(gameTime);
@@ -26,20 +26,24 @@ public class ActorMoveAction : IActorAction
         }
     }
 
+    public void Start()
+    {
+        State = ActionState.Ongoing;
+        _actor.TransitionState(ActorState.Walking);
+    }
+
     public bool Stop()
     {
+        State = ActionState.Finished;
         _actor.TransitionState(ActorState.Idling);
-        HasFinished = true;
         return true;
     }
 
     public void SetDestination(Vector2 destination)
     {
-        HasFinished = false;
         _destination = destination;
         _angle = Utils.CalculateAngle(_actor.Position, _destination);
         _actor.Facing = GetFacingState(_angle);
-        _actor.TransitionState(ActorState.Walking);
     }
 
     private bool WalkTowardsDestination(GameTime gameTime)
@@ -59,7 +63,7 @@ public class ActorMoveAction : IActorAction
         else
         {
             _actor.Position = _destination;
-            HasFinished = true;
+            Stop();
             return true;
         }
     }

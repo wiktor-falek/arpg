@@ -1,13 +1,8 @@
-/*
-    Next skill cannot be casted before previous skill cooldown hasnt finished
-    Cooldown must not be updated while game is paused
-*/
-
 using Microsoft.Xna.Framework;
 
 public class ActorCastAction : IActorAction
 {
-    public bool HasFinished { get; private set; } = false;
+    public ActionState State { get; private set; } = ActionState.Pending;
     private IActor _actor;
     private ISkill _skill;
     private double _angle;
@@ -18,12 +13,11 @@ public class ActorCastAction : IActorAction
         _actor = actor;
         _skill = skill;
         _angle = angle;
-        _actor.ActionState = ActorActionState.Casting;
     }
 
     public void Update(GameTime gameTime)
     {
-        if (HasFinished)
+        if (State != ActionState.Ongoing)
             return;
 
         _elapsed += gameTime.ElapsedGameTime.TotalSeconds;
@@ -33,12 +27,18 @@ public class ActorCastAction : IActorAction
         }
     }
 
+    public void Start()
+    {
+        State = ActionState.Ongoing;
+        _actor.TransitionState(ActorActionState.Casting);
+    }
+
     public bool Stop() => false;
 
     private void End()
     {
-        HasFinished = true;
-        _actor.ActionState = ActorActionState.None;
+        State = ActionState.Finished;
+        _actor.TransitionState(ActorActionState.None);
         _skill.Cast(_angle);
     }
 }

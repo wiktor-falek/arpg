@@ -29,35 +29,52 @@ public class SkeletonBehaviorComponent
                 Game1.World.RemoveActor(monster);
             }
 
-            monster.ActionState = ActorActionState.None;
+            monster.TransitionState(ActorState.Dead);
+            monster.TransitionState(ActorActionState.None);
+            monster.Action = null;
             return;
         }
 
         Vector2 playerPosition = Game1.World.Player.Position;
-
         double distance = Vector2.Distance(monster.Position, playerPosition);
-        monster.IsLeashed = distance <= 100;
 
-        if (monster.IsLeashed)
-        {
-            const int ATTACK_TRIGGER_RANGE = 32;
+        // if (!monster.IsLeashed && distance <= 100)
+        // {
+        //     monster.IsLeashed = true;
+        // }
 
-            ActorMoveAction action = new(
-                monster,
-                Utils.GetRadialIntersection(playerPosition, monster.Position, ATTACK_TRIGGER_RANGE)
-            );
-            monster.StartAction(action, interruptPrevious: true);
-        }
-        else if (distance <= ATTACK_TRIGGER_RANGE)
-        {
-            monster.Action = null; // TODO: attack action
-            monster.TransitionState(ActorActionState.Swinging);
-        }
-        else
-        {
-            monster.Action = null;
-            monster.TransitionState(ActorState.Idling);
-        }
+        // if (distance <= 32)
+        // {
+        //     // monster.TransitionState(ActorActionState.Swinging);
+        //     monster.TransitionState(ActorState.Idling);
+        //     monster.Action = null;
+        //     return;
+        // }
+
+        // // const int ATTACK_TRIGGER_RANGE = 32;
+
+        // if (monster.IsLeashed)
+        // {
+        //     ActorMoveAction action = new(monster, playerPosition);
+        //     monster.SetAction(action);
+        // }
+
+        // else
+        // {
+        //     monster.TransitionState(ActorState.Idling);
+        //     monster.TransitionState(ActorActionState.None);
+        //     monster.Action = null;
+        // }
+        // else if (distance <= ATTACK_TRIGGER_RANGE)
+        // {
+        //     monster.Action = null; // TODO: attack action
+        //     monster.TransitionState(ActorActionState.Swinging);
+        // }
+        // else
+        // {
+        //     monster.Action = null;
+        //     monster.TransitionState(ActorState.Idling);
+        // }
 
         // if (_isAttacking)
         // {

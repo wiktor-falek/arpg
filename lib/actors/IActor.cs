@@ -34,7 +34,7 @@ public interface IActor
     string Id { get; }
     ActorKind Kind { get; }
     ActorState State { get; }
-    ActorActionState ActionState { get; set; }
+    ActorActionState ActionState { get; }
     ActorFacing Facing { get; set; }
     IActorAction? Action { get; set; }
     Vector2 Position { get; set; }
@@ -46,12 +46,15 @@ public interface IActor
     void Draw(SpriteBatch spriteBatch);
     void TakeDamage(double amount);
     bool TransitionState(ActorState newState);
+    bool TransitionState(ActorActionState newState);
 }
 
 public interface IMonster
 {
     public int XP { get; }
-    public bool IsLeashed { get; }
+    public int Level { get; }
+    public bool IsLeashed { get; set; }
+    public void OnDeath();
 }
 
 public interface IMonsterActor : IActor, IMonster;
@@ -67,8 +70,6 @@ public abstract class BaseActor : IActor
     public IActorAction? Action { get; set; } = null;
     public IHitbox Hitbox => new RectangleHitbox((int)Position.X - 8, (int)Position.Y - 16, 16, 32);
     public abstract ActorBaseStats Stats { get; }
-
-    // int IMonster.XP { get; } = 10;
 
     public BaseActor(ActorKind kind)
     {
@@ -100,7 +101,6 @@ public abstract class BaseActor : IActor
         if (stateChanged)
         {
             State = newState;
-            // _graphicsComponent.ResetFrames();
         }
 
         return stateChanged;
@@ -112,23 +112,60 @@ public abstract class BaseActor : IActor
         if (stateChanged)
         {
             ActionState = newState;
-            // _graphicsComponent.ResetFrames();
         }
 
         return stateChanged;
     }
 
-    public void StartAction(IActorAction action, bool interruptPrevious = false)
+    public void SetAction(IActorAction? action)
     {
-        if (interruptPrevious && Action is not null)
-        {
-            Action.Stop();
-        }
-
-        if (Action is null || Action.HasFinished)
+        if (Action is null || Action.State == global::ActionState.Finished || Action.Stop())
         {
             Action = action;
             return;
+        }
+    }
+}
+
+public abstract class Monster : BaseActor, IMonster
+{
+    public int Level { get; private set; }
+    public int XP { get; private set; }
+    public bool IsLeashed { get; set; }
+
+    public Monster(int level, int xp, bool isLeashed = false)
+        : base(ActorKind.Monster)
+    {
+        Level = level;
+        XP = xp;
+        IsLeashed = isLeashed;
+    }
+
+    /// <summary>
+    /// Drops items from global pool
+    /// </summary>
+    public void OnDeath()
+    {
+        Item item = GlobalLootTable.GenerateItem(Level);
+        DroppedItem droppedItem = new(item, new(Position.X, Position.Y));
+        Game1.World.Items.Add(droppedItem);
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+    }
+
+    public new void TakeDamage(double amount)
+    {
+        base.TakeDamage(amount);
+
+        IsLeashed = true;
+
+        if (!IsAlive)
+        {
+            Game1.World.Player.OnKill(this);
+            OnDeath();
         }
     }
 }

@@ -3,28 +3,25 @@ using Microsoft.Xna.Framework;
 
 public class PlayerLootAction : IActorAction
 {
-    public bool HasFinished { get; private set; } = false;
+    public ActionState State { get; private set; } = ActionState.Pending;
     private Player _player;
     private DroppedItem _item;
     private ActorMoveAction _moveAction;
     private static int PICKUP_RANGE = 40;
 
-    public PlayerLootAction(Player actor, DroppedItem item)
+    public PlayerLootAction(Player player, DroppedItem item)
     {
-        _player = actor;
+        _player = player;
         _item = item;
-        _moveAction = new(
-            _player,
-            Utils.GetRadialIntersection(_item.Position, _player.Position, PICKUP_RANGE - 1)
-        );
+        _moveAction = new(player, item.Position);
     }
 
     public void Update(GameTime gameTime)
     {
-        if (HasFinished)
+        if (State != ActionState.Ongoing)
             return;
 
-        if (Vector2.Distance(_item.Position, _player.Position) < PICKUP_RANGE)
+        if (Vector2.Distance(_item.Position, _player.Position) <= PICKUP_RANGE)
         {
             _item.GetPickedUp(_player);
             Stop();
@@ -35,10 +32,16 @@ public class PlayerLootAction : IActorAction
         }
     }
 
+    public void Start()
+    {
+        State = ActionState.Ongoing;
+        _moveAction.Start();
+    }
+
     public bool Stop()
     {
+        State = ActionState.Finished;
         _moveAction.Stop();
-        HasFinished = true;
         return true;
     }
 }

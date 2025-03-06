@@ -59,11 +59,10 @@ public class PlayerInputComponent
 
     private void StartCasting(ISkill skill)
     {
-        // TODO: check if can cast
         Vector2 playerAimCoordinate = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
         double angle = Utils.CalculateAngle(_player.Position, playerAimCoordinate);
         ActorCastAction action = new(_player, skill, angle);
-        _player.StartAction(action, interruptPrevious: true);
+        _player.SetAction(action);
     }
 
     public void Update(GameTime gameTime)
@@ -82,16 +81,8 @@ public class PlayerInputComponent
     public void Move()
     {
         Vector2 destination = Camera.CameraOrigin + MouseManager.GetInGameMousePosition();
-
-        if (_player.Action is ActorMoveAction moveAction)
-        {
-            moveAction.SetDestination(destination);
-        }
-        else
-        {
-            ActorMoveAction action = new(_player, destination);
-            _player.StartAction(action, interruptPrevious: true);
-        }
+        ActorMoveAction action = new(_player, destination);
+        _player.SetAction(action);
     }
 
     public bool OnLeftClick()

@@ -1,12 +1,19 @@
 using Microsoft.Xna.Framework;
 
+public enum ActionState
+{
+    Pending,
+    Ongoing,
+    Finished,
+}
+
 public interface IActorAction
 {
-    bool HasFinished { get; }
+    ActionState State { get; }
+    void Start();
     void Update(GameTime gameTime);
     bool Stop();
 }
-
 
 /*
     All of these cancel previous action, but it might not be the case in the future.

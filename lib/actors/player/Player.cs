@@ -42,7 +42,12 @@ public class Player : BaseActor
         Skills.Update(gameTime);
         Stats.Update(gameTime);
         InputComponent.Update(gameTime);
-        Action?.Update(gameTime);
+        if (Action is not null)
+        {
+            if (Action.State == global::ActionState.Pending)
+                Action.Start();
+            Action.Update(gameTime);
+        }
         _graphicsComponent.Update(gameTime);
     }
 
