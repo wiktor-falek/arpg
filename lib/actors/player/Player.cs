@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using arpg;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -81,5 +83,12 @@ public class Player : IActor
         playerStats.Level.GrantXP(monster.XP);
         playerStats.OffsetHealth(playerStats.HealthOnKill);
         playerStats.OffsetMana(playerStats.ManaOnKill);
+
+        List<Item> loot = Game1.LootSystem.GenerateLoot(monster, this);
+        foreach (var item in loot)
+        {
+            DroppedItem droppedItem = new(item, monster.Position);
+            Game1.World.Items.Add(droppedItem);
+        }
     }
 }

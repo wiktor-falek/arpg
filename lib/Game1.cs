@@ -14,6 +14,7 @@ public class Game1 : Game
     }
 
     public static World World;
+    public static LootSystem LootSystem;
     public static new GraphicsDevice GraphicsDevice;
     public static InputManager InputManager;
 
@@ -49,6 +50,7 @@ public class Game1 : Game
 
         Player player = new Player();
         World = new World(player);
+        LootSystem = new LootSystem();
         _background = new Background();
         _lootUI = new LootUI();
         _hud = new Hud();
